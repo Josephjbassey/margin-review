@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --paper: #F4F1EA;
+  --surface: #FBFAF6;
+  --ink: #101426;
+  --accent: #2B44FF;
+  --wash: #C5CEFF;
+  --selected: #E4E8FF;
+  --track: #E4E1D6;
+  --muted: #5A5E70;
+  --on-dark: #AEB9FF;
+
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  --border-radius: 2px;
+  --shadow-button: 3px 3px 0 0 var(--ink);
+  --shadow-card: 4px 4px 0 0 var(--ink);
+  --shadow-card-hover: 5px 5px 0 0 var(--ink);
+  --shadow-modal: 8px 8px 0 0 var(--ink);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-inter);
+  color: var(--ink);
+  margin-top: 0;
+  font-weight: 600;
+  text-transform: none; /* sentence case, no all-caps */
+}
+
+.page-title {
+  font-size: 54px;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+.caption-mono {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 40px 96px 40px;
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--paper);
+  border-bottom: 1px solid var(--ink);
+}
+
+.topbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-brand {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-brand .brand-badge {
+  font-size: 11px;
+  border: 1px solid var(--ink);
+  padding: 2px 6px;
+  border-radius: var(--border-radius);
+  background: var(--surface);
+  font-weight: 400;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 100%;
+}
+
+.topbar-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.topbar-link:hover {
+  color: var(--ink);
+}
+
+.topbar-link.active {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.topbar-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge-lecturer {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 3px 10px;
+  border: 1px solid var(--ink);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--ink);
+}
+
+/* Cards */
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--ink);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-button);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: #FFFFFF;
+}
+
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
+.btn-dark {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+.btn-sm {
+  padding: 4px 10px;
+  font-size: 11px;
+  box-shadow: 2px 2px 0 0 var(--ink);
+}
+
+.btn-sm:hover {
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+
+.btn:disabled {
+  background-color: var(--track);
+  color: var(--muted);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Tags & Badges */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Conflict, Unsupported: ink fill with paper text */
+.tag-conflict, .tag-unsupported {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+/* Same facts, Duplicate, Supported: wash fill with ink text */
+.tag-same_facts, .tag-duplicate, .tag-supported {
+  background-color: var(--wash);
+  color: var(--ink);
+}
+
+/* In review, Running: accent fill with white text */
+.tag-in_review, .tag-running {
+  background-color: var(--accent);
+  color: #FFFFFF;
+}
+
+/* Overlap, Partial, Related, Queued, Done, Draft: outlined, no fill */
+.tag-overlap, .tag-partial, .tag-related, .tag-queued, .tag-done, .tag-draft {
+  background-color: transparent;
+  color: var(--ink);
+}
+
+/* Evidence Highlight */
+.evidence-highlight {
+  background-color: transparent;
+  box-shadow: inset 0 -0.5em 0 0 var(--wash);
+  padding: 0 1px;
+  color: inherit;
+}
+
+/* Form Controls */
+.input, .textarea {
+  width: 100%;
+  background-color: var(--surface);
+  border: 1px solid var(--ink);
+  border-radius: var(--border-radius);
+  padding: 10px 14px;
+  font-family: var(--font-inter);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.input:focus, .textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.dropzone {
+  border: 1px dashed var(--ink);
+  background-color: var(--surface);
+  border-radius: var(--border-radius);
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.dropzone:hover {
+  background-color: var(--selected);
+}
+
+/* Progress bar */
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--track);
+  border: 1px solid var(--ink);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+}
+
+/* Two-column review layout (5:7 ratio) */
+.review-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Selected row */
+.list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--ink);
+  cursor: pointer;
+  background-color: var(--surface);
+  transition: background-color 0.12s ease;
+}
+
+.list-row:hover {
+  background-color: var(--paper);
+}
+
+.list-row.selected {
+  background-color: var(--selected);
+}
+
+/* Dark ink footer band */
+.footer-band {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--ink);
+  color: var(--paper);
+  padding: 12px 40px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 40;
+  border-top: 1px solid var(--ink);
+}
+
+.footer-band .on-dark {
+  color: var(--on-dark);
+}
