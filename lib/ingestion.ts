@@ -17,8 +17,13 @@ export async function extractTextFromFile(
   const ext = filename.split(".").pop()?.toLowerCase();
 
   if (ext === "docx") {
-    const result = await mammoth.extractRawText({ buffer });
-    return result.value.replace(/\r\n/g, "\n").trim();
+    try {
+      const result = await mammoth.extractRawText({ buffer });
+      return result.value.replace(/\r\n/g, "\n").trim();
+    } catch {
+      // Fallback to utf-8 string if not a valid docx zip archive
+      return buffer.toString("utf-8").replace(/\r\n/g, "\n").trim();
+    }
   }
 
   // Default to utf-8 text (.txt and other plain text)
