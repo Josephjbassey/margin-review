@@ -90,15 +90,46 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
   });
 
   it("adapter correctly normalizes official Verify (grounding) response", () => {
+    // 1. toRequest options & custom parameters
+    const reqObj = clockedAdapters.verify.toRequest(
+      "An expired connector certificate caused the incident.",
+      [{ id: "incident-timeline", text: "09:22 UTC: Expired connector certificate identified." }],
+      ["An expired connector certificate caused the incident."],
+      {
+        question: "What caused the incident?",
+        instructions: "Evaluate only the supplied incident records.",
+        threshold: 0.65,
+        evidence: "all",
+        rotations: 4,
+      }
+    );
+    assert.strictEqual(reqObj.answer, "An expired connector certificate caused the incident.");
+    assert.strictEqual(reqObj.question, "What caused the incident?");
+    assert.strictEqual(reqObj.instructions, "Evaluate only the supplied incident records.");
+    assert.strictEqual(reqObj.threshold, 0.65);
+    assert.strictEqual(reqObj.evidence, "all");
+    assert.strictEqual(reqObj.rotations, 4);
+    assert.strictEqual(reqObj.claims?.[0], "An expired connector certificate caused the incident.");
+
+    // 2. fromResponse normalization
     const raw = {
       model: "clocked-1.0",
+      instructions_used: "custom",
       grounded: 0.75,
+      ungrounded: 0.25,
       verdict: "partial",
+      threshold: 0.65,
+      documents: [{ id: "R-01", share: 0.8, share_of_answer: 0.75, claims: [0] }],
       claims: [
         {
           claim: "The algorithm runs in polynomial time.",
+          kind: "factual",
+          counted: true,
+          weight: 1.0,
           verdict: "supported",
           supported: 0.99,
+          contradicted: 0.0,
+          not_stated: 0.01,
           evidence: {
             document: "R-01",
             quote: "Theorem 4 states O(n^2) polynomial runtime.",
@@ -109,19 +140,38 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
         },
         {
           claim: "It uses quantum teleportation.",
+          kind: "factual",
+          counted: true,
+          weight: 0.5,
           verdict: "not_stated",
           supported: 0.01,
+          contradicted: 0.02,
+          not_stated: 0.97,
         },
       ],
       unsupported_claims: [1],
+      not_claims: [],
+      weakest_claim: { index: 1, supported: 0.01 },
+      answers_question: 0.92,
     };
 
     const adapted = clockedAdapters.verify.fromResponse(raw);
+    assert.strictEqual(adapted.grounded, 0.75);
     assert.strictEqual(adapted.grounded_score, 0.75);
+    assert.strictEqual(adapted.ungrounded, 0.25);
+    assert.strictEqual(adapted.verdict, "partial");
+    assert.strictEqual(adapted.threshold, 0.65);
+    assert.strictEqual(adapted.answers_question, 0.92);
+    assert.strictEqual(adapted.weakest_claim?.index, 1);
     assert.strictEqual(adapted.claims.length, 2);
     assert.strictEqual(adapted.claims[0].status, "supported");
+    assert.strictEqual(adapted.claims[0].supported, 0.99);
     assert.strictEqual(adapted.claims[0].evidence[0].source_id, "R-01");
+    assert.strictEqual(adapted.claims[0].evidence[0].char_start, 40);
+    assert.strictEqual(adapted.claims[0].evidence[0].char_end, 83);
     assert.strictEqual(adapted.claims[1].status, "unsupported");
+    assert.strictEqual(adapted.claims[1].not_stated, 0.97);
+    assert.strictEqual(adapted.unsupported_claims?.[0], 1);
     assert.strictEqual(adapted.unsupported_claim_indexes[0], 1);
   });
 

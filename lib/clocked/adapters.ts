@@ -70,16 +70,61 @@ export interface ClaimVerification {
   claim: string;
   status: "supported" | "partial" | "unsupported";
   verdict: string;
+  kind?: string;
+  counted?: boolean;
+  weight?: number;
+  supported?: number;
+  contradicted?: number;
+  not_stated?: number;
+  not_a_claim?: number;
   evidence: VerifyEvidence[];
   source_id?: string;
+  sources?: Record<string, any>;
   confidence: number;
 }
 
+export interface VerifyOptions {
+  question?: string;
+  claims?: string[];
+  instructions?: string;
+  threshold?: number;
+  evidence?: "all" | "flagged" | "none";
+  rotations?: number;
+  pdf?: string;
+  return_pdf?: "highlight" | "box" | "redact";
+}
+
+export interface VerifyRequestPayload {
+  documents?: Array<string | { id: string; text: string }>;
+  pdf?: string;
+  return_pdf?: "highlight" | "box" | "redact";
+  answer: string;
+  question?: string;
+  claims?: string[];
+  instructions?: string;
+  threshold?: number;
+  evidence?: "all" | "flagged" | "none";
+  rotations?: number;
+}
+
 export interface VerifyResult {
-  grounded_score: number;
-  overall_verdict: string;
+  model?: string;
+  instructions_used?: string;
+  grounded?: number;
+  grounded_score: number; // alias for backwards compatibility
+  ungrounded?: number;
+  verdict?: string;
+  overall_verdict: string; // alias for backwards compatibility
+  threshold?: number;
   claims: ClaimVerification[];
-  unsupported_claim_indexes: number[];
+  documents?: Array<{ id: string; share?: number; share_of_answer?: number; claims?: number[] }>;
+  unsupported_claims?: number[];
+  unsupported_claim_indexes: number[]; // alias for backwards compatibility
+  not_claims?: number[];
+  weakest_claim?: { index: number; supported: number } | null;
+  answers_question?: number;
+  pdf?: Record<string, any>;
+  timing?: Record<string, any>;
   raw_response: any;
 }
 
@@ -524,24 +569,53 @@ export const clockedAdapters = {
   verify: {
     endpoint: "/grounding",
     toRequest(
-      answer: string,
-      sources: Array<{ id: string; text: string }>,
-      claims?: string[]
+      answerOrPayload: string | VerifyRequestPayload,
+      sources?: Array<string | { id: string; text: string }>,
+      claimsOrOptions?: string[] | VerifyOptions,
+      maybeOptions?: VerifyOptions
     ) {
+      if (typeof answerOrPayload === "object") {
+        return {
+          threshold: 0.5,
+          evidence: "flagged",
+          rotations: 3,
+          ...answerOrPayload,
+        };
+      }
+
+      const answer = answerOrPayload;
+      const claims = Array.isArray(claimsOrOptions) ? claimsOrOptions : undefined;
+      const opts = (Array.isArray(claimsOrOptions) ? maybeOptions : claimsOrOptions) || {};
+
+      const documents = sources?.map((s) => (typeof s === "string" ? s : { id: s.id, text: s.text })) || [];
+
       return {
-        documents: sources.map((s) => ({ id: s.id, text: s.text })),
+        ...(opts.pdf ? { pdf: opts.pdf } : { documents }),
         answer,
-        ...(claims && claims.length > 0 ? { claims } : {}),
-        evidence: "all",
-        threshold: 0.5,
+        ...(opts.question ? { question: opts.question } : {}),
+        ...(claims && claims.length > 0
+          ? { claims }
+          : opts.claims && opts.claims.length > 0
+          ? { claims: opts.claims }
+          : {}),
+        ...(opts.instructions ? { instructions: opts.instructions } : {}),
+        threshold: opts.threshold ?? 0.5,
+        evidence: opts.evidence ?? "all",
+        rotations: opts.rotations ?? 3,
+        ...(opts.return_pdf ? { return_pdf: opts.return_pdf } : {}),
       };
     },
     fromResponse(data: any): VerifyResult {
-      const grounded_score = Number(data?.grounded ?? 0);
-      const overall_verdict = String(data?.verdict ?? "unsupported");
-      const unsupported_claim_indexes: number[] = Array.isArray(data?.unsupported_claims)
+      const grounded = Number(data?.grounded ?? 0);
+      const ungrounded = data?.ungrounded !== undefined ? Number(data.ungrounded) : undefined;
+      const verdict = String(
+        data?.verdict ?? (grounded >= (Number(data?.threshold ?? 0.5)) ? "supported" : "unsupported")
+      );
+      const threshold = Number(data?.threshold ?? 0.5);
+      const unsupported_claims: number[] = Array.isArray(data?.unsupported_claims)
         ? data.unsupported_claims
         : [];
+      const not_claims: number[] = Array.isArray(data?.not_claims) ? data.not_claims : [];
 
       const rawClaims = Array.isArray(data?.claims) ? data.claims : [];
       const parsedClaims: ClaimVerification[] = rawClaims.map((c: any) => {
@@ -555,7 +629,12 @@ export const clockedAdapters = {
 
         const evidence: VerifyEvidence[] = [];
         if (c?.evidence) {
-          const evRel = status === "supported" ? "supported" : rawVerdict.includes("contra") ? "contradicts" : "unsupported";
+          const evRel =
+            status === "supported"
+              ? "supported"
+              : rawVerdict.includes("contra")
+              ? "contradicts"
+              : "unsupported";
           evidence.push({
             source_id: String(c.evidence.document || c.source || "reading-pack"),
             passage_text: String(c.evidence.quote || ""),
@@ -568,19 +647,41 @@ export const clockedAdapters = {
 
         return {
           claim: String(c?.claim || ""),
+          kind: c?.kind ? String(c.kind) : undefined,
+          counted: c?.counted !== undefined ? Boolean(c.counted) : undefined,
+          weight: c?.weight !== undefined ? Number(c.weight) : undefined,
+          supported: c?.supported !== undefined ? Number(c.supported) : undefined,
+          contradicted: c?.contradicted !== undefined ? Number(c.contradicted) : undefined,
+          not_stated: c?.not_stated !== undefined ? Number(c.not_stated) : undefined,
+          not_a_claim: c?.not_a_claim !== undefined ? Number(c.not_a_claim) : undefined,
           status,
-          verdict: rawVerdict,
+          verdict: String(c?.verdict ?? rawVerdict),
           evidence,
           source_id: c?.source ? String(c.source) : undefined,
+          sources: c?.sources,
           confidence: Number(c?.supported ?? (status === "supported" ? 0.95 : 0.1)),
         };
       });
 
       return {
-        grounded_score,
-        overall_verdict,
+        model: data?.model,
+        instructions_used: data?.instructions_used,
+        grounded,
+        grounded_score: grounded, // alias for backwards compatibility
+        ungrounded,
+        verdict,
+        overall_verdict: verdict, // alias for backwards compatibility
+        threshold,
         claims: parsedClaims,
-        unsupported_claim_indexes,
+        documents: data?.documents,
+        unsupported_claims,
+        unsupported_claim_indexes: unsupported_claims, // alias for backwards compatibility
+        not_claims,
+        weakest_claim: data?.weakest_claim,
+        answers_question:
+          data?.answers_question !== undefined ? Number(data.answers_question) : undefined,
+        pdf: data?.pdf,
+        timing: data?.timing,
         raw_response: data,
       };
     },

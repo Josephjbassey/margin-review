@@ -5,6 +5,8 @@ import {
   ProtectOptions,
   ProtectResult,
   CompareResult,
+  VerifyOptions,
+  VerifyRequestPayload,
   VerifyResult,
   RerankResult,
   DecideRequestPayload,
@@ -228,17 +230,30 @@ export async function compare(
  * Checks student claims against course reading pack documents.
  */
 export async function verify(
-  answer: string,
-  sources: Array<{ id: string; text: string }>,
-  claims?: string[],
+  answerOrPayload: string | VerifyRequestPayload,
+  sources?: Array<string | { id: string; text: string }>,
+  claimsOrOptions?: string[] | VerifyOptions | (() => VerifyResult),
+  optionsOrFallback?: VerifyOptions | (() => VerifyResult),
   mockFallback?: () => VerifyResult
 ): Promise<VerifyResult> {
-  const payload = clockedAdapters.verify.toRequest(answer, sources, claims);
+  let fallback: (() => VerifyResult) | undefined = mockFallback;
+  if (typeof optionsOrFallback === "function") {
+    fallback = optionsOrFallback;
+  } else if (typeof claimsOrOptions === "function") {
+    fallback = claimsOrOptions;
+  }
+
+  const claims = Array.isArray(claimsOrOptions) ? claimsOrOptions : undefined;
+  const options =
+    (typeof claimsOrOptions === "object" && !Array.isArray(claimsOrOptions) ? claimsOrOptions : undefined) ||
+    (typeof optionsOrFallback === "object" ? optionsOrFallback : undefined);
+
+  const payload = clockedAdapters.verify.toRequest(answerOrPayload, sources, claims, options);
   return executeWithCache(
     clockedAdapters.verify.endpoint,
     payload,
     (data) => clockedAdapters.verify.fromResponse(data),
-    mockFallback
+    fallback
   );
 }
 
