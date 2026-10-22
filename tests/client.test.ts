@@ -151,4 +151,30 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
     assert.strictEqual(res.masked_text, "Student <PERSON>");
     assert.strictEqual(res.entities_masked_count, 1);
   });
+
+  it("adapter and client correctly process Decide request and response", async () => {
+    const mockDecideRaw = {
+      model: "clocked-1.0",
+      answers: {
+        flag_for_review: {
+          noul: 0.92,
+          decision: true,
+          threshold: 0.75,
+        },
+        category: {
+          choice: "contradiction",
+          probabilities: { contradiction: 0.88, stylistic_overlap: 0.12 },
+          confidence: 0.88,
+        },
+      },
+      usage: { input_tokens: 64, output_tokens: 32 },
+    };
+
+    const adapted = clockedAdapters.decide.fromResponse(mockDecideRaw);
+    assert.strictEqual(adapted.model, "clocked-1.0");
+    assert.strictEqual(adapted.answers.flag_for_review.decision, true);
+    assert.strictEqual(adapted.answers.category.choice, "contradiction");
+    assert.strictEqual(adapted.usage?.input_tokens, 64);
+  });
 });
+

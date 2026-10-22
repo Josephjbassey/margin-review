@@ -6,6 +6,8 @@ import {
   CompareResult,
   VerifyResult,
   RerankResult,
+  DecideRequestPayload,
+  DecideResult,
 } from "./adapters";
 import {
   computeCacheKey,
@@ -246,3 +248,22 @@ export async function rerank(
     mockFallback
   );
 }
+
+/**
+ * 5. DECIDE (POST /clocked/decide):
+ * Answer named questions with typed decisions (noul, choice, multiselect, score)
+ * and the probabilities behind them.
+ */
+export async function decide(
+  payload: DecideRequestPayload,
+  mockFallback?: () => DecideResult
+): Promise<DecideResult> {
+  const reqPayload = clockedAdapters.decide.toRequest(payload);
+  return executeWithCache(
+    clockedAdapters.decide.endpoint,
+    reqPayload,
+    (data) => clockedAdapters.decide.fromResponse(data),
+    mockFallback
+  );
+}
+

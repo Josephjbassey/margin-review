@@ -83,6 +83,54 @@ export interface RerankResult {
   raw_response: any;
 }
 
+export type DecideQuestion =
+  | {
+      type: "noul";
+      instructions?: string;
+      threshold?: number;
+      document?: string;
+    }
+  | {
+      type: "choice";
+      instructions?: string;
+      criteria: Record<string, string>;
+      document?: string;
+    }
+  | {
+      type: "multiselect";
+      instructions?: string;
+      criteria?: Record<string, string>;
+      options?: string[];
+      threshold?: number;
+      document?: string;
+    }
+  | {
+      type: "score";
+      instructions?: string;
+      criteria: string[];
+      document?: string;
+    };
+
+export interface DecideRequestPayload {
+  state?: string | object | any[];
+  pdf?: string;
+  instructions?: string;
+  calibration_temperature?: number;
+  rotations?: number;
+  documents?: Array<{ id: string; text: string }>;
+  questions: Record<string, DecideQuestion>;
+}
+
+export interface DecideResult {
+  model?: string;
+  answers: Record<string, any>;
+  usage?: {
+    input_tokens?: number;
+    output_tokens?: number;
+  };
+  raw_response: any;
+}
+
 // --- Adapters ---
 
 export const clockedAdapters = {
@@ -316,4 +364,21 @@ export const clockedAdapters = {
       };
     },
   },
+
+  // 5. DECIDE: POST /clocked/decide
+  decide: {
+    endpoint: "/decide",
+    toRequest(payload: DecideRequestPayload) {
+      return payload;
+    },
+    fromResponse(data: any): DecideResult {
+      return {
+        model: data?.model,
+        answers: data?.answers || {},
+        usage: data?.usage,
+        raw_response: data,
+      };
+    },
+  },
 };
+
