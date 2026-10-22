@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { StoredBatch } from "@/lib/storage";
+import { authClient } from "@/lib/auth-client";
+import { LandingPage } from "@/components/LandingPage";
 
 export default function BatchesPage() {
+  const { data: session, isPending: authPending } = authClient.useSession();
   const [batches, setBatches] = useState<StoredBatch[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
@@ -25,8 +28,12 @@ export default function BatchesPage() {
   };
 
   useEffect(() => {
-    loadBatches();
-  }, []);
+    if (session?.user) {
+      loadBatches();
+    } else if (!authPending) {
+      setLoading(false);
+    }
+  }, [session?.user, authPending]);
 
   const handleSeedDemo = async () => {
     setSeeding(true);
@@ -90,8 +97,21 @@ export default function BatchesPage() {
     return true;
   });
 
+  if (authPending) {
+    return (
+      <div className="container" style={{ textAlign: "center", padding: "100px 0" }}>
+        <div className="label-mono text-muted">Checking authentication status...</div>
+      </div>
+    );
+  }
+
+  if (!session?.user) {
+    return <LandingPage />;
+  }
+
   return (
     <div className="container">
+
       {/* System Status Strip */}
       <div
         style={{

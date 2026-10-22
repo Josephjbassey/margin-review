@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { StoredBatch } from "@/lib/storage";
 import { FooterBand } from "@/components/FooterBand";
+import { authClient } from "@/lib/auth-client";
+import { AuthGate } from "@/components/AuthGate";
 
 export default function ProcessingPage({
   params,
@@ -13,6 +15,7 @@ export default function ProcessingPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
+  const { data: session, isPending: authPending } = authClient.useSession();
 
   const [batch, setBatch] = useState<StoredBatch | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +28,8 @@ export default function ProcessingPage({
 
   // Poll step runner
   useEffect(() => {
+    if (!session?.user) return;
+
     let timer: NodeJS.Timeout;
     let active = true;
 
@@ -43,6 +48,7 @@ export default function ProcessingPage({
         if (!active) return;
 
         setBatch(data.batch);
+
 
         if (data.finished || data.batch?.status === "done") {
           setIsCompleted(true);
@@ -94,8 +100,22 @@ export default function ProcessingPage({
   const verifyStatus = getStepStatus("verify");
   const rerankStatus = getStepStatus("rerank");
 
+  if (authPending) {
+
+    return (
+      <div className="container" style={{ textAlign: "center", padding: "80px 0" }}>
+        <div className="label-mono text-muted">Checking authentication...</div>
+      </div>
+    );
+  }
+
+  if (!session?.user) {
+    return <AuthGate title="Batch Processing Requires Authentication" />;
+  }
+
   return (
     <div className="container" style={{ paddingBottom: 120 }}>
+
       <div style={{ marginBottom: 20 }}>
         <Link href="/" className="caption-mono text-muted" style={{ textDecoration: "none" }}>
           ← Back to Batches

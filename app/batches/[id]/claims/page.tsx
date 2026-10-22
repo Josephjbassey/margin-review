@@ -6,6 +6,8 @@ import { StoredBatch } from "@/lib/storage";
 import { BatchNav } from "@/components/BatchNav";
 import { FooterBand } from "@/components/FooterBand";
 import { DecisionChoice } from "@/lib/decisions";
+import { authClient } from "@/lib/auth-client";
+import { AuthGate } from "@/components/AuthGate";
 
 export default function ClaimsCheckPage({
   params,
@@ -13,6 +15,7 @@ export default function ClaimsCheckPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const { data: session, isPending: authPending } = authClient.useSession();
 
   const [batch, setBatch] = useState<StoredBatch | null>(null);
   const [loading, setLoading] = useState(true);
@@ -23,6 +26,11 @@ export default function ClaimsCheckPage({
   const [savingDecision, setSavingDecision] = useState(false);
 
   useEffect(() => {
+    if (!session?.user) {
+      if (!authPending) setLoading(false);
+      return;
+    }
+
     async function loadBatch() {
       try {
         const res = await fetch(`/api/batches/${id}`);
@@ -49,7 +57,19 @@ export default function ClaimsCheckPage({
     }
 
     loadBatch();
-  }, [id]);
+  }, [id, session?.user, authPending]);
+
+  if (authPending) {
+    return (
+      <div className="container" style={{ textAlign: "center", padding: "80px 0" }}>
+        <div className="label-mono text-muted">Checking authentication...</div>
+      </div>
+    );
+  }
+
+  if (!session?.user) {
+    return <AuthGate title="Claims Verification Requires Authentication" />;
+  }
 
   if (loading) {
     return (
@@ -58,6 +78,7 @@ export default function ClaimsCheckPage({
       </div>
     );
   }
+
 
   if (error || !batch) {
     return (

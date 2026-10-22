@@ -3,15 +3,19 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { AuthGate } from "@/components/AuthGate";
 
 const MAX_PAIRS = 20;
 
 export default function NewBatchPage() {
   const router = useRouter();
+  const { data: session, isPending: authPending } = authClient.useSession();
 
   useEffect(() => {
     document.title = "New Batch · Margin Academic Forensic Review";
   }, []);
+
 
   const [name, setName] = useState("GNS102 Informatics & Formal Methods");
   const [submissions, setSubmissions] = useState<File[]>([]);
@@ -113,8 +117,26 @@ export default function NewBatchPage() {
     }
   };
 
+  if (authPending) {
+    return (
+      <div className="container" style={{ textAlign: "center", padding: "80px 0" }}>
+        <div className="label-mono text-muted">Checking authentication...</div>
+      </div>
+    );
+  }
+
+  if (!session?.user) {
+    return (
+      <AuthGate
+        title="Batch Creation Requires Authentication"
+        subtitle="You must be signed in as an authorized lecturer to create review queues and stage student manuscripts."
+      />
+    );
+  }
+
   return (
     <div className="container">
+
       {/* Top back link */}
       <div style={{ marginBottom: 20 }}>
         <Link href="/" className="caption-mono text-muted" style={{ textDecoration: "none" }}>
