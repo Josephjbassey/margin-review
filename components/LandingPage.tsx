@@ -116,7 +116,7 @@ export function LandingPage() {
               }}
             />
             <span style={{ letterSpacing: "0.04em", textTransform: "uppercase" }}>
-              FORENSIC EVIDENCE &amp; MANUSCRIPT VERIFICATION ENGINE
+              ACADEMIC INTEGRITY &amp; CITATION REVIEW PLATFORM
             </span>
           </div>
 
@@ -251,7 +251,7 @@ export function LandingPage() {
             <span className="caption-mono text-muted hidden sm:inline">1280px Proof Frame Split 5:7</span>
           </div>
           <h2 style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.015em", margin: 0 }}>
-            Forensic Manuscript Adjudication Sheet
+            Side-by-Side Review Sheet
           </h2>
         </div>
 
@@ -574,7 +574,7 @@ export function LandingPage() {
                 </span>
               </div>
               <h3 style={{ fontSize: "18px", fontWeight: 600, margin: "0 0 10px 0" }}>
-                Blind Forensic Comparison
+                Anonymous Text Comparison
               </h3>
               <p style={{ fontSize: "14px", lineHeight: "22px", color: "var(--muted)", margin: 0 }}>
                 Anonymizes student identifiers prior to pairwise cross-checking. Instructors evaluate strictly raw conceptual overlap and source grounding without demographic or historical bias, upholding student FERPA guarantees.
@@ -1129,7 +1129,7 @@ export function LandingPage() {
               maxWidth: "780px",
             }}
           >
-            Restore academic rigor with verified forensic evidence.
+            Support scholarly integrity with clear, verifiable evidence.
           </h2>
 
           <p
@@ -1304,7 +1304,7 @@ export function LandingPage() {
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Public Portal
+              Academic Integrity &amp; Citation Review · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>

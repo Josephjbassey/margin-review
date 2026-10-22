@@ -128,7 +128,7 @@ export default function NewBatchPage() {
     return (
       <AuthGate
         title="Batch Creation Requires Authentication"
-        subtitle="You must be signed in as an authorized lecturer to create review queues and stage student manuscripts."
+        subtitle="You must be signed in as an authorized lecturer to create review queues and upload student papers."
       />
     );
   }
@@ -308,7 +308,7 @@ export default function NewBatchPage() {
           {/* Quick Demo Pre-load Bar */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
             <span className="caption-mono text-muted">
-              Select student manuscripts and assigned syllabus readings or stage benchmark files:
+              Select student papers and course readings or load sample files:
             </span>
             <button
               type="button"
@@ -418,7 +418,7 @@ export default function NewBatchPage() {
                   }}
                   className="caption-mono text-muted"
                 >
-                  <span style={{ textTransform: "uppercase" }}>Student Manuscript ID</span>
+                  <span style={{ textTransform: "uppercase" }}>Student Paper Name</span>
                   <div style={{ display: "flex", gap: "24px" }}>
                     <span>SIZE</span>
                     <span>STATUS</span>
@@ -436,7 +436,7 @@ export default function NewBatchPage() {
                 >
                   {submissions.length === 0 ? (
                     <div style={{ padding: "16px 0", textAlign: "center" }} className="caption-mono text-muted">
-                      No student manuscripts staged yet. Drag files above.
+                      No student papers added yet. Drag files above.
                     </div>
                   ) : (
                     submissions.map((f, i) => (
@@ -748,7 +748,7 @@ export default function NewBatchPage() {
                 Pairwise Comparison Guard (MAX_PAIRS = {MAX_PAIRS})
               </div>
               <div style={{ fontSize: "13px", marginTop: "2px" }}>
-                {submissionCount} manuscripts yield <strong>{pairCount} unique pairs</strong> [formula: n(n-1)/2].
+                {submissionCount} papers yield <strong>{pairCount} unique comparisons</strong> [formula: n(n-1)/2].
               </div>
             </div>
 
@@ -850,7 +850,7 @@ export default function NewBatchPage() {
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+              Academic Integrity &amp; Citation Review Platform · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

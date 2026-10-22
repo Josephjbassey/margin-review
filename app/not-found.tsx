@@ -27,7 +27,7 @@ export default function NotFound() {
         </div>
 
         <h1 className="page-title" style={{ fontSize: "38px", marginBottom: "16px" }}>
-          Manuscript Not Found
+          Page or Batch Not Found
         </h1>
 
         <p
@@ -38,8 +38,8 @@ export default function NotFound() {
             marginBottom: "32px",
           }}
         >
-          The requested forensic batch, citation offset, or submission record does not exist
-          in the local review index. It may have been purged or relocated.
+          The requested essay batch or submission record does not exist
+          in your local review index. It may have been completed, deleted, or relocated.
         </p>
 
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
@@ -61,7 +61,7 @@ export default function NotFound() {
             fontFamily: "var(--font-mono)",
           }}
         >
-          Margin · Academic Integrity Forensic Review System
+          Margin · Academic Integrity &amp; Citation Review Platform
         </div>
 
       </div>

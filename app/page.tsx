@@ -405,7 +405,7 @@ export default function BatchesPage() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             {loading ? (
               <div style={{ padding: "40px", textAlign: "center" }} className="label-mono text-muted">
-                Loading forensic review queues...
+                Loading review queues...
               </div>
             ) : filteredBatches.length === 0 ? (
               <div style={{ padding: "48px 24px", textAlign: "center" }}>
@@ -758,7 +758,7 @@ export default function BatchesPage() {
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+              Academic Integrity &amp; Citation Review Platform · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

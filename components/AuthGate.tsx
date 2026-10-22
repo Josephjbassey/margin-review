@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function AuthGate({
   title = "Reviewer Authentication Required",
-  subtitle = "Student manuscripts and pairwise forensic alignments are protected under FERPA data isolation guidelines. Please sign in as a verified lecturer or activate Judge Mode to proceed.",
+  subtitle = "Student essays and review findings are protected under FERPA data isolation guidelines. Please sign in as a verified lecturer or activate Judge Mode to proceed.",
 }: {
   title?: string;
   subtitle?: string;

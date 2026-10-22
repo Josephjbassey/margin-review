@@ -418,7 +418,7 @@ export default function ProcessingPage({
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span className="label-mono" style={{ fontWeight: 700, color: "var(--ink)", textTransform: "uppercase" }}>
-                  Forensic Feed
+                  Live Review Feed
                 </span>
                 <span className="tag tag-draft" style={{ fontSize: "10px" }}>
                   LIVE METRICS
@@ -508,7 +508,7 @@ export default function ProcessingPage({
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span className="label-mono" style={{ fontWeight: 700, color: "var(--paper)", textTransform: "uppercase" }}>
-                  Inspector Note
+                  Privacy &amp; Integrity Note
                 </span>
                 <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--wash)" }}>
                   verified
@@ -516,7 +516,7 @@ export default function ProcessingPage({
               </div>
 
               <p style={{ margin: 0, fontSize: "13px", lineHeight: "19px", color: "var(--on-dark)" }}>
-                The forensic pipeline performs pairwise cross-comparison without uploading plaintext outside your institutional network enclave. Results will populate directly into the <span style={{ textDecoration: "underline", color: "var(--paper)" }}>Analysis</span> registry when step 4 finalizes.
+                The review pipeline compares essays and verifies citations locally without sending unmasked student names outside your institutional network. Results will be ready for your review when processing completes.
               </p>
 
               <div>
@@ -622,7 +622,7 @@ export default function ProcessingPage({
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+              Academic Integrity &amp; Citation Review Platform · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

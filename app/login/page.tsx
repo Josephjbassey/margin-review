@@ -586,32 +586,32 @@ export default function LoginPage() {
             gap: "24px",
           }}
         >
-          {/* Forensic Rigor Protocol */}
+          {/* Evidence-First Review Protocol */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
               <span style={{ width: "8px", height: "8px", backgroundColor: "var(--ink)", display: "inline-block" }} />
               <span className="label-mono" style={{ fontWeight: 700, textTransform: "uppercase" }}>
-                Forensic Rigor Protocol
+                Evidence-First Review Protocol
               </span>
             </div>
             <p style={{ fontSize: "13px", lineHeight: "19px", color: "var(--muted)", margin: "0 0 6px 0" }}>
-              Margin operates on an evidence-first baseline. Match metrics identify potential overlaps, while final adjudications are authored solely by verified faculty members.
+              Margin provides side-by-side evidence and text overlaps, while final academic decisions are made exclusively by faculty.
             </p>
             <span className="caption-mono" style={{ color: "var(--ink)", fontWeight: 700 }}>
-              PROTOCOL REF: ACC-STD-2026
+              HUMAN-IN-THE-LOOP STANDARD
             </span>
           </div>
 
-          {/* FERPA & Cryptographic Redaction */}
+          {/* Student Privacy & FERPA Compliance */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
               <span style={{ width: "8px", height: "8px", backgroundColor: "var(--ink)", display: "inline-block" }} />
               <span className="label-mono" style={{ fontWeight: 700, textTransform: "uppercase" }}>
-                FERPA Redaction Pipeline
+                Student Privacy &amp; FERPA Compliance
               </span>
             </div>
             <p style={{ fontSize: "13px", lineHeight: "19px", color: "var(--muted)", margin: "0 0 6px 0" }}>
-              Student manuscripts are indexed via pseudo-anonymized hashes. Identifiable demographic identifiers remain vaulted within your campus registrar gateway.
+              Student essays are evaluated with names masked locally. Student identity is never shared with third-party AI models or public databases.
             </p>
             <span className="caption-mono" style={{ color: "var(--ink)", fontWeight: 700 }}>
               REGULATION: 34 CFR § 99.31

@@ -182,9 +182,9 @@ export default function DecisionsSummaryPage({
                   display: "inline-block",
                 }}
               />
-              CORPUS INTEGRITY 100%
+              ALL FINDINGS REVIEWED
             </span>
-            <span className="caption-mono text-muted">BATCH RUN: 14:38 EST</span>
+            <span className="caption-mono text-muted">BATCH COMPLETE</span>
           </div>
         </div>
 
@@ -715,7 +715,7 @@ export default function DecisionsSummaryPage({
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+              Academic Integrity &amp; Citation Review Platform · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

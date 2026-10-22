@@ -187,10 +187,10 @@ export default function ClaimsCheckPage({
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
               <span className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                Forensic Verification Module
+                Step 2 · Citation Verification
               </span>
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--accent)" }} />
-              <span className="caption-mono text-muted">Neural Alignment v2.4</span>
+              <span className="caption-mono text-muted">Reading Pack Grounding</span>
             </div>
             <h1
               style={{
@@ -785,7 +785,7 @@ export default function ClaimsCheckPage({
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+              Academic Integrity &amp; Citation Review Platform · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

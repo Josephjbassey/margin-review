@@ -212,9 +212,9 @@ export default function OverlapReviewPage({
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
               <span className="tag tag-draft" style={{ padding: "2px 8px", fontSize: "10px", textTransform: "uppercase" }}>
-                Phase · Forensic Review
+                Step 1 · Text Overlap Review
               </span>
-              <span className="label-mono text-muted">Step 3 of 3</span>
+              <span className="label-mono text-muted">Comparative Evidence</span>
             </div>
             <h1
               style={{
@@ -416,7 +416,7 @@ export default function OverlapReviewPage({
                     display: "inline-block",
                   }}
                 />
-                Cosine Vector v4.1
+                Comparison Engine v4.1
               </span>
             </div>
           </div>
@@ -780,7 +780,7 @@ export default function OverlapReviewPage({
               MARGIN
             </span>
             <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
-              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+              Academic Integrity &amp; Citation Review Platform · Faculty Portal
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
