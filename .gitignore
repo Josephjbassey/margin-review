@@ -41,6 +41,7 @@ yarn-error.log*
 # cache & databases
 clocked_cache/
 responses_cache/
+.data/
 *.sqlite
 *.sqlite3
 *.db
