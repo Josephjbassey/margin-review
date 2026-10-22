@@ -49,11 +49,84 @@ export interface PassageOffset {
   confidence?: number;
 }
 
+export interface ComparePassage {
+  document: string;
+  quote: string;
+  start: number;
+  end: number;
+  confidence?: number;
+}
+
+export interface CompareFinding {
+  kind?: string;
+  kinds?: Record<string, number>;
+  confidence?: number;
+  a: ComparePassage;
+  b: ComparePassage;
+}
+
+export interface ComparePairResult {
+  a: string;
+  b: string;
+  relation: "same" | "overlapping" | "conflicting" | "unrelated" | string;
+  related?: number;
+  probabilities?: Record<string, number>;
+  duplicates?: CompareFinding[];
+  conflicts?: CompareFinding[];
+}
+
+export interface CompareOptions {
+  instructions?: string;
+  threshold?: number;
+  evidence?: "all" | "flagged" | "none";
+  kinds?: boolean;
+  rotations?: number;
+  debug?: boolean;
+  return_pdf?: "highlight" | "box" | "redact";
+}
+
+export interface CompareDocumentInput {
+  id?: string;
+  text?: string;
+  pdf?: string;
+  pages?: string;
+  date?: string;
+}
+
+export interface CompareRequestPayload {
+  documents: Array<string | CompareDocumentInput>;
+  return_pdf?: "highlight" | "box" | "redact";
+  instructions?: string;
+  threshold?: number;
+  evidence?: "all" | "flagged" | "none";
+  kinds?: boolean;
+  rotations?: number;
+  debug?: boolean;
+}
+
 export interface CompareResult {
+  model?: string;
+  verdict?: string;
   relation: "conflict" | "same_facts" | "duplicate" | "overlap" | "none";
+  official_relation?: string;
   probability: number;
+  related?: number;
+  probabilities?: Record<string, number>;
   passages_a: PassageOffset[];
   passages_b: PassageOffset[];
+  findings?: CompareFinding[];
+  duplicates?: CompareFinding[];
+  conflicts?: CompareFinding[];
+  pairs?: ComparePairResult[];
+  documents?: any[];
+  duplicates_indexes?: number[];
+  overlaps_indexes?: number[];
+  conflicts_indexes?: number[];
+  related_pairs_indexes?: number[];
+  instructions_used?: string;
+  stages?: Record<string, any>;
+  pdf?: any[];
+  timing?: Record<string, any>;
   raw_response: any;
 }
 
@@ -472,15 +545,35 @@ export const clockedAdapters = {
   // 2. COMPARE: POST /clocked/compare
   compare: {
     endpoint: "/compare",
-    toRequest(docA: { id: string; text: string }, docB: { id: string; text: string }) {
+    toRequest(
+      docAOrPayload: { id?: string; text?: string } | CompareRequestPayload,
+      docB?: { id?: string; text?: string },
+      options?: CompareOptions
+    ) {
+      if ("documents" in docAOrPayload && Array.isArray(docAOrPayload.documents)) {
+        return {
+          threshold: 0.5,
+          evidence: "flagged",
+          kinds: true,
+          ...docAOrPayload,
+        };
+      }
+
+      const docA = docAOrPayload as { id: string; text: string };
+      const docBVal = docB || { id: "doc-b", text: "" };
+
       return {
         documents: [
           { id: docA.id, text: docA.text },
-          { id: docB.id, text: docB.text },
+          { id: docBVal.id, text: docBVal.text },
         ],
-        threshold: 0.5,
-        evidence: "flagged",
-        kinds: true,
+        threshold: options?.threshold ?? 0.5,
+        evidence: options?.evidence ?? "flagged",
+        kinds: options?.kinds ?? true,
+        ...(options?.instructions ? { instructions: options.instructions } : {}),
+        ...(options?.rotations !== undefined ? { rotations: options.rotations } : {}),
+        ...(options?.debug !== undefined ? { debug: options.debug } : {}),
+        ...(options?.return_pdf ? { return_pdf: options.return_pdf } : {}),
       };
     },
     fromResponse(data: any): CompareResult {
@@ -511,9 +604,33 @@ export const clockedAdapters = {
       const passages_a: PassageOffset[] = [];
       const passages_b: PassageOffset[] = [];
 
-      // Extract duplicates findings if present
+      function parseFinding(item: any): CompareFinding {
+        return {
+          kind: item?.kind ? String(item.kind) : undefined,
+          kinds: item?.kinds,
+          confidence: item?.confidence !== undefined ? Number(item.confidence) : undefined,
+          a: {
+            document: String(item?.a?.document || pair?.a || ""),
+            quote: String(item?.a?.quote ?? ""),
+            start: Number(item?.a?.start ?? 0),
+            end: Number(item?.a?.end ?? 0),
+            confidence: item?.a?.confidence !== undefined ? Number(item.a.confidence) : undefined,
+          },
+          b: {
+            document: String(item?.b?.document || pair?.b || ""),
+            quote: String(item?.b?.quote ?? ""),
+            start: Number(item?.b?.start ?? 0),
+            end: Number(item?.b?.end ?? 0),
+            confidence: item?.b?.confidence !== undefined ? Number(item.b.confidence) : undefined,
+          },
+        };
+      }
+
+      const duplicates: CompareFinding[] = [];
       if (Array.isArray(pair?.duplicates)) {
         for (const item of pair.duplicates) {
+          const parsed = parseFinding(item);
+          duplicates.push(parsed);
           if (item?.a) {
             passages_a.push({
               char_start: Number(item.a.start ?? 0),
@@ -533,9 +650,11 @@ export const clockedAdapters = {
         }
       }
 
-      // Extract conflicts findings if present
+      const conflicts: CompareFinding[] = [];
       if (Array.isArray(pair?.conflicts)) {
         for (const item of pair.conflicts) {
+          const parsed = parseFinding(item);
+          conflicts.push(parsed);
           if (item?.a) {
             passages_a.push({
               char_start: Number(item.a.start ?? 0),
@@ -555,11 +674,43 @@ export const clockedAdapters = {
         }
       }
 
+      const findings = [...duplicates, ...conflicts];
+
+      const pairs: ComparePairResult[] = Array.isArray(data?.pairs)
+        ? data.pairs.map((p: any) => ({
+            a: String(p?.a || ""),
+            b: String(p?.b || ""),
+            relation: String(p?.relation || "unrelated"),
+            related: p?.related !== undefined ? Number(p.related) : undefined,
+            probabilities: p?.probabilities,
+            duplicates: Array.isArray(p?.duplicates) ? p.duplicates.map(parseFinding) : undefined,
+            conflicts: Array.isArray(p?.conflicts) ? p.conflicts.map(parseFinding) : undefined,
+          }))
+        : [];
+
       return {
+        model: data?.model,
+        verdict: data?.verdict,
         relation,
+        official_relation: String(pair?.relation || rawRel),
         probability,
+        related: pair?.related !== undefined ? Number(pair.related) : undefined,
+        probabilities: pair?.probabilities,
         passages_a,
         passages_b,
+        findings,
+        duplicates,
+        conflicts,
+        pairs,
+        documents: data?.documents,
+        duplicates_indexes: data?.duplicates,
+        overlaps_indexes: data?.overlaps,
+        conflicts_indexes: data?.conflicts,
+        related_pairs_indexes: data?.related_pairs,
+        instructions_used: data?.instructions_used,
+        stages: data?.stages,
+        pdf: data?.pdf,
+        timing: data?.timing,
         raw_response: data,
       };
     },

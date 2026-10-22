@@ -4,6 +4,10 @@ import {
   clockedAdapters,
   ProtectOptions,
   ProtectResult,
+  CompareOptions,
+  CompareRequestPayload,
+  CompareFinding,
+  ComparePairResult,
   CompareResult,
   VerifyOptions,
   VerifyRequestPayload,
@@ -212,16 +216,37 @@ export async function protect(
  * Compares two submissions for conflicts, duplicates, same facts, or overlaps.
  */
 export async function compare(
-  docA: { id: string; text: string },
-  docB: { id: string; text: string },
+  docAOrPayload: { id?: string; text?: string } | CompareRequestPayload,
+  docBOrFallback?: { id?: string; text?: string } | CompareOptions | (() => CompareResult),
+  optionsOrFallback?: CompareOptions | (() => CompareResult),
   mockFallback?: () => CompareResult
 ): Promise<CompareResult> {
-  const payload = clockedAdapters.compare.toRequest(docA, docB);
+  let docB: { id?: string; text?: string } | undefined;
+  let options: CompareOptions | undefined;
+  let fallback: (() => CompareResult) | undefined = mockFallback;
+
+  if (typeof docBOrFallback === "function") {
+    fallback = docBOrFallback;
+  } else if (docBOrFallback && "text" in docBOrFallback) {
+    docB = docBOrFallback;
+    if (typeof optionsOrFallback === "function") {
+      fallback = optionsOrFallback;
+    } else if (typeof optionsOrFallback === "object") {
+      options = optionsOrFallback;
+    }
+  } else if (typeof docBOrFallback === "object") {
+    options = docBOrFallback as CompareOptions;
+    if (typeof optionsOrFallback === "function") {
+      fallback = optionsOrFallback;
+    }
+  }
+
+  const payload = clockedAdapters.compare.toRequest(docAOrPayload, docB, options);
   return executeWithCache(
     clockedAdapters.compare.endpoint,
     payload,
     (data) => clockedAdapters.compare.fromResponse(data),
-    mockFallback
+    fallback
   );
 }
 

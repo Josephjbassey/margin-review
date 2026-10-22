@@ -52,10 +52,37 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
     assert.strictEqual(customReq.threshold, 0.7);
   });
 
-  it("adapter correctly normalizes official Compare response with conflicts and duplicates", () => {
+  it("adapter correctly normalizes official Compare response with conflicts and duplicates", async () => {
+    // 1. toRequest options & custom parameters
+    const reqObj = clockedAdapters.compare.toRequest(
+      { id: "S-01", text: "Algorithm converged in 45 iterations." },
+      { id: "S-02", text: "Algorithm converged in 120 iterations." },
+      {
+        instructions: "Compare convergence claim and hardware configuration.",
+        threshold: 0.6,
+        evidence: "all",
+        kinds: true,
+        rotations: 2,
+        debug: true,
+      }
+    );
+    assert.strictEqual(reqObj.documents.length, 2);
+    assert.strictEqual(reqObj.instructions, "Compare convergence claim and hardware configuration.");
+    assert.strictEqual(reqObj.threshold, 0.6);
+    assert.strictEqual(reqObj.evidence, "all");
+    assert.strictEqual(reqObj.kinds, true);
+    assert.strictEqual(reqObj.rotations, 2);
+    assert.strictEqual(reqObj.debug, true);
+
+    // 2. fromResponse normalization
     const raw = {
       model: "clocked-1.0",
       verdict: "conflicts",
+      documents: [{ id: "S-01", conflicts: ["S-02"] }],
+      conflicts: [0],
+      duplicates: [],
+      overlaps: [],
+      related_pairs: [0],
       pairs: [
         {
           a: "S-01",
@@ -72,21 +99,46 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
             {
               kind: "contradiction",
               confidence: 0.98,
-              a: { document: "S-01", quote: "converged in 45 iterations", start: 10, end: 36 },
-              b: { document: "S-02", quote: "converged in 120 iterations", start: 12, end: 39 },
+              a: { document: "S-01", quote: "converged in 45 iterations", start: 10, end: 36, confidence: 0.98 },
+              b: { document: "S-02", quote: "converged in 120 iterations", start: 12, end: 39, confidence: 0.98 },
             },
           ],
+          duplicates: [],
         },
       ],
     };
 
     const adapted = clockedAdapters.compare.fromResponse(raw);
+    assert.strictEqual(adapted.model, "clocked-1.0");
+    assert.strictEqual(adapted.verdict, "conflicts");
     assert.strictEqual(adapted.relation, "conflict");
+    assert.strictEqual(adapted.official_relation, "conflicting");
     assert.strictEqual(adapted.probability, 0.94);
+    assert.strictEqual(adapted.related, 0.94);
+    assert.strictEqual(adapted.probabilities?.conflicting, 0.94);
+    assert.strictEqual(adapted.conflicts_indexes?.[0], 0);
+    assert.strictEqual(adapted.findings?.length, 1);
+    assert.strictEqual(adapted.findings?.[0].kind, "contradiction");
+    assert.strictEqual(adapted.findings?.[0].a.quote, "converged in 45 iterations");
     assert.strictEqual(adapted.passages_a.length, 1);
     assert.strictEqual(adapted.passages_a[0].char_start, 10);
     assert.strictEqual(adapted.passages_a[0].text, "converged in 45 iterations");
     assert.strictEqual(adapted.passages_b[0].text, "converged in 120 iterations");
+
+    // 3. compare client call with mock fallback
+    const mockRes = await compare(
+      { id: "S-01", text: "Text A" },
+      { id: "S-02", text: "Text B" },
+      () => ({
+        relation: "same_facts",
+        probability: 0.95,
+        passages_a: [],
+        passages_b: [],
+        raw_response: { mocked: true },
+      })
+    );
+    assert.strictEqual(mockRes.relation, "same_facts");
+    assert.strictEqual(mockRes.probability, 0.95);
   });
 
   it("adapter correctly normalizes official Verify (grounding) response", () => {
