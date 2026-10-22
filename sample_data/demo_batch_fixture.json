@@ -1,0 +1,863 @@
+{
+  "id": "batch-demo-gns102",
+  "name": "GNS102 Informatics & Formal Methods (Autumn 2026)",
+  "created_at": "2026-10-22T02:32:32.269Z",
+  "status": "done",
+  "current_step": "completed",
+  "submissions": [
+    {
+      "id": "doc-sub-1",
+      "filename": "essay_01_alice.txt",
+      "kind": "submission",
+      "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+      "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+      "label": "S-01",
+      "identifiers_masked_count": 3
+    },
+    {
+      "id": "doc-sub-2",
+      "filename": "essay_02_bob.txt",
+      "kind": "submission",
+      "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+      "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+      "label": "S-02",
+      "identifiers_masked_count": 3
+    },
+    {
+      "id": "doc-sub-3",
+      "filename": "essay_03_clara.txt",
+      "kind": "submission",
+      "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+      "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+      "label": "S-03",
+      "identifiers_masked_count": 3
+    },
+    {
+      "id": "doc-sub-4",
+      "filename": "essay_04_david.txt",
+      "kind": "submission",
+      "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+      "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+      "label": "S-04",
+      "identifiers_masked_count": 3
+    },
+    {
+      "id": "doc-sub-5",
+      "filename": "essay_05_elena.txt",
+      "kind": "submission",
+      "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+      "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+      "label": "S-05",
+      "identifiers_masked_count": 3
+    },
+    {
+      "id": "doc-sub-6",
+      "filename": "essay_06_fiona.txt",
+      "kind": "submission",
+      "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+      "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+      "label": "S-06",
+      "identifiers_masked_count": 3
+    }
+  ],
+  "reading_pack": [
+    {
+      "id": "doc-read-1",
+      "filename": "reading_pack_ch4_convergence.txt",
+      "kind": "reading",
+      "text": "COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS\nSOURCE DOCUMENT: R-01 (Textbook Chapter 4: Convergence Bounds in Deterministic Verification)\nAuthor: Prof. Marcus Vance, Cambridge University Press (Synthetic 2024 Edition)\n\nSection 4.1: Deterministic Verification of Finite State Automata\nIn the automated verification of concurrent transition systems, bounded model checking relies on iterative unrolling of transition relations. Under standard bounded inputs and the canonical Alpha benchmark suite, the deterministic verification algorithm converges in exactly 45 iterations. Any empirical run exceeding 60 iterations implies anomalous convergence behavior or diverging heuristics.\n\nSection 4.2: Precision and Error Tolerances\nThe formal verification engine achieves a verified precision score of 99.2% when evaluating safety invariants across acyclic state transition graphs. The convergence rate is governed by Lyapunov exponent criteria, ensuring strict monotonicity during invariant discovery.",
+      "masked_text": "COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS\nSOURCE DOCUMENT: R-01 (Textbook Chapter 4: Convergence Bounds in Deterministic Verification)\nAuthor: Prof. Marcus Vance, Cambridge University Press (Synthetic 2024 Edition)\n\nSection 4.1: Deterministic Verification of Finite State Automata\nIn the automated verification of concurrent transition systems, bounded model checking relies on iterative unrolling of transition relations. Under standard bounded inputs and the canonical Alpha benchmark suite, the deterministic verification algorithm converges in exactly 45 iterations. Any empirical run exceeding 60 iterations implies anomalous convergence behavior or diverging heuristics.\n\nSection 4.2: Precision and Error Tolerances\nThe formal verification engine achieves a verified precision score of 99.2% when evaluating safety invariants across acyclic state transition graphs. The convergence rate is governed by Lyapunov exponent criteria, ensuring strict monotonicity during invariant discovery.",
+      "label": "R-01"
+    },
+    {
+      "id": "doc-read-2",
+      "filename": "reading_pack_ch7_complexity.txt",
+      "kind": "reading",
+      "text": "COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS\nSOURCE DOCUMENT: R-02 (Textbook Chapter 7: Complexity Classes and Quantum Limits)\nAuthor: Dr. Evelyn Reed, Oxford Academic Series (Synthetic 2024 Edition)\n\nSection 7.1: State Space Explosion and Partial Order Reduction\nConcurrent systems with n independent processes suffer from an exponential state space explosion proportional to 2^n. Partial order reduction (POR) mitigates this explosion by establishing commutativity of independent transitions. For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.\n\nSection 7.2: Physical Limits and Quantum Annealing\nDespite speculative claims regarding quantum supremacy, quantum annealing has not been proven to eliminate runtime overheads in classical polynomial verification problems. In particular, mapping boolean satisfiability (SAT) to Ising spin glasses introduces non-negligible decoherence and embedding penalties that preserve NP-complete hardness.",
+      "masked_text": "COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS\nSOURCE DOCUMENT: R-02 (Textbook Chapter 7: Complexity Classes and Quantum Limits)\nAuthor: Dr. Evelyn Reed, Oxford Academic Series (Synthetic 2024 Edition)\n\nSection 7.1: State Space Explosion and Partial Order Reduction\nConcurrent systems with n independent processes suffer from an exponential state space explosion proportional to 2^n. Partial order reduction (POR) mitigates this explosion by establishing commutativity of independent transitions. For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.\n\nSection 7.2: Physical Limits and Quantum Annealing\nDespite speculative claims regarding quantum supremacy, quantum annealing has not been proven to eliminate runtime overheads in classical polynomial verification problems. In particular, mapping boolean satisfiability (SAT) to Ising spin glasses introduces non-negligible decoherence and embedding penalties that preserve NP-complete hardness.",
+      "label": "R-02"
+    }
+  ],
+  "pair_findings": [
+    {
+      "id": "pair-S-01-S-02-0",
+      "doc_a": {
+        "id": "doc-sub-1",
+        "filename": "essay_01_alice.txt",
+        "kind": "submission",
+        "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-01",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-2",
+        "filename": "essay_02_bob.txt",
+        "kind": "submission",
+        "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-02",
+        "identifiers_masked_count": 3
+      },
+      "relation": "conflict",
+      "probability": 0.98,
+      "passages_a": [
+        {
+          "char_start": 367,
+          "char_end": 423,
+          "text": "converged in exactly 45 iterations with 99.2% precision."
+        }
+      ],
+      "passages_b": [
+        {
+          "char_start": 365,
+          "char_end": 422,
+          "text": "converged in exactly 120 iterations with 64.0% precision."
+        }
+      ],
+      "raw_json": {
+        "verdict": "conflicts"
+      }
+    },
+    {
+      "id": "pair-S-05-S-06-14",
+      "doc_a": {
+        "id": "doc-sub-5",
+        "filename": "essay_05_elena.txt",
+        "kind": "submission",
+        "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "label": "S-05",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-6",
+        "filename": "essay_06_fiona.txt",
+        "kind": "submission",
+        "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "label": "S-06",
+        "identifiers_masked_count": 3
+      },
+      "relation": "duplicate",
+      "probability": 0.92,
+      "passages_a": [
+        {
+          "char_start": 172,
+          "char_end": 400,
+          "text": "Linear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition."
+        }
+      ],
+      "passages_b": [
+        {
+          "char_start": 180,
+          "char_end": 410,
+          "text": "Linear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition."
+        }
+      ],
+      "raw_json": {
+        "verdict": "duplicates"
+      }
+    },
+    {
+      "id": "pair-S-03-S-04-9",
+      "doc_a": {
+        "id": "doc-sub-3",
+        "filename": "essay_03_clara.txt",
+        "kind": "submission",
+        "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "label": "S-03",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-4",
+        "filename": "essay_04_david.txt",
+        "kind": "submission",
+        "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "label": "S-04",
+        "identifiers_masked_count": 3
+      },
+      "relation": "same_facts",
+      "probability": 0.85,
+      "passages_a": [
+        {
+          "char_start": 420,
+          "char_end": 540,
+          "text": "reduced visited states by an average factor of 3.4x without losing soundness."
+        }
+      ],
+      "passages_b": [
+        {
+          "char_start": 410,
+          "char_end": 530,
+          "text": "reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions."
+        }
+      ],
+      "raw_json": {
+        "verdict": "same_facts"
+      }
+    },
+    {
+      "id": "pair-S-01-S-03-1",
+      "doc_a": {
+        "id": "doc-sub-1",
+        "filename": "essay_01_alice.txt",
+        "kind": "submission",
+        "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-01",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-3",
+        "filename": "essay_03_clara.txt",
+        "kind": "submission",
+        "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "label": "S-03",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-01-S-04-2",
+      "doc_a": {
+        "id": "doc-sub-1",
+        "filename": "essay_01_alice.txt",
+        "kind": "submission",
+        "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-01",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-4",
+        "filename": "essay_04_david.txt",
+        "kind": "submission",
+        "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "label": "S-04",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-01-S-05-3",
+      "doc_a": {
+        "id": "doc-sub-1",
+        "filename": "essay_01_alice.txt",
+        "kind": "submission",
+        "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-01",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-5",
+        "filename": "essay_05_elena.txt",
+        "kind": "submission",
+        "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "label": "S-05",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-01-S-06-4",
+      "doc_a": {
+        "id": "doc-sub-1",
+        "filename": "essay_01_alice.txt",
+        "kind": "submission",
+        "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-01",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-6",
+        "filename": "essay_06_fiona.txt",
+        "kind": "submission",
+        "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "label": "S-06",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-02-S-03-5",
+      "doc_a": {
+        "id": "doc-sub-2",
+        "filename": "essay_02_bob.txt",
+        "kind": "submission",
+        "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-02",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-3",
+        "filename": "essay_03_clara.txt",
+        "kind": "submission",
+        "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "label": "S-03",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-02-S-04-6",
+      "doc_a": {
+        "id": "doc-sub-2",
+        "filename": "essay_02_bob.txt",
+        "kind": "submission",
+        "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-02",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-4",
+        "filename": "essay_04_david.txt",
+        "kind": "submission",
+        "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "label": "S-04",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-02-S-05-7",
+      "doc_a": {
+        "id": "doc-sub-2",
+        "filename": "essay_02_bob.txt",
+        "kind": "submission",
+        "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-02",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-5",
+        "filename": "essay_05_elena.txt",
+        "kind": "submission",
+        "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "label": "S-05",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-02-S-06-8",
+      "doc_a": {
+        "id": "doc-sub-2",
+        "filename": "essay_02_bob.txt",
+        "kind": "submission",
+        "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-02",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-6",
+        "filename": "essay_06_fiona.txt",
+        "kind": "submission",
+        "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "label": "S-06",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-03-S-05-10",
+      "doc_a": {
+        "id": "doc-sub-3",
+        "filename": "essay_03_clara.txt",
+        "kind": "submission",
+        "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "label": "S-03",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-5",
+        "filename": "essay_05_elena.txt",
+        "kind": "submission",
+        "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "label": "S-05",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-03-S-06-11",
+      "doc_a": {
+        "id": "doc-sub-3",
+        "filename": "essay_03_clara.txt",
+        "kind": "submission",
+        "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "label": "S-03",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-6",
+        "filename": "essay_06_fiona.txt",
+        "kind": "submission",
+        "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "label": "S-06",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-04-S-05-12",
+      "doc_a": {
+        "id": "doc-sub-4",
+        "filename": "essay_04_david.txt",
+        "kind": "submission",
+        "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "label": "S-04",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-5",
+        "filename": "essay_05_elena.txt",
+        "kind": "submission",
+        "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "label": "S-05",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    },
+    {
+      "id": "pair-S-04-S-06-13",
+      "doc_a": {
+        "id": "doc-sub-4",
+        "filename": "essay_04_david.txt",
+        "kind": "submission",
+        "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "label": "S-04",
+        "identifiers_masked_count": 3
+      },
+      "doc_b": {
+        "id": "doc-sub-6",
+        "filename": "essay_06_fiona.txt",
+        "kind": "submission",
+        "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "label": "S-06",
+        "identifiers_masked_count": 3
+      },
+      "relation": "none",
+      "probability": 0.05,
+      "passages_a": [],
+      "passages_b": [],
+      "raw_json": {
+        "verdict": "unrelated"
+      }
+    }
+  ],
+  "claim_findings": [
+    {
+      "id": "claim-S-02-0",
+      "document": {
+        "id": "doc-sub-2",
+        "filename": "essay_02_bob.txt",
+        "kind": "submission",
+        "text": "Student Name: Bob Wright\nStudent ID: CS/2024/044\nEmail: bob.wright@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures.\n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-02",
+        "identifiers_masked_count": 3
+      },
+      "text": "The deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision.",
+      "status": "unsupported",
+      "verdict": "contradicted",
+      "evidence": [
+        {
+          "source_id": "R-01",
+          "passage_text": "Any empirical run exceeding 60 iterations implies anomalous convergence behavior or diverging heuristics.",
+          "relation": "contradicts",
+          "char_start": 486,
+          "char_end": 593,
+          "confidence": 0.96
+        }
+      ],
+      "raw_json": {
+        "claim": "The deterministic verification algorithm converged in exactly 120 iterations with 64.0% precision.",
+        "status": "unsupported",
+        "verdict": "contradicted",
+        "confidence": 0.05,
+        "evidence": [
+          {
+            "source_id": "R-01",
+            "passage_text": "Any empirical run exceeding 60 iterations implies anomalous convergence behavior or diverging heuristics.",
+            "relation": "contradicts",
+            "char_start": 486,
+            "char_end": 593,
+            "confidence": 0.96
+          }
+        ]
+      },
+      "reranked_evidence": [
+        {
+          "passage_text": "COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS\nSOURCE DOCUMENT: R-01 (Textbook Chapter 4: Convergence Bounds in Deterministic Verification)\nAuthor: Prof. Marcus Vance, Cambridge University Press (Synthetic 2024 Edition)",
+          "source_id": "R-01",
+          "action": "use",
+          "relevance_score": 0.97
+        },
+        {
+          "passage_text": "Section 4.1: Deterministic Verification of Finite State Automata\nIn the automated verification of concurrent transition systems, bounded model checking relies on iterative unrolling of transition relations. Under standard bounded inputs and the canonical Alpha benchmark suite, the deterministic verification algorithm converges in exactly 45 iterations. Any empirical run exceeding 60 iterations implies anomalous convergence behavior or diverging heuristics.",
+          "source_id": "R-01",
+          "action": "expand",
+          "relevance_score": 0.42
+        }
+      ]
+    },
+    {
+      "id": "claim-S-01-0",
+      "document": {
+        "id": "doc-sub-1",
+        "filename": "essay_01_alice.txt",
+        "kind": "submission",
+        "text": "Student Name: Alice Vance\nStudent ID: CS/2024/019\nEmail: alice.vance@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Empirical Analysis of Bounded Verification\n\nIn this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. \n\nIn our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.",
+        "label": "S-01",
+        "identifiers_masked_count": 3
+      },
+      "text": "The deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision.",
+      "status": "supported",
+      "verdict": "supported",
+      "evidence": [
+        {
+          "source_id": "R-01",
+          "passage_text": "Under standard bounded inputs and the canonical Alpha benchmark suite, the deterministic verification algorithm converges in exactly 45 iterations.",
+          "relation": "supported",
+          "char_start": 334,
+          "char_end": 485,
+          "confidence": 0.99
+        }
+      ],
+      "raw_json": {
+        "claim": "The deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision.",
+        "status": "supported",
+        "verdict": "supported",
+        "confidence": 0.99,
+        "evidence": [
+          {
+            "source_id": "R-01",
+            "passage_text": "Under standard bounded inputs and the canonical Alpha benchmark suite, the deterministic verification algorithm converges in exactly 45 iterations.",
+            "relation": "supported",
+            "char_start": 334,
+            "char_end": 485,
+            "confidence": 0.99
+          }
+        ]
+      }
+    },
+    {
+      "id": "claim-S-03-0",
+      "document": {
+        "id": "doc-sub-3",
+        "filename": "essay_03_clara.txt",
+        "kind": "submission",
+        "text": "Student Name: Clara Oswald\nStudent ID: CS/2024/082\nEmail: clara.oswald@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: State Space Mitigation via Partial Order Reduction\n\nConcurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. \n\nBy constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.",
+        "label": "S-03",
+        "identifiers_masked_count": 3
+      },
+      "text": "Ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+      "status": "supported",
+      "verdict": "supported",
+      "evidence": [
+        {
+          "source_id": "R-02",
+          "passage_text": "For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+          "relation": "supported",
+          "char_start": 470,
+          "char_end": 605,
+          "confidence": 0.98
+        }
+      ],
+      "raw_json": {
+        "claim": "Ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+        "status": "supported",
+        "verdict": "supported",
+        "confidence": 0.95,
+        "evidence": [
+          {
+            "source_id": "R-02",
+            "passage_text": "For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+            "relation": "supported",
+            "char_start": 470,
+            "char_end": 605,
+            "confidence": 0.98
+          }
+        ]
+      }
+    },
+    {
+      "id": "claim-S-04-0",
+      "document": {
+        "id": "doc-sub-4",
+        "filename": "essay_04_david.txt",
+        "kind": "submission",
+        "text": "Student Name: David Tennant\nStudent ID: CS/2024/099\nEmail: david.tennant@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reducing State Space via Ample Sets\n\nWhen modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.\n\nWe implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.",
+        "label": "S-04",
+        "identifiers_masked_count": 3
+      },
+      "text": "Ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+      "status": "supported",
+      "verdict": "supported",
+      "evidence": [
+        {
+          "source_id": "R-02",
+          "passage_text": "For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+          "relation": "supported",
+          "char_start": 470,
+          "char_end": 605,
+          "confidence": 0.98
+        }
+      ],
+      "raw_json": {
+        "claim": "Ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+        "status": "supported",
+        "verdict": "supported",
+        "confidence": 0.95,
+        "evidence": [
+          {
+            "source_id": "R-02",
+            "passage_text": "For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.",
+            "relation": "supported",
+            "char_start": 470,
+            "char_end": 605,
+            "confidence": 0.98
+          }
+        ]
+      }
+    },
+    {
+      "id": "claim-S-05-0",
+      "document": {
+        "id": "doc-sub-5",
+        "filename": "essay_05_elena.txt",
+        "kind": "submission",
+        "text": "Student Name: Elena Rostova\nStudent ID: CS/2024/115\nEmail: elena.rostova@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Linear Temporal Logic Checking for Reactive Systems\n\nLinear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.",
+        "label": "S-05",
+        "identifiers_masked_count": 3
+      },
+      "text": "LTL formulas convert into generalized Büchi automata using standard tableau decomposition.",
+      "status": "supported",
+      "verdict": "supported",
+      "evidence": [
+        {
+          "source_id": "R-02",
+          "passage_text": "Ample set construction mitigates this explosion.",
+          "relation": "supported",
+          "char_start": 300,
+          "char_end": 350,
+          "confidence": 0.85
+        }
+      ],
+      "raw_json": {
+        "claim": "LTL formulas convert into generalized Büchi automata using standard tableau decomposition.",
+        "status": "supported",
+        "verdict": "supported",
+        "confidence": 0.9,
+        "evidence": [
+          {
+            "source_id": "R-02",
+            "passage_text": "Ample set construction mitigates this explosion.",
+            "relation": "supported",
+            "char_start": 300,
+            "char_end": 350,
+            "confidence": 0.85
+          }
+        ]
+      }
+    },
+    {
+      "id": "claim-S-06-0",
+      "document": {
+        "id": "doc-sub-6",
+        "filename": "essay_06_fiona.txt",
+        "kind": "submission",
+        "text": "Student Name: Fiona Gallagher\nStudent ID: CS/2024/142\nEmail: fiona.gallagher@university.ac.uk\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "masked_text": "Student Name: <PERSON>\nStudent ID: <STUDENT_ID>\nEmail: <EMAIL>\nCourse: GNS102 Formal Systems\n\nTitle: Reactive System Verification with Linear Temporal Logic\n\nLinear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.",
+        "label": "S-06",
+        "identifiers_masked_count": 3
+      },
+      "text": "LTL formulas convert into generalized Büchi automata using standard tableau decomposition.",
+      "status": "supported",
+      "verdict": "supported",
+      "evidence": [
+        {
+          "source_id": "R-02",
+          "passage_text": "Ample set construction mitigates this explosion.",
+          "relation": "supported",
+          "char_start": 300,
+          "char_end": 350,
+          "confidence": 0.85
+        }
+      ],
+      "raw_json": {
+        "claim": "LTL formulas convert into generalized Büchi automata using standard tableau decomposition.",
+        "status": "supported",
+        "verdict": "supported",
+        "confidence": 0.9,
+        "evidence": [
+          {
+            "source_id": "R-02",
+            "passage_text": "Ample set construction mitigates this explosion.",
+            "relation": "supported",
+            "char_start": 300,
+            "char_end": 350,
+            "confidence": 0.85
+          }
+        ]
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec-1792638769276-8sret",
+      "batch_id": "batch-demo-gns102",
+      "finding_type": "pair",
+      "finding_id": "pair-S-01-S-02-0",
+      "choice": "common_source",
+      "note": "",
+      "decided_at": "2026-10-22T03:12:49.276Z"
+    },
+    {
+      "id": "dec-1792636352269-mnn4g",
+      "batch_id": "batch-demo-gns102",
+      "finding_type": "pair",
+      "finding_id": "pair-S-05-S-06-14",
+      "choice": "flag",
+      "note": "Extensive text overlap on LTL model checking. Check if students collaborated.",
+      "decided_at": "2026-10-22T02:32:32.269Z"
+    },
+    {
+      "id": "dec-1792636352269-ja300",
+      "batch_id": "batch-demo-gns102",
+      "finding_type": "claim",
+      "finding_id": "claim-S-02-0",
+      "choice": "flag",
+      "note": "Claim contradicts Textbook Section 4.1.",
+      "decided_at": "2026-10-22T02:32:32.269Z"
+    }
+  ],
+  "progress": {
+    "ingest": {
+      "step": "ingest",
+      "done": 8,
+      "total": 8,
+      "state": "done"
+    },
+    "protect": {
+      "step": "protect",
+      "done": 6,
+      "total": 6,
+      "state": "done"
+    },
+    "compare": {
+      "step": "compare",
+      "done": 15,
+      "total": 15,
+      "state": "done"
+    },
+    "verify": {
+      "step": "verify",
+      "done": 6,
+      "total": 6,
+      "state": "done"
+    },
+    "rerank": {
+      "step": "rerank",
+      "done": 1,
+      "total": 1,
+      "state": "done"
+    }
+  },
+  "total_identifiers_masked": 18
+}
