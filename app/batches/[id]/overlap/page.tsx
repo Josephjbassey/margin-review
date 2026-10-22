@@ -577,7 +577,7 @@ export default function OverlapReviewPage({
                     }}
                     className="caption-mono text-muted"
                   >
-                    Token density: 0.84 · Antithetical stance
+                    Close Paraphrase · Opposite Claim
                   </div>
                 </div>
               </div>
@@ -599,7 +599,7 @@ export default function OverlapReviewPage({
                 </span>
                 <div>
                   <div className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
-                    Semantic Antonymy Flagged
+                    Conflicting Conclusions Identified
                   </div>
                   <div style={{ fontSize: "14px", color: "var(--muted)", marginTop: "2px" }}>
                     Submissions draw direct opposite behavioral conclusions (&ldquo;within minutes&rdquo; vs &ldquo;pause to verify&rdquo;) citing identical socio-behavioral hypotheses.

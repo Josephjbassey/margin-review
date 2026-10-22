@@ -481,10 +481,10 @@ export default function ClaimsCheckPage({
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span className="label-mono text-muted" style={{ textTransform: "uppercase" }}>
-                  Rerank · best passages from the reading pack
+                  Best matching passages from course readings
                 </span>
                 <span className="caption-mono" style={{ color: "var(--accent)" }}>
-                  Cross-Encoder Top 2
+                  Top 2 Matches
                 </span>
               </div>
 

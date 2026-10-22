@@ -110,10 +110,10 @@ export default function LoginPage() {
               }}
             />
             <span style={{ letterSpacing: "0.04em", textTransform: "uppercase", fontWeight: 700 }}>
-              GATEWAY TERMINAL · NODE-04
+              FACULTY &amp; LECTURER PORTAL
             </span>
             <span style={{ color: "var(--muted)" }}>/</span>
-            <span style={{ color: "var(--muted)" }}>IDP RELAY: INCOMMON FEDERATION</span>
+            <span style={{ color: "var(--muted)" }}>INSTITUTIONAL ACCESS</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span
@@ -126,9 +126,9 @@ export default function LoginPage() {
                 fontWeight: 700,
               }}
             >
-              FERPA AUTHORISED
+              FERPA COMPLIANT
             </span>
-            <span style={{ color: "var(--ink)" }}>ENCLAVE TLS 1.3 · SHA-256</span>
+            <span style={{ color: "var(--ink)" }}>SECURE LOCAL SESSION</span>
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@ export default function LoginPage() {
           position: "relative",
         }}
       >
-        {/* Decorative Grid Registration Marks */}
+        {/* Decorative Academic Grid Markers */}
         <div
           aria-hidden="true"
           style={{
@@ -166,14 +166,14 @@ export default function LoginPage() {
           className="hidden md:flex"
         >
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>+ REG-TL: 41.8781° N</span>
-            <span>SEC-PROOF-GRID // 100-M</span>
-            <span>+ REG-TR: 87.6298° W</span>
+            <span>[MARGIN · FERPA PROTECTED]</span>
+            <span>ACADEMIC INTEGRITY REVIEW SYSTEM</span>
+            <span>[ZERO PERMANENT RETENTION]</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>+ REG-BL: LAT-ENC-OK</span>
-            <span>[FORENSIC EVIDENCE VERIFICATION CLUSTER]</span>
-            <span>+ REG-BR: 2026-Q1</span>
+            <span>[VERIFIED ACCESS]</span>
+            <span>[HUMAN FACULTY ADJUDICATION]</span>
+            <span>[2026 ACADEMIC SESSION]</span>
           </div>
         </div>
 

@@ -156,12 +156,12 @@ export default function BatchesPage() {
               className="caption-mono text-muted"
               style={{ letterSpacing: "0.05em", textTransform: "uppercase" }}
             >
-              FERPA Isolation Active · Corpus CS-2026.B · Clocked Enclave
+              Student Privacy Active · FERPA Compliant · Local Enclave
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }} className="caption-mono text-muted">
             <span>
-              Index Synchronization: <strong style={{ color: "var(--ink)" }}>14:02 UTC</strong>
+              Last Updated: <strong style={{ color: "var(--ink)" }}>Today</strong>
             </span>
             <span
               style={{
@@ -173,7 +173,7 @@ export default function BatchesPage() {
                 fontWeight: 700,
               }}
             >
-              REV-QUEUE: READY
+              QUEUE: READY
             </span>
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function BatchesPage() {
                 maxWidth: "600px",
               }}
             >
-              Forensic manuscript verification queues, comparative text alignment runs, and originality claims.
+              Review student paper submissions against course readings and peer essays with side-by-side evidence.
             </p>
           </div>
 
@@ -282,7 +282,7 @@ export default function BatchesPage() {
               <span style={{ fontSize: "28px", fontWeight: 700, lineHeight: 1, color: "var(--ink)" }}>
                 {totalSubmissions || 19}
               </span>
-              <span className="caption-mono text-muted">total manuscripts</span>
+              <span className="caption-mono text-muted">student essays</span>
             </div>
             <div
               style={{
@@ -313,7 +313,7 @@ export default function BatchesPage() {
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <span className="caption-mono text-muted" style={{ textTransform: "uppercase" }}>
-                Pending Evidentiary Claims
+                Unresolved Citation Flags
               </span>
               <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>
                 fact_check
@@ -345,7 +345,7 @@ export default function BatchesPage() {
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <span className="caption-mono text-muted" style={{ textTransform: "uppercase" }}>
-                Batch Decided Velocity
+                Review Completion Rate
               </span>
               <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--ink)" }}>
                 insights
@@ -659,10 +659,10 @@ export default function BatchesPage() {
             </div>
             <div>
               <h2 style={{ fontSize: "18px", fontWeight: 600, margin: 0, color: "var(--ink)" }}>
-                Direct Submission Importer
+                Import Student Submissions
               </h2>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: "4px 0 0 0" }}>
-                Drag and drop zip bundles of student manuscripts (.pdf, .docx, .txt) to provision an instant comparative matrix.
+                Upload or drop folders of student essays (.pdf, .docx, .txt) to compare against course materials and peer work.
               </p>
             </div>
           </div>
@@ -709,10 +709,10 @@ export default function BatchesPage() {
             </span>
             <div>
               <span className="label-mono" style={{ color: "var(--paper)", fontWeight: 700, textTransform: "uppercase" }}>
-                Forensic Principle:{" "}
+                Human-in-the-Loop Principle:{" "}
               </span>
               <span style={{ fontSize: "13px", color: "var(--on-dark)" }}>
-                The Margin engine highlights alignment scores and character offsets. Final adjudications remain with faculty.
+                Margin highlights evidence and passage offsets. Final academic integrity decisions always remain with faculty.
               </span>
             </div>
           </div>
@@ -726,7 +726,7 @@ export default function BatchesPage() {
               whiteSpace: "nowrap",
             }}
           >
-            ISO 27001 AUDITED
+            CAMPUS READY
           </span>
         </div>
       </div>

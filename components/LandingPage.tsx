@@ -69,14 +69,14 @@ export function LandingPage() {
                 display: "inline-block",
               }}
             />
-            <span style={{ fontWeight: 700 }}>AUDIT ENGINE v4.1</span>
+            <span style={{ fontWeight: 700 }}>STUDENT PRIVACY FIRST</span>
             <span style={{ color: "var(--muted)" }}>·</span>
-            <span>ZERO PERMANENT RETENTION ENCLAVE ACTIVE</span>
+            <span>ZERO PERMANENT RETENTION · LOCAL PROCESSING</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "16px", color: "var(--muted)" }} className="hidden sm:flex">
             <span>FERPA SEC. 99.31 COMPLIANT</span>
-            <span>SHA-256 LOCAL TOKENIZATION</span>
-            <span style={{ color: "var(--ink)", fontWeight: 700 }}>CAMPUS PROOF NODE #882</span>
+            <span>LOCAL ANONYMIZATION</span>
+            <span style={{ color: "var(--ink)", fontWeight: 700 }}>INSTITUTIONAL GRADE</span>
           </div>
         </div>
       </div>
@@ -960,8 +960,8 @@ export function LandingPage() {
                 }}
                 className="caption-mono"
               >
-                <span style={{ color: "var(--on-dark)" }}>TERMINAL ENCLAVE DAEMON</span>
-                <span style={{ color: "var(--accent)", fontWeight: 700 }}>ONLINE</span>
+                <span style={{ color: "var(--on-dark)" }}>LOCAL PRIVACY PIPELINE · SESSION MONITOR</span>
+                <span style={{ color: "var(--accent)", fontWeight: 700 }}>ACTIVE</span>
               </div>
               <div
                 style={{
@@ -1027,28 +1027,27 @@ export function LandingPage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontFamily: "var(--font-mono)",
-                fontWeight: 700,
-                fontSize: "20px",
                 color: "var(--ink)",
                 marginBottom: "12px",
                 boxShadow: "2px 2px 0 0 var(--ink)",
               }}
             >
-              DR
+              <span className="material-symbols-outlined" style={{ fontSize: "32px" }}>
+                school
+              </span>
             </div>
-            <div style={{ fontSize: "18px", fontWeight: 600 }}>Prof. David Reynolds</div>
+            <div style={{ fontSize: "18px", fontWeight: 600 }}>The Educator&rsquo;s Creed</div>
             <div className="caption-mono text-muted" style={{ marginTop: "2px" }}>
-              Chair of Academic Honor Council
+              Academic Due Process
             </div>
             <div className="caption-mono" style={{ color: "var(--accent)", marginTop: "4px" }}>
-              Collegiate Faculty of Arts &amp; Sciences
+              Human Judgment Over AI Scores
             </div>
           </div>
 
           <div style={{ flex: 1, minWidth: "280px" }}>
             <div className="label-mono" style={{ color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
-              FACULTY ADJUDICATION DISPATCH
+              WHY WE REJECTED AUTOMATED CHEATING SCORES
             </div>
             <blockquote
               style={{
@@ -1059,16 +1058,18 @@ export function LandingPage() {
                 margin: "0 0 16px 0",
               }}
             >
-              &ldquo;Standard plagiarism checkers hand you an intimidating red 87% number that causes panic and adversarial appeals. Margin gives me two exact excerpts, the character offsets from my own reading pack, and the dignity to say:{" "}
+              &ldquo;Standard plagiarism checkers hand you an intimidating red 87% number that causes panic, adversarial appeals, and false accusations. Margin was built on a different principle: give professors the exact side-by-side excerpts, the character offsets from their own reading pack, and the dignity to say:{" "}
               <span className="evidence-highlight" style={{ fontWeight: 600 }}>
                 &lsquo;This citation is misattributed; discuss it in office hours.&rsquo;
               </span>{" "}
-              It treats professors as scholars, not prison wardens.&rdquo;
+              It treats educators as scholars, not prison wardens.&rdquo;
             </blockquote>
-            <div className="caption-mono text-muted" style={{ display: "flex", gap: "12px" }}>
-              <span>COHORT SIZE: 1,450 STUDENTS</span>
+            <div className="caption-mono text-muted" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <span>EVIDENCE OVER PERCENTAGES</span>
               <span>·</span>
-              <span>CONTESTED APPEALS REDUCTION: 91%</span>
+              <span>LOCAL FERPA PRIVACY</span>
+              <span>·</span>
+              <span>HUMAN LECTURER DECIDES</span>
             </div>
           </div>
         </div>

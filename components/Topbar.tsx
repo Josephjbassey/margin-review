@@ -83,7 +83,7 @@ export function Topbar({ active = "batches" }: TopbarProps) {
                     padding: "0 4px",
                   }}
                 >
-                  Dept. of Informatics
+                  Faculty Reviewer
                 </span>
               </div>
               <div

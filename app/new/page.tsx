@@ -153,7 +153,7 @@ export default function NewBatchPage() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
               <span className="tag tag-conflict" style={{ padding: "2px 8px", fontSize: "10px" }}>
-                STAGE · INGESTION
+                STAGE · UPLOAD
               </span>
               <span className="label-mono text-muted" style={{ textTransform: "uppercase" }}>
                 Step 1 of 3
@@ -195,7 +195,7 @@ export default function NewBatchPage() {
                 1
               </span>
               <span className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
-                Corpus Intake
+                Upload Files
               </span>
             </div>
             <div style={{ width: "32px", height: "2px", backgroundColor: "var(--ink)" }} />
@@ -218,7 +218,7 @@ export default function NewBatchPage() {
               >
                 2
               </span>
-              <span className="label-mono text-muted">Tokenize &amp; Align</span>
+              <span className="label-mono text-muted">Compare Essays</span>
             </div>
             <div style={{ width: "32px", height: "2px", backgroundColor: "var(--track)" }} />
             <div style={{ display: "flex", alignItems: "center", gap: "6px", opacity: 0.5 }}>
@@ -240,7 +240,7 @@ export default function NewBatchPage() {
               >
                 3
               </span>
-              <span className="label-mono text-muted">Claims Matrix</span>
+              <span className="label-mono text-muted">Check Citations</span>
             </div>
           </div>
         </div>
@@ -704,10 +704,10 @@ export default function NewBatchPage() {
               </div>
               <div>
                 <div className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
-                  Corpus Detection Tolerance: Exact &amp; Conceptual Overlap
+                  Comparison Settings: Direct Quotes &amp; Conceptual Overlap
                 </div>
                 <div style={{ fontSize: "12px", color: "var(--muted)" }}>
-                  Character offset matching window configured to 64 tokens with semantic paraphrase flag enabled.
+                  Flags exact matching passages and paraphrased claims compared against course readings and peer essays.
                 </div>
               </div>
             </div>
