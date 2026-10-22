@@ -1,11 +1,12 @@
 # Margin — Academic Integrity Review System
 
 > **Entry for the Clocked Build Challenge (Oct 21 – Nov 10, 2026)**  
-> **Author:** Joseph John Bassey
+> **Author:** Joseph John Bassey  
+> **Live Architecture:** Next.js 16 (Turbopack) · Better Auth · Neon PostgreSQL · Pure Vanilla CSS
 
 Margin helps a university lecturer review a batch of student submissions: it masks student identifiers, compares every pair of submissions for shared or conflicting facts, checks each submission's claims against the course reading pack, and shows every finding side-by-side with its evidence so a human decides.
 
-**Margin flags; it never issues a verdict.**  
+**Margin flags; it never issues an automated verdict.**  
 Margin is **NOT** an internet-wide plagiarism checker. Within one class, the useful forensic questions are narrower and more actionable: which submissions overlap, which claims are unsupported by the syllabus, and where is the exact textual evidence?
 
 ---
@@ -63,12 +64,15 @@ Margin is **NOT** an internet-wide plagiarism checker. Within one class, the use
                                                         ▼
  ┌──────────────────────────────────────────────────────────────────────────────┐
  │                           LECTURER REVIEW INTERFACE                          │
- │  1. Batches List: Operational diagnostics, queue volume & decision velocity  │
- │  2. New Batch: Dual dropzones, sample preloader, MAX_PAIRS guard indicator   │
- │  3. Processing View: Step-by-step runner with live polling and audit trail   │
- │  4. Overlap Review: Side-by-side manuscript reader with evidence highlights  │
- │  5. Claims Check: Evidentiary citations grounded against course reading pack │
- │  6. Decisions Summary: Audit log, stat cards, and Markdown export download   │
+ │  1. Public Showcase (/): Interactive evidence sandbox & due process creed    │
+ │  2. Batches List (/): Operational diagnostics, queue volume & velocity       │
+ │  3. New Batch (/new): Dual dropzones, sample preloader, MAX_PAIRS guard      │
+ │  4. Processing View (/batches/[id]/processing): Step-by-step pipeline runner │
+ │  5. Overlap Review (/batches/[id]/overlap): Side-by-side manuscript reader   │
+ │  6. Claims Check (/batches/[id]/claims): Evidentiary citations grounded      │
+ │  7. Decisions Summary (/batches/[id]/decisions): Audit log & Markdown export │
+ │  8. Pricing & Licensing (/pricing): Usage calculator & semester pack model   │
+ │  9. FERPA & Privacy (/privacy): Redaction guarantee & data sovereignty       │
  └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -108,35 +112,58 @@ Margin is built with pure Vanilla CSS tokens (no Tailwind or external component 
 - **Typography**:
   - Headings and body: **Inter** (clean, academic readability)
   - Badges, identifiers, and metrics: **Space Mono** (`label-mono`, `caption-mono`)
+  - Icons: **Material Symbols Outlined** (locally bundled font with ligature rendering)
 - **Physical Affordances**:
   - Hard offset drop shadows (`3px 3px 0 #101426` for buttons, `4px 4px 0 #101426` for cards).
   - Hover shifts up-left by 1px with shadow expansion; active press translates 2px down-right.
 - **Evidence Highlight**:
   - Wrapped via safe HTML escaping in `<mark class="evidence-highlight">` with `box-shadow: inset 0 -0.5em 0 0 var(--wash)`.
-- **Dark Ink Footer Band**:
-  - Fixed at the bottom of review views, displaying a live FERPA isolation privacy audit (`"Protect · X identifiers masked before comparison"`).
+- **Top Navigation Bar**:
+  - Route-aware active indicators (`usePathname()`).
+  - Distinct views for authenticated reviewers vs. public visitors.
+  - Interactive, editable institution / department affiliation with `localStorage` persistence.
+  - Instant **"⚖️ Judge Access"** 1-click evaluation button for hackathon judges.
 
 ---
 
-## Privacy & Security Guarantees
+## Academic Pricing & Inference Economics (`/pricing`)
+
+Margin's pricing is grounded directly in Clocked's published sub-second inference metrics (where 1 credit covers up to 25ms of active model time):
+
+- **Inference Reality**: Reviewing a typical 1,500-word student essay against syllabus reading packs consumes ~40 to 60 compute credits. Initial n-gram shingling is computed locally in memory at **zero API cost**.
+- **Tier Structure**:
+  1. **Course Pilot ($0)**: 4,000 compute credits one-time for single class evaluation (up to 20 paper comparisons).
+  2. **Instructor Plan ($29/mo or $26.10/mo yearly)**: 120,000 credits/mo ($0.24 per 1k overage), covers ~2,400 student paper comparisons.
+  3. **Department License ($249/mo or $224.10/mo yearly)**: 1,250,000 credits/mo ($0.20 per 1k overage), covers ~25,000 paper comparisons with multi-TA shared workspace.
+  4. **Campus & Registrar ($999/mo or $899.10/mo yearly)**: 6,500,000 credits/mo ($0.15 per 1k overage), covers ~130,000 comparisons with Canvas/Blackboard LTI 1.3 and InCommon SAML SSO.
+- **Annual Discount**: 10% off subscription price + 10% bonus credit pool.
+- **Transparent Reset Disclosure**: Included subscription credits reset monthly per Clocked billing rules.
+- **Flexible Procurement Models**:
+  - **Direct Institutional Connect (BYOK)**: University connects its verified AI account with 0% platform surcharge.
+  - **All-in-One Semester Packs**: Fixed $49 / 250 paper reviews approved for university P-cards and grant receipts.
+
+---
+
+## Privacy & Security Guarantees (`/privacy`)
 
 1. **FERPA Student Isolation**:
    - Raw student identifiers (names, IDs, emails) are parsed only during ingestion.
-   - Clocked Protect (`POST /clocked/pii`) anonymizes submissions immediately.
-   - All pairwise comparison, claim grounding, and reviewer displays exclusively consume `masked_text`.
-2. **Never Commit Secrets**:
+   - Automated PII masking strips identifiers immediately; downstream comparison and reviewer screens strictly consume `masked_text`.
+2. **Intra-Cohort Boundary**:
+   - Submissions are evaluated solely within their assigned course cohort. Student essays are never pooled into public corpora and never used to train external models.
+3. **Never Commit Secrets**:
    - `CLOCKED_API_KEY` is loaded from `.env` (gitignored). No API keys or tokens are ever logged.
-3. **Deterministic Content-Hash Disk Cache**:
+4. **Deterministic Content-Hash Disk Cache**:
    - Caches responses under `clocked_cache/` keyed by `sha256(endpoint + ":" + canonicalJson(payload))`.
    - Keys are sorted recursively so identical payloads with different key orders hit the cache.
    - **Never-Cache-Error Policy**: Only HTTP 200 responses with non-empty payloads are cached.
-4. **Rate Limiting & Worker Limiter**:
+5. **Rate Limiting & Worker Limiter**:
    - `p-limit` caps outbound requests to 4 concurrent workers.
    - Automatic exponential backoff with random jitter on HTTP 429 and 5xx responses.
-5. **MAX_PAIRS Guard**:
+6. **MAX_PAIRS Guard**:
    - Since $n$ submissions require $n(n-1)/2$ pairwise comparisons, `MAX_PAIRS` (default: 20) guards against accidental combinatorial credit depletion.
    - The UI displays live pair calculations and blocks batches exceeding the guard limit.
-6. **Authentication & Judge Mode**:
+7. **Authentication & Judge Mode**:
    - Production authentication powered by **Better Auth** with **Neon PostgreSQL** (`user`, `session`, `account`, `verification` tables via Drizzle ORM).
    - Supports academic lecturer registration and email/password sign-in.
    - **1-Click Judge Mode** (`POST /api/auth/judge-login`): provides instant access for Clocked Build Challenge judges without requiring email confirmations or password creation.
@@ -206,7 +233,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### 5. Run Unit Tests
 
-Execute the full automated test suite:
+Execute the full automated test suite (34 passing tests across 6 suites):
 
 ```bash
 npm test
@@ -214,7 +241,7 @@ npm test
 
 ### 6. Production Build
 
-Verify production bundle compilation:
+Verify production bundle compilation with Turbopack:
 
 ```bash
 npm run build
@@ -224,26 +251,35 @@ npm run build
 
 ## Evaluation Workflow (Step-by-Step for Judges)
 
-1. **Batches Dashboard (`/`)**:
+1. **Public Landing Page & 1-Click Judge Access (`/`)**:
+   - Open [http://localhost:3000](http://localhost:3000) in your browser.
+   - Explore the public landing page: interactive live evidence trial sandbox, Academic Due Process manifesto, and operational criteria comparison table.
+   - Click the topbar button: **"⚖️ Judge Access"** (or click **"Launch Free Judge Trial →"** in the hero). This instantly provisions an authenticated evaluation session without requiring signup.
+2. **Batches Dashboard (`/`)**:
    - Inspect the operational diagnostics (Queue Volume, Evidentiary Claims, Decision Velocity).
    - Click into the pre-seeded **"GNS102 Informatics & Formal Methods"** batch.
-2. **Overlap Review (`/batches/[id]/overlap`)**:
+3. **Overlap Review (`/batches/[id]/overlap`)**:
    - Observe how pairs are ordered: **Conflicts first**.
    - Select pair **S-01 ↔ S-02** to see the highlighted contradiction on convergence iteration counts (45 vs 120).
    - Select pair **S-05 ↔ S-06** to inspect near-duplicate text with pen-wash highlights.
    - Click a decision button (`Dismiss`, `Common source`, `Flag for follow-up`) and enter an audit note. The decision is recorded instantly without page reload.
-3. **Claims Check (`/batches/[id]/claims`)**:
+4. **Claims Check (`/batches/[id]/claims`)**:
    - Review extracted statements grounded against the syllabus.
    - Select the **Unsupported** quantum teleportation claim from S-07. Note the warning indicating that no supporting evidence exists in the reading pack.
    - Record an evaluation (`Ask student to cite` or `Flag for discussion`).
-4. **Decisions Summary (`/batches/[id]/decisions`)**:
+5. **Decisions Summary (`/batches/[id]/decisions`)**:
    - Review the aggregate metrics and decision log.
    - Click **"Download Report (.md)"** to download the clean, audit-ready Markdown summary of all findings and lecturer decisions.
-5. **Create a New Batch (`/new`)**:
+6. **Create a New Batch (`/new`)**:
    - Click **"New batch"** in the top navigation.
    - Click **"⚡ Stage GNS102 Sample Files"** to instantly stage the sample manuscripts and reading pack files.
    - Note the real-time **MAX_PAIRS Guard** indicator showing $n$ manuscripts and calculated $n(n-1)/2$ combinations.
    - Click **"Start Analysis"** to watch the 4-step pipeline runner execute with live progress bars and automatic redirection.
+7. **Pricing & Department Economics (`/pricing`)**:
+   - Test the interactive Course Cohort Credit Estimator slider.
+   - Toggle between Monthly and Yearly billing to see the 10% discount and credit pool expansion.
+8. **FERPA & Privacy Documentation (`/privacy`)**:
+   - Review the formal student record isolation policy and intra-cohort security ledger.
 
 ---
 
