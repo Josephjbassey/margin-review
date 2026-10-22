@@ -136,6 +136,11 @@ Margin is built with pure Vanilla CSS tokens (no Tailwind or external component 
 5. **MAX_PAIRS Guard**:
    - Since $n$ submissions require $n(n-1)/2$ pairwise comparisons, `MAX_PAIRS` (default: 20) guards against accidental combinatorial credit depletion.
    - The UI displays live pair calculations and blocks batches exceeding the guard limit.
+6. **Authentication & Judge Mode**:
+   - Production authentication powered by **Better Auth** with **Neon PostgreSQL** (`user`, `session`, `account`, `verification` tables via Drizzle ORM).
+   - Supports academic lecturer registration and email/password sign-in.
+   - **1-Click Judge Mode** (`POST /api/auth/judge-login`): provides instant access for Clocked Build Challenge judges without requiring email confirmations or password creation.
+   - Offline & test fallback: runs seamlessly in-memory when `DATABASE_URL` is unset, keeping local development and automated CI tests fast.
 
 ---
 
