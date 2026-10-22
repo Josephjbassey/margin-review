@@ -227,32 +227,119 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
     assert.strictEqual(adapted.unsupported_claim_indexes[0], 1);
   });
 
-  it("adapter correctly normalizes official Rerank response", () => {
+  it("adapter correctly normalizes official Rerank response", async () => {
+    // 1. toRequest options & custom parameters
+    const reqObj = clockedAdapters.rerank.toRequest(
+      "Can I take my folding bike on the train?",
+      [
+        {
+          id: "regional-bikes",
+          title: "Bicycles on regional trains",
+          text: "On regional trains, bikes travel unfolded.",
+          metadata: { route: "domestic" },
+        },
+      ],
+      {
+        top_n: 3,
+        context: { service: "high-speed", route: "domestic" },
+        conversation: [
+          { role: "user", content: "Can I take my folding bike on the train?" },
+        ],
+        instructions: "Screen rail luggage policies strictly.",
+        calibration_temperature: 3.5,
+      }
+    );
+    assert.strictEqual(reqObj.query, "Can I take my folding bike on the train?");
+    assert.strictEqual(reqObj.top_n, 3);
+    assert.strictEqual((reqObj.context as any).service, "high-speed");
+    assert.strictEqual(reqObj.conversation?.[0].role, "user");
+    assert.strictEqual(reqObj.instructions, "Screen rail luggage policies strictly.");
+    assert.strictEqual(reqObj.calibration_temperature, 3.5);
+
+    // 2. fromResponse normalization
     const raw = {
       model: "clocked-1.0",
       results: [
         {
           index: 2,
-          id: "passage-3",
+          id: "hs-bikes",
           action: "use",
           relevance_score: 0.992,
           document_score: 0.995,
+          levels: {
+            answers: 0.992,
+            elsewhere: 0.003,
+            already_given: 0.0,
+            different_case: 0.0,
+            unrelated: 0.005,
+          },
+        },
+        {
+          index: 1,
+          id: "luggage-overview",
+          action: "expand",
+          relevance_score: 0.12,
+          document_score: 0.88,
+          levels: {
+            answers: 0.12,
+            elsewhere: 0.76,
+            already_given: 0.0,
+            different_case: 0.0,
+            unrelated: 0.12,
+          },
         },
         {
           index: 0,
           id: "passage-1",
           action: "skip",
-          reason: "unrelated",
-          relevance_score: 0.05,
+          reason: "already_given",
+          relevance_score: 0.01,
+          document_score: 0.01,
+          levels: {
+            answers: 0.01,
+            elsewhere: 0.0,
+            already_given: 0.98,
+            different_case: 0.0,
+            unrelated: 0.01,
+          },
         },
       ],
+      usage: { input_tokens: 350 },
     };
 
-    const adapted = clockedAdapters.rerank.fromResponse(raw, "Search query");
-    assert.strictEqual(adapted.results.length, 2);
+    const adapted = clockedAdapters.rerank.fromResponse(raw, "Can I take my folding bike on the train?");
+    assert.strictEqual(adapted.model, "clocked-1.0");
+    assert.strictEqual(adapted.query, "Can I take my folding bike on the train?");
+    assert.strictEqual(adapted.results.length, 3);
     assert.strictEqual(adapted.results[0].action, "use");
     assert.strictEqual(adapted.results[0].relevance_score, 0.992);
-    assert.strictEqual(adapted.results[1].action, "skip");
+    assert.strictEqual(adapted.results[0].document_score, 0.995);
+    assert.strictEqual(adapted.results[0].levels?.answers, 0.992);
+    assert.strictEqual(adapted.results[1].action, "expand");
+    assert.strictEqual(adapted.results[2].action, "skip");
+    assert.strictEqual(adapted.results[2].reason, "already_given");
+    assert.strictEqual(adapted.usage?.input_tokens, 350);
+
+    // 3. rerank client call with mock fallback
+    const mockRes = await rerank(
+      "claim query",
+      [{ id: "R-01", text: "Text passage" }],
+      1,
+      () => ({
+        query: "claim query",
+        results: [
+          {
+            index: 0,
+            id: "R-01",
+            action: "use",
+            relevance_score: 0.99,
+          },
+        ],
+        raw_response: { mocked: true },
+      })
+    );
+    assert.strictEqual(mockRes.results.length, 1);
+    assert.strictEqual(mockRes.results[0].action, "use");
   });
 
   it("client executes protect with mock fallback when offline", async () => {

@@ -12,6 +12,12 @@ import {
   VerifyOptions,
   VerifyRequestPayload,
   VerifyResult,
+  RerankDocumentInput,
+  RerankConversationTurn,
+  RerankLevels,
+  RerankedPassage,
+  RerankOptions,
+  RerankRequestPayload,
   RerankResult,
   DecideRequestPayload,
   DecideResult,
@@ -287,17 +293,38 @@ export async function verify(
  * Picks the most relevant reading pack passages for an unsupported/partial claim.
  */
 export async function rerank(
-  query: string,
-  passages: Array<{ id: string; text: string; title?: string }>,
-  top_n: number = 5,
+  queryOrPayload: string | RerankRequestPayload,
+  passages?: Array<string | RerankDocumentInput>,
+  topNOrOptions?: number | RerankOptions | (() => RerankResult),
+  optionsOrFallback?: RerankOptions | (() => RerankResult),
   mockFallback?: () => RerankResult
 ): Promise<RerankResult> {
-  const payload = clockedAdapters.rerank.toRequest(query, passages, top_n);
+  let fallback: (() => RerankResult) | undefined = mockFallback;
+  if (typeof optionsOrFallback === "function") {
+    fallback = optionsOrFallback;
+  } else if (typeof topNOrOptions === "function") {
+    fallback = topNOrOptions;
+  }
+
+  const topN = typeof topNOrOptions === "number" ? topNOrOptions : undefined;
+  const options =
+    (typeof topNOrOptions === "object" && topNOrOptions !== null ? topNOrOptions : undefined) ||
+    (typeof optionsOrFallback === "object" && optionsOrFallback !== null ? optionsOrFallback : undefined);
+
+  const payload = clockedAdapters.rerank.toRequest(
+    queryOrPayload,
+    passages,
+    topN !== undefined ? topN : options,
+    topN !== undefined ? options : undefined
+  );
+
+  const queryStr = typeof queryOrPayload === "string" ? queryOrPayload : queryOrPayload.query;
+
   return executeWithCache(
     clockedAdapters.rerank.endpoint,
     payload,
-    (data) => clockedAdapters.rerank.fromResponse(data, query),
-    mockFallback
+    (data) => clockedAdapters.rerank.fromResponse(data, queryStr),
+    fallback
   );
 }
 

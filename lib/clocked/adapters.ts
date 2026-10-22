@@ -201,18 +201,66 @@ export interface VerifyResult {
   raw_response: any;
 }
 
+export interface RerankDocumentInput {
+  text: string;
+  id?: string;
+  title?: string;
+  metadata?: Record<string, string | number>;
+}
+
+export interface RerankConversationTurn {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface RerankLevels {
+  answers?: number;
+  elsewhere?: number;
+  already_given?: number;
+  different_case?: number;
+  unrelated?: number;
+  [key: string]: number | undefined;
+}
+
 export interface RerankedPassage {
   index: number;
   id?: string;
   action: "use" | "expand" | "skip";
-  reason?: string;
+  reason?: "different_case" | "unrelated" | "already_given" | string;
   relevance_score: number;
   document_score?: number;
+  levels?: RerankLevels;
+}
+
+export interface RerankOptions {
+  top_n?: number;
+  context?: string | object | any[];
+  conversation?: RerankConversationTurn[];
+  instructions?: string;
+  questions?: Record<string, any>;
+  calibration_temperature?: number;
+}
+
+export interface RerankRequestPayload {
+  query: string;
+  documents: Array<string | RerankDocumentInput>;
+  context?: string | object | any[];
+  conversation?: RerankConversationTurn[];
+  instructions?: string;
+  top_n?: number;
+  questions?: Record<string, any>;
+  calibration_temperature?: number;
 }
 
 export interface RerankResult {
+  model?: string;
   query: string;
   results: RerankedPassage[];
+  answers?: Record<string, any>;
+  usage?: {
+    input_tokens?: number;
+  };
+  timing?: Record<string, any>;
   raw_response: any;
 }
 
@@ -841,31 +889,73 @@ export const clockedAdapters = {
   // 4. RERANK: POST /clocked/rerank
   rerank: {
     endpoint: "/rerank",
-    toRequest(query: string, passages: Array<{ id: string; text: string; title?: string }>, top_n?: number) {
+    toRequest(
+      queryOrPayload: string | RerankRequestPayload,
+      passages?: Array<string | RerankDocumentInput>,
+      topNOrOptions?: number | RerankOptions,
+      maybeOptions?: RerankOptions
+    ) {
+      if (typeof queryOrPayload === "object" && "documents" in queryOrPayload) {
+        return queryOrPayload;
+      }
+
+      const query = String(queryOrPayload || "");
+      const top_n =
+        typeof topNOrOptions === "number"
+          ? topNOrOptions
+          : typeof topNOrOptions === "object"
+          ? topNOrOptions.top_n
+          : undefined;
+      const opts = (typeof topNOrOptions === "object" ? topNOrOptions : maybeOptions) || {};
+
+      const documents =
+        passages?.map((p) => {
+          if (typeof p === "string") return { text: p };
+          return {
+            text: p.text,
+            ...(p.id ? { id: p.id } : {}),
+            ...(p.title ? { title: p.title } : {}),
+            ...(p.metadata ? { metadata: p.metadata } : {}),
+          };
+        }) || [];
+
       return {
         query,
-        documents: passages.map((p) => ({
-          id: p.id,
-          text: p.text,
-          ...(p.title ? { title: p.title } : {}),
-        })),
-        ...(top_n ? { top_n } : {}),
+        documents,
+        ...(top_n !== undefined ? { top_n } : {}),
+        ...(opts.context !== undefined ? { context: opts.context } : {}),
+        ...(opts.conversation && opts.conversation.length > 0 ? { conversation: opts.conversation } : {}),
+        ...(opts.instructions ? { instructions: opts.instructions } : {}),
+        ...(opts.questions ? { questions: opts.questions } : {}),
+        ...(opts.calibration_temperature !== undefined
+          ? { calibration_temperature: opts.calibration_temperature }
+          : {}),
       };
     },
-    fromResponse(data: any, query: string): RerankResult {
+    fromResponse(data: any, query?: string): RerankResult {
       const rawResults = Array.isArray(data?.results) ? data.results : [];
       const results: RerankedPassage[] = rawResults.map((r: any) => ({
         index: Number(r.index ?? 0),
         id: r.id ? String(r.id) : undefined,
         action: (r.action as "use" | "expand" | "skip") || "use",
         reason: r.reason ? String(r.reason) : undefined,
-        relevance_score: Number(r.relevance_score ?? 0),
-        document_score: r.document_score ? Number(r.document_score) : undefined,
+        relevance_score: Number(r.relevance_score ?? (r.levels?.answers ?? 0)),
+        document_score:
+          r.document_score !== undefined
+            ? Number(r.document_score)
+            : r.levels?.elsewhere !== undefined
+            ? Number((r.levels.answers ?? 0) + r.levels.elsewhere)
+            : undefined,
+        levels: r.levels,
       }));
 
       return {
-        query,
+        model: data?.model,
+        query: query || "",
         results,
+        answers: data?.answers,
+        usage: data?.usage,
+        timing: data?.timing,
         raw_response: data,
       };
     },
