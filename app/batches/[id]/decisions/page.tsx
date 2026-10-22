@@ -495,7 +495,7 @@ export default function DecisionsSummaryPage({
                 </span>
                 Both findings marked for academic chair review or hearing intake
               </span>
-              <span>DISPOSITION CODE: FLG-ACAD-2</span>
+              <span>DISPOSITION CODE: FLG-FACULTY-2</span>
             </div>
           </div>
 

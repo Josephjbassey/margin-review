@@ -731,7 +731,7 @@ export function LandingPage() {
                 >
                   <th style={{ padding: "14px 20px" }}>OPERATIONAL CRITERIA</th>
                   <th style={{ padding: "14px 20px", backgroundColor: "rgba(197, 206, 255, 0.3)", color: "var(--accent)" }}>
-                    MARGIN ACAD-REV
+                    MARGIN FACULTY
                   </th>
                   <th style={{ padding: "14px 20px", color: "var(--muted)" }}>COMMERCIAL AI DETECTORS</th>
                   <th style={{ padding: "14px 20px", color: "var(--muted)" }}>LEGACY STRING DETECTORS</th>

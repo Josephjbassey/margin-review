@@ -337,7 +337,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="e.g. m.vance@informatics.ox.ac.uk"
+                placeholder="e.g. e.reed@faculty.edu"
                 className="input"
                 style={{ padding: "8px 12px", fontSize: "14px" }}
               />
