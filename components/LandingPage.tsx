@@ -1419,8 +1419,6 @@ export function LandingPage() {
             </p>
           </div>
         </div>
-          </div>
-        </div>
       </section>
 
       {/* 8. Institutional Access Request Card (Final CTA) */}
