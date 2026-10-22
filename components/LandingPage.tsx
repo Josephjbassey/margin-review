@@ -1077,7 +1077,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 7.5 Pricing & Institutional Credit Packs (Coming Soon) */}
+      {/* 7.5 Pricing & Clocked Infrastructure Economics */}
       <section
         id="pricing"
         style={{
@@ -1105,22 +1105,38 @@ export function LandingPage() {
             <span className="material-symbols-outlined" style={{ fontSize: "14px", color: "var(--accent)" }}>
               payments
             </span>
-            <span style={{ fontWeight: 700 }}>PREDICTABLE ACADEMIC BILLING · COMING SOON</span>
+            <span style={{ fontWeight: 700 }}>POWERED BY CLOCKED API · TRANSPARENT USAGE</span>
           </div>
           <h2 style={{ fontSize: "36px", fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 10px 0", color: "var(--ink)" }}>
-            Simple, Transparent Plans for Faculty &amp; Departments
+            Honest Academic Pricing Grounded in Real Inference
           </h2>
-          <p style={{ fontSize: "16px", color: "var(--muted)", maxWidth: "620px", margin: "0 auto", lineHeight: "24px" }}>
-            No surprise overage bills or uncapped API meters. Tailored for university procurement cycles, departmental P-cards, and grant funding.
+          <p style={{ fontSize: "16px", color: "var(--muted)", maxWidth: "680px", margin: "0 auto", lineHeight: "24px" }}>
+            Margin runs on Clocked&apos;s sub-second intelligence engine (1 credit = up to 25ms active model time). Connect your direct Clocked key or use a managed semester pack with no hidden markup.
           </p>
+          <div style={{ marginTop: "12px" }}>
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "12px",
+                color: "var(--accent)",
+                backgroundColor: "var(--wash)",
+                padding: "3px 10px",
+                borderRadius: "2px",
+                fontWeight: 700,
+                border: "1px solid var(--ink)",
+              }}
+            >
+              Annual Billing: 10% Off + 10% More Credits
+            </span>
+          </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", alignItems: "stretch" }}>
-          {/* Plan 1: Instructor Pilot */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: "20px", alignItems: "stretch" }}>
+          {/* Plan 1: Explore (Free Trial) */}
           <div
             className="card"
             style={{
-              padding: "32px 24px",
+              padding: "28px 20px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -1129,55 +1145,116 @@ export function LandingPage() {
             }}
           >
             <div>
-              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
-                Individual Pilot
+              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
+                01 / Explore
               </div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "6px" }}>
-                <span style={{ fontSize: "36px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$0</span>
-                <span className="caption-mono text-muted">/ Free for evaluation</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
+                <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$0</span>
+                <span className="caption-mono text-muted">/ Free Trial</span>
               </div>
-              <p style={{ fontSize: "14px", color: "var(--muted)", margin: "0 0 24px 0", lineHeight: "20px" }}>
-                For individual professors, seminar leaders, and honor court members evaluating Margin on a single course cohort.
+              <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, marginBottom: "8px" }}>
+                4,000 credits once · No card required
+              </div>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
+                Evaluate Margin on a sample class. Covers ~300 PII redactions, 493 claim extractions, or 4,000 decisions.
               </p>
 
-              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Up to 20 paper comparisons per run</span>
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>4,000 Clocked credits one-time</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Direct PDF, Word &amp; Text ingestion</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>1 request at a time concurrency</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Full side-by-side evidence reviewer</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Full side-by-side evidence UI</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
                   <span>Signed Markdown audit export</span>
                 </div>
               </div>
             </div>
 
-            <div style={{ paddingTop: "28px" }}>
+            <div style={{ paddingTop: "24px" }}>
               <button
                 type="button"
                 onClick={handleJudgeLogin}
                 disabled={judgeLoading}
                 className="btn btn-secondary"
-                style={{ width: "100%", padding: "12px", justifyContent: "center" }}
+                style={{ width: "100%", padding: "10px", fontSize: "12px", justifyContent: "center" }}
               >
-                Launch Free Judge Trial →
+                Start Free Trial →
               </button>
             </div>
           </div>
 
-          {/* Plan 2: Department Credit Packs (Highlighted) */}
+          {/* Plan 2: Build (Single Instructor) */}
           <div
             className="card"
             style={{
-              padding: "32px 24px",
+              padding: "28px 20px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              boxShadow: "4px 4px 0 0 var(--ink)",
+              position: "relative",
+            }}
+          >
+            <div>
+              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
+                02 / Build
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
+                <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$29</span>
+                <span className="caption-mono text-muted">/ month ($26.10/mo yr)</span>
+              </div>
+              <div className="caption-mono" style={{ color: "var(--ink)", fontWeight: 700, marginBottom: "8px" }}>
+                120,000 credits/mo ($0.24 per 1k)
+              </div>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
+                Ideal for individual professors or seminar courses reviewing up to 2,400 student papers/month.
+              </p>
+
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>120k credits (132k/mo on yearly)</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>4 requests at a time concurrency</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Overage: flat $0.30 per 1,000 credits</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Credits reset monthly per Clocked</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ paddingTop: "24px" }}>
+              <Link
+                href="/pricing"
+                className="btn btn-secondary"
+                style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
+              >
+                View Build Details →
+              </Link>
+            </div>
+          </div>
+
+          {/* Plan 3: Production (Collegiate Departments - Highlighted) */}
+          <div
+            className="card"
+            style={{
+              padding: "28px 20px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -1191,13 +1268,13 @@ export function LandingPage() {
               style={{
                 position: "absolute",
                 top: "-12px",
-                right: "20px",
+                right: "16px",
                 backgroundColor: "var(--accent)",
                 color: "#FFFFFF",
                 fontSize: "10px",
                 fontWeight: 700,
                 fontFamily: "var(--font-mono)",
-                padding: "2px 10px",
+                padding: "2px 8px",
                 borderRadius: "2px",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
@@ -1207,61 +1284,56 @@ export function LandingPage() {
             </div>
 
             <div>
-              <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
-                Department Credit Packs
+              <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
+                03 / Production
               </div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "6px" }}>
-                <span style={{ fontSize: "36px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>Prepaid</span>
-                <span className="caption-mono text-muted">/ Credits rollover</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
+                <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$249</span>
+                <span className="caption-mono text-muted">/ month ($224.10/mo yr)</span>
               </div>
-              <p style={{ fontSize: "14px", color: "var(--muted)", margin: "0 0 24px 0", lineHeight: "20px" }}>
-                Pre-purchase essay review credits with departmental grant funds or credit cards. Credits never expire and carry over across semesters.
+              <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, marginBottom: "8px" }}>
+                1,250,000 credits/mo ($0.20 per 1k)
+              </div>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
+                For collegiate departments pooling reviews across multiple instructors and TAs (~25,000 papers/month).
               </p>
 
-              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span><strong>250 Essays:</strong> $49 (~$0.19/essay)</span>
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>1.25M credits (1.375M/mo on yearly)</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span><strong>1,000 Essays:</strong> $149 (~$0.14/essay)</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>8 requests at a time concurrency</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Full Course Syllabus &amp; Reading Pack Grounding</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Overage: flat $0.25 per 1,000 credits</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Shared workspace for TAs &amp; Course Instructors</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Automatic deterministic cache discount</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Shared departmental TA workspace</span>
                 </div>
               </div>
             </div>
 
-            <div style={{ paddingTop: "28px" }}>
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById("demo");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
+            <div style={{ paddingTop: "24px" }}>
+              <Link
+                href="/pricing"
                 className="btn btn-primary"
-                style={{ width: "100%", padding: "12px", justifyContent: "center" }}
+                style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
               >
-                Join Waitlist for Fall 2026 →
-              </button>
+                Choose Production →
+              </Link>
             </div>
           </div>
 
-          {/* Plan 3: Campus Enclave (Enterprise / BYOK) */}
+          {/* Plan 4: Scale (Campus-Wide & Registrar) */}
           <div
             className="card"
             style={{
-              padding: "32px 24px",
+              padding: "28px 20px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -1270,54 +1342,83 @@ export function LandingPage() {
             }}
           >
             <div>
-              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
-                Campus &amp; Registrar
+              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
+                04 / Scale
               </div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "6px" }}>
-                <span style={{ fontSize: "36px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>Campus</span>
-                <span className="caption-mono text-muted">/ Annual Site License</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
+                <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$999</span>
+                <span className="caption-mono text-muted">/ month ($899.10/mo yr)</span>
               </div>
-              <p style={{ fontSize: "14px", color: "var(--muted)", margin: "0 0 24px 0", lineHeight: "20px" }}>
-                Full institutional deployment for university-wide honor courts, registrar offices, and academic computing divisions.
+              <div className="caption-mono" style={{ color: "var(--ink)", fontWeight: 700, marginBottom: "8px" }}>
+                6,500,000 credits/mo ($0.15 per 1k)
+              </div>
+              <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
+                Campus-wide honor courts and university registrar offices reviewing high-volume cohorts (~130,000 papers/month).
               </p>
 
-              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Unlimited student paper submissions</span>
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>6.5M credits (7.15M/mo on yearly)</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Canvas, Blackboard, &amp; D2L Brightspace LTI 1.3</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>16 requests at a time concurrency</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>InCommon / Shibboleth / SAML SSO Integration</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Overage: flat $0.20 per 1,000 credits</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span><strong>Bring-Your-Own-Key (BYOK)</strong> direct API option</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
-                  <span>Dedicated compliance SLA &amp; FERPA DPA</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
+                  <span>Canvas / Blackboard LTI 1.3 &amp; SAML SSO</span>
                 </div>
               </div>
             </div>
 
-            <div style={{ paddingTop: "28px" }}>
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById("demo");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
+            <div style={{ paddingTop: "24px" }}>
+              <Link
+                href="/pricing"
                 className="btn btn-secondary"
-                style={{ width: "100%", padding: "12px", justifyContent: "center" }}
+                style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
               >
-                Inquire for Campus License →
-              </button>
+                Explore Campus Scale →
+              </Link>
             </div>
+          </div>
+        </div>
+
+        {/* Realistic Monetization Architecture Callout */}
+        <div
+          style={{
+            marginTop: "36px",
+            padding: "24px",
+            backgroundColor: "var(--surface)",
+            border: "1px solid var(--ink)",
+            borderRadius: "2px",
+            boxShadow: "3px 3px 0 0 var(--ink)",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "20px",
+          }}
+        >
+          <div>
+            <div className="label-mono" style={{ color: "var(--accent)", fontWeight: 700, marginBottom: "6px" }}>
+              HOW PAYMENT WORKS: DIRECT BYOK VS. SEMESTER PACKS
+            </div>
+            <p style={{ margin: 0, fontSize: "13px", color: "var(--ink)", lineHeight: "20px" }}>
+              <strong>Direct Clocked Key (Commission Model):</strong> Sign up at Clocked (Rezolve AI), paste your API key with 0 markup, and Margin earns a partner commission on your plan.
+            </p>
+          </div>
+          <div>
+            <div className="label-mono" style={{ color: "var(--ink)", fontWeight: 700, marginBottom: "6px" }}>
+              MANAGED SEMESTER PACKS FOR FACULTY P-CARDS
+            </div>
+            <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)", lineHeight: "20px" }}>
+              Can&apos;t manage developer API billing? Purchase fixed semester course packs ($49 / 250 papers) billed cleanly per academic term, backed by Margin&apos;s pooled Clocked reserve.
+            </p>
+          </div>
+        </div>
           </div>
         </div>
       </section>
