@@ -30,7 +30,7 @@ Margin is **NOT** an internet-wide plagiarism checker. Within one class, the use
  │   CLOCKED PROTECT    │◄─────►│        STEP 1: PII MASKING            │
  │  POST /clocked/pii   │       │   • Mask names, IDs, emails           │
  └──────────────────────┘       │   • Strictly output `masked_text`     │
-                                └───────────────────────┬───────────────────────┘
+                                └───────────────────────┬───────────────┘
                                                         │
                                                         ▼
  ┌──────────────────────┐       ┌───────────────────────────────────────┐
@@ -38,34 +38,34 @@ Margin is **NOT** an internet-wide plagiarism checker. Within one class, the use
  │ POST /clocked/compare│       │   • Evaluate n(n-1)/2 masked pairs    │
  └──────────────────────┘       │   • Enforce MAX_PAIRS limit guard     │
                                 │   • Prioritize contradictions first   │
-                                └───────────────────────┬───────────────────────┘
+                                └───────────────────────┬───────────────┘
                                                         │
                                                         ▼
  ┌──────────────────────┐       ┌───────────────────────────────────────┐
  │    CLOCKED VERIFY    │◄─────►│      STEP 3: GROUNDING CHECK          │
  │POST /clocked/grounding       │   • Ground claims against reading pack│
  └──────────────────────┘       │   • Categorize: supported / partial   │
-                                └───────────────────────┬───────────────────────┘
+                                └───────────────────────┬───────────────┘
                                                         │
                                                         ▼
  ┌──────────────────────┐       ┌───────────────────────────────────────┐
  │    CLOCKED RERANK    │◄─────►│      STEP 4: EVIDENCE RERANKING       │
  │ POST /clocked/rerank │       │   • Trigger only on unsupported/part  │
  └──────────────────────┘       │   • Retrieve most relevant citations  │
-                                └───────────────────────┬───────────────────────┘
+                                └───────────────────────┬───────────────┘
                                                         │
                                                         ▼
  ┌──────────────────────┐       ┌───────────────────────────────────────┐
  │    CLOCKED DECIDE    │◄─────►│      STEP 5: OPTIONAL PRIORITIZATION  │
  │ POST /clocked/decide │       │   • Answer typed review questions     │
- └──────────────────────┘       └───────────────────────┬───────────────────────┘
+ └──────────────────────┘       └───────────────────────┬───────────────┘
                                                         │
                                                         ▼
  ┌──────────────────────────────────────────────────────────────────────────────┐
  │                           LECTURER REVIEW INTERFACE                          │
  │  1. Batches List: Operational diagnostics, queue volume & decision velocity  │
  │  2. New Batch: Dual dropzones, sample preloader, MAX_PAIRS guard indicator   │
- │  3. Processing View: Step-by-step runner with live polling and audit trail    │
+ │  3. Processing View: Step-by-step runner with live polling and audit trail   │
  │  4. Overlap Review: Side-by-side manuscript reader with evidence highlights  │
  │  5. Claims Check: Evidentiary citations grounded against course reading pack │
  │  6. Decisions Summary: Audit log, stat cards, and Markdown export download   │
@@ -85,6 +85,7 @@ Margin consumes official Clocked API endpoints directly via standard HTTP JSON o
 | **Verify** | `POST /clocked/grounding` | `{ documents: [...reading_pack], answer: submission_text, claims: [...] }` | `grounded`, `verdict`, `claims[]`, `unsupported_claims[]` | Verifies claims against the syllabus. Tags statements as `supported`, `partial`, or `unsupported`. Unsupported claims are prioritized for lecturer inspection. |
 | **Rerank** | `POST /clocked/rerank` | `{ query: claim_text, documents: reading_passages, top_n: 5 }` | `results[]: [{ index, id, action, relevance_score }]` | For unsupported or partial claims, reranks reading pack passages to find the closest syllabus references, showing verbatim excerpts with relevance scores. |
 | **Decide** | `POST /clocked/decide` | `{ state, questions: { ...typed questions (noul, choice, multiselect, score) } }` | `answers`: `{ [q]: { decision, choice, probabilities, confidence } }` | Evaluates typed classification questions over text context with calibrated probability distributions. |
+| **Extract** | `POST /clocked/extract` | `{ text, fields: { name: "...", list: true, format: "..." } }` | `fields`: `{ [f]: { value, start, end, confidence, items[] } }` | Reads named values verbatim with exact zero-based Unicode character offsets (`start`, `end`) for source evidence verification. |
 
 ---
 

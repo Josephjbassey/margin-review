@@ -176,5 +176,42 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
     assert.strictEqual(adapted.answers.category.choice, "contradiction");
     assert.strictEqual(adapted.usage?.input_tokens, 64);
   });
+
+  it("adapter and client correctly process Extract request and response", async () => {
+    const mockExtractRaw = {
+      model: "clocked-1.0",
+      fields: {
+        candidate: {
+          value: "Amina Rahman",
+          start: 35,
+          end: 47,
+          confidence: 1,
+        },
+        iterations: {
+          value: "45",
+          start: 367,
+          end: 369,
+          confidence: 0.98,
+        },
+        equipment: {
+          value: ["ThinkPad T14", "USB-C dock"],
+          items: [
+            { value: "ThinkPad T14", start: 150, end: 162, confidence: 1 },
+            { value: "USB-C dock", start: 164, end: 174, confidence: 1 },
+          ],
+        },
+      },
+      timing: { read_ms: 120 },
+    };
+
+    const adapted = clockedAdapters.extract.fromResponse(mockExtractRaw);
+    assert.strictEqual(adapted.model, "clocked-1.0");
+    assert.strictEqual(adapted.fields.candidate.value, "Amina Rahman");
+    assert.strictEqual(adapted.fields.candidate.start, 35);
+    assert.strictEqual(adapted.fields.candidate.end, 47);
+    assert.strictEqual(adapted.fields.equipment.items?.length, 2);
+    assert.strictEqual(adapted.fields.equipment.items?.[0].value, "ThinkPad T14");
+  });
 });
+
 

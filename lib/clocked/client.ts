@@ -8,6 +8,8 @@ import {
   RerankResult,
   DecideRequestPayload,
   DecideResult,
+  ExtractRequestPayload,
+  ExtractResult,
 } from "./adapters";
 import {
   computeCacheKey,
@@ -266,4 +268,22 @@ export async function decide(
     mockFallback
   );
 }
+
+/**
+ * 6. EXTRACT (POST /clocked/extract):
+ * Read named values verbatim with their exact positions (start/end) in the source text.
+ */
+export async function extract(
+  payload: ExtractRequestPayload,
+  mockFallback?: () => ExtractResult
+): Promise<ExtractResult> {
+  const reqPayload = clockedAdapters.extract.toRequest(payload);
+  return executeWithCache(
+    clockedAdapters.extract.endpoint,
+    reqPayload,
+    (data) => clockedAdapters.extract.fromResponse(data),
+    mockFallback
+  );
+}
+
 

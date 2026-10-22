@@ -131,6 +131,63 @@ export interface DecideResult {
   raw_response: any;
 }
 
+export type ExtractFormat =
+  | "text"
+  | "integer"
+  | "number"
+  | "date"
+  | "email"
+  | "phone"
+  | "url"
+  | "code";
+
+export interface ExtractFieldDefinition {
+  description?: string;
+  list?: boolean;
+  max_items?: number;
+  format?: ExtractFormat;
+  normalize?: string | Record<string, any>;
+  fields?: Record<string, string | ExtractFieldDefinition>;
+  row_anchor?: string;
+}
+
+export interface ExtractRequestPayload {
+  text?: string;
+  pdf?: string;
+  pages?: number[] | string;
+  pdf_mode?: "auto" | "text" | "image";
+  return_text?: boolean;
+  instructions?: string;
+  return_pdf?: "highlight" | "box" | "redact";
+  fields: Record<string, string | ExtractFieldDefinition>;
+}
+
+export interface ExtractedSpan {
+  value: any;
+  start?: number;
+  end?: number;
+  confidence?: number;
+  normalized?: any;
+  fields?: Record<string, ExtractedSpan>;
+}
+
+export interface ExtractedFieldResult {
+  value: any;
+  start?: number;
+  end?: number;
+  confidence?: number;
+  items?: ExtractedSpan[];
+  row_anchor?: string;
+}
+
+export interface ExtractResult {
+  model?: string;
+  fields: Record<string, ExtractedFieldResult>;
+  timing?: Record<string, any>;
+  pdf?: Record<string, any>;
+  raw_response: any;
+}
+
 // --- Adapters ---
 
 export const clockedAdapters = {
@@ -380,5 +437,47 @@ export const clockedAdapters = {
       };
     },
   },
+
+  // 6. EXTRACT: POST /clocked/extract
+  extract: {
+    endpoint: "/extract",
+    toRequest(payload: ExtractRequestPayload) {
+      return payload;
+    },
+    fromResponse(data: any): ExtractResult {
+      const rawFields = data?.fields || {};
+      const fields: Record<string, ExtractedFieldResult> = {};
+
+      for (const [key, val] of Object.entries(rawFields)) {
+        const v = val as any;
+        fields[key] = {
+          value: v?.value ?? null,
+          start: typeof v?.start === "number" ? v.start : undefined,
+          end: typeof v?.end === "number" ? v.end : undefined,
+          confidence: typeof v?.confidence === "number" ? v.confidence : 1,
+          items: Array.isArray(v?.items)
+            ? v.items.map((it: any) => ({
+                value: it?.value ?? null,
+                start: it?.start,
+                end: it?.end,
+                confidence: it?.confidence ?? 1,
+                normalized: it?.normalized,
+                fields: it?.fields,
+              }))
+            : undefined,
+          row_anchor: v?.row_anchor,
+        };
+      }
+
+      return {
+        model: data?.model,
+        fields,
+        timing: data?.timing,
+        pdf: data?.pdf,
+        raw_response: data,
+      };
+    },
+  },
 };
+
 
