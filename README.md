@@ -1,7 +1,7 @@
 # Margin — Academic Integrity Review System
 
 > **Entry for the Clocked Build Challenge (Oct 21 – Nov 10, 2026)**  
-> **Author:** Joseph
+> **Author:** Joseph John Bassey
 
 Margin helps a university lecturer review a batch of student submissions: it masks student identifiers, compares every pair of submissions for shared or conflicting facts, checks each submission's claims against the course reading pack, and shows every finding side-by-side with its evidence so a human decides.
 
@@ -242,4 +242,4 @@ npm run build
 
 ## License
 
-MIT License. Designed and developed by Joseph for the Clocked Build Challenge (2026).
+MIT License. Designed and developed by Joseph John Bassey for the Clocked Build Challenge (2026).

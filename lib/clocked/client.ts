@@ -2,6 +2,7 @@ import pLimit from "p-limit";
 import crypto from "crypto";
 import {
   clockedAdapters,
+  ProtectOptions,
   ProtectResult,
   CompareResult,
   VerifyResult,
@@ -186,14 +187,17 @@ async function executeWithCache<T>(
  */
 export async function protect(
   text: string,
+  options?: ProtectOptions | (() => ProtectResult),
   mockFallback?: () => ProtectResult
 ): Promise<ProtectResult> {
-  const payload = clockedAdapters.protect.toRequest(text);
+  const actualOptions = typeof options === "object" ? options : undefined;
+  const actualFallback = typeof options === "function" ? options : mockFallback;
+  const payload = clockedAdapters.protect.toRequest(text, actualOptions);
   return executeWithCache(
     clockedAdapters.protect.endpoint,
     payload,
     (data) => clockedAdapters.protect.fromResponse(data, text),
-    mockFallback
+    actualFallback
   );
 }
 

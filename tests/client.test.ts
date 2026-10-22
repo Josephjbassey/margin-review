@@ -37,6 +37,17 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
     assert.strictEqual(adapted.masked_text, "Student <PERSON>, ID <STUDENT_ID>.");
     assert.strictEqual(adapted.entities_masked_count, 2);
     assert.strictEqual(adapted.entities[0].value, "Alex Chen");
+    assert.strictEqual(adapted.counts?.person, 1);
+    assert.strictEqual(adapted.counts?.student_id, 1);
+
+    const customReq = clockedAdapters.protect.toRequest("Student Alex Chen", {
+      anonymize: "mask",
+      mask_keep: 2,
+      threshold: 0.7,
+    });
+    assert.strictEqual(customReq.anonymize, "mask");
+    assert.strictEqual(customReq.mask_keep, 2);
+    assert.strictEqual(customReq.threshold, 0.7);
   });
 
   it("adapter correctly normalizes official Compare response with conflicts and duplicates", () => {

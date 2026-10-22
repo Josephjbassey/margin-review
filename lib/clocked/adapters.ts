@@ -12,17 +12,32 @@
 
 // --- Internal Domain Types ---
 
+export interface ProtectOptions {
+  entities?:
+    | string[]
+    | Record<string, string | null | { description?: string; format?: string }>;
+  anonymize?: "replace" | "mask" | "hash" | "redact" | Record<string, string>;
+  threshold?: number;
+  mask_keep?: number;
+  max_items?: number;
+  allow?: string[];
+  deny?: string[] | Record<string, string>;
+  instructions?: string;
+}
+
 export interface ProtectEntity {
   type: string;
   value: string;
   start: number;
   end: number;
   confidence: number;
+  source?: string;
 }
 
 export interface ProtectResult {
   masked_text: string;
   entities: ProtectEntity[];
+  counts?: Record<string, number>;
   entities_masked_count: number;
   raw_response: any;
 }
@@ -299,16 +314,21 @@ export const clockedAdapters = {
   // 1. PROTECT: POST /clocked/pii
   protect: {
     endpoint: "/pii",
-    toRequest(text: string) {
+    toRequest(text: string, options?: ProtectOptions) {
       return {
         text,
-        entities: {
+        entities: options?.entities || {
           person: "Full names of people or students",
           student_id: "Student matriculation numbers or IDs (e.g. CS/2024/019 or MAT-102)",
           email: "Email addresses",
         },
-        anonymize: "replace",
-        threshold: 0.5,
+        anonymize: options?.anonymize || "replace",
+        threshold: options?.threshold ?? 0.5,
+        ...(options?.mask_keep !== undefined ? { mask_keep: options.mask_keep } : {}),
+        ...(options?.max_items !== undefined ? { max_items: options.max_items } : {}),
+        ...(options?.allow ? { allow: options.allow } : {}),
+        ...(options?.deny ? { deny: options.deny } : {}),
+        ...(options?.instructions ? { instructions: options.instructions } : {}),
       };
     },
     fromResponse(data: any, originalText: string): ProtectResult {
@@ -321,11 +341,15 @@ export const clockedAdapters = {
         start: Number(e.start ?? 0),
         end: Number(e.end ?? 0),
         confidence: Number(e.confidence ?? 1),
+        source: e.source ? String(e.source) : undefined,
       }));
+
+      const counts: Record<string, number> = data?.counts || {};
 
       return {
         masked_text,
         entities,
+        counts,
         entities_masked_count: entities.length,
         raw_response: data,
       };
