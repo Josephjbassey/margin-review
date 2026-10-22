@@ -446,6 +446,45 @@ export default function BatchesPage() {
           </div>
         )}
       </div>
+
+
+      <footer
+        style={{
+          marginTop: "60px",
+          paddingTop: "24px",
+          borderTop: "1px solid var(--track)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "16px",
+          fontSize: "13px",
+          color: "var(--muted)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: "var(--ink)" }}>MARGIN</span>
+          <span>· Academic Integrity Forensic System</span>
+          <span>· © {new Date().getFullYear()}</span>
+        </div>
+
+        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-mono)" }}>
+            Flags overlap for human review · Never issues automated verdicts
+          </span>
+          <Link
+            href="/privacy"
+            style={{
+              color: "var(--accent)",
+              textDecoration: "underline",
+              fontFamily: "var(--font-mono)",
+            }}
+          >
+            FERPA & Privacy Policy
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }
+

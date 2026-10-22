@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    document.title = "Lecturer Sign In · Judge Access · Margin";
+  }, []);
+
   const [isRegistering, setIsRegistering] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

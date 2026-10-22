@@ -35,7 +35,9 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overflow-x: hidden;
 }
+
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -408,4 +410,34 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-band .on-dark {
   color: var(--on-dark);
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 40px 96px 40px;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 34px !important;
+  }
+  .container,
+  .content-container {
+    padding: 20px 16px 80px 16px !important;
+  }
+  .topbar-content {
+    padding: 0 16px !important;
+    gap: 8px;
+  }
+  .topbar-nav {
+    gap: 14px !important;
+  }
+  .footer-band {
+    padding: 10px 16px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
 }

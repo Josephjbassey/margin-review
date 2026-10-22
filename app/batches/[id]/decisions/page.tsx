@@ -26,6 +26,9 @@ export default function DecisionsSummaryPage({
         if (!res.ok) throw new Error("Failed to load batch");
         const data = await res.json();
         setBatch(data.batch);
+        if (data.batch?.name) {
+          document.title = `Decisions & Audit · ${data.batch.name} · Margin`;
+        }
       } catch (err: any) {
         setError(err.message);
       } finally {

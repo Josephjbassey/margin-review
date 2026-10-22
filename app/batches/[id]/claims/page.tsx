@@ -29,6 +29,9 @@ export default function ClaimsCheckPage({
         if (!res.ok) throw new Error("Failed to load batch");
         const data = await res.json();
         setBatch(data.batch);
+        if (data.batch?.name) {
+          document.title = `Claim Grounding · ${data.batch.name} · Margin`;
+        }
 
         const claims = data.batch.claim_findings || [];
         // Prioritize first unsupported or first claim

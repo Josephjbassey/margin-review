@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 interface TopbarProps {
-  active?: "batches" | "reading" | "decisions";
+  active?: "batches" | "reading" | "decisions" | "privacy";
 }
 
 export function Topbar({ active = "batches" }: TopbarProps) {
@@ -46,6 +46,12 @@ export function Topbar({ active = "batches" }: TopbarProps) {
             className={`topbar-link ${active === "reading" ? "active" : ""}`}
           >
             New Batch
+          </Link>
+          <Link
+            href="/privacy"
+            className={`topbar-link ${active === "privacy" ? "active" : ""}`}
+          >
+            FERPA Policy
           </Link>
         </nav>
 

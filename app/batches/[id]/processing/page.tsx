@@ -19,6 +19,10 @@ export default function ProcessingPage({
   const [isCompleted, setIsCompleted] = useState(false);
   const [running, setRunning] = useState(true);
 
+  useEffect(() => {
+    document.title = "Pipeline Processing · Margin Academic Review";
+  }, []);
+
   // Poll step runner
   useEffect(() => {
     let timer: NodeJS.Timeout;

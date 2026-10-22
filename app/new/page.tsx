@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -8,6 +8,11 @@ const MAX_PAIRS = 20;
 
 export default function NewBatchPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    document.title = "New Batch · Margin Academic Forensic Review";
+  }, []);
+
   const [name, setName] = useState("GNS102 Informatics & Formal Methods");
   const [submissions, setSubmissions] = useState<File[]>([]);
   const [readingPack, setReadingPack] = useState<File[]>([]);

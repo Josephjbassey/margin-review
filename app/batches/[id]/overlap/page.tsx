@@ -30,6 +30,9 @@ export default function OverlapReviewPage({
         if (!res.ok) throw new Error("Failed to load batch");
         const data = await res.json();
         setBatch(data.batch);
+        if (data.batch?.name) {
+          document.title = `Overlap Review · ${data.batch.name} · Margin`;
+        }
 
         // Select the first conflict or first pair by default
         const pairs = data.batch.pair_findings || [];
