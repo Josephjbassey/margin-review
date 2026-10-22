@@ -100,15 +100,20 @@ Margin consumes official Clocked API endpoints directly via standard HTTP JSON o
 
 Margin is built with pure Vanilla CSS tokens (no Tailwind or external component libraries) implementing a distinct editorial academic design:
 
-- **Color Tokens**:
-  - Paper: `#F4F1EA` (warm background)
-  - Surface: `#FBFAF6` (card panels)
-  - Ink: `#101426` (high-contrast text, borders, and shadows)
-  - Cobalt Accent: `#2B44FF` (primary actions and indicators)
-  - Pen Wash: `#C5CEFF` (evidence highlighter)
-  - Selected: `#E4E8FF` (active rows)
-  - Track: `#E4E1D6` (progress meters)
-  - Muted: `#5A5E70` (metadata and labels)
+- **CSS Color Tokens (`:root`)**:
+  - `--paper: #F4F1EA`: Warm manuscript page background
+  - `--surface: #FBFAF6`: Card panels, inspection surfaces, and form inputs
+  - `--surface-container: #F1EEE7`: Secondary grouping containers
+  - `--surface-container-low: #F6F3EC`: Inset panels and subtle contrast backgrounds
+  - `--surface-container-high: #EBE8E1`: High-contrast structural dividers
+  - `--ink: #101426`: High-contrast body typography, 1px solid borders, and hard drop shadows
+  - `--accent: #2B44FF`: Cobalt blue — primary CTA buttons, active state underlines, focus rings
+  - `--wash: #C5CEFF`: Pen-wash evidence highlighter and "same facts" tags
+  - `--selected: #E4E8FF`: Active pair and claim row selection
+  - `--track: #E4E1D6`: Progress meter background tracks and empty slot fills
+  - `--muted: #5A5E70`: Forensic metadata, secondary labels, and character offset markers
+  - `--on-dark: #AEB9FF`: High-legibility emphasis text on dark ink audit bands
+  - `--error: #BA1A1A`: Validation alerts and severe contradiction indicators
 - **Typography**:
   - Headings and body: **Inter** (clean, academic readability)
   - Badges, identifiers, and metrics: **Space Mono** (`label-mono`, `caption-mono`)
