@@ -10,6 +10,8 @@ import {
   DecideResult,
   ExtractRequestPayload,
   ExtractResult,
+  FillRequestPayload,
+  FillResult,
 } from "./adapters";
 import {
   computeCacheKey,
@@ -285,5 +287,23 @@ export async function extract(
     mockFallback
   );
 }
+
+/**
+ * 7. FILL (POST /clocked/fill):
+ * Combine extracted facts, decisions, scores, and explicitly requested generated text in one record.
+ */
+export async function fill(
+  payload: FillRequestPayload,
+  mockFallback?: () => FillResult
+): Promise<FillResult> {
+  const reqPayload = clockedAdapters.fill.toRequest(payload);
+  return executeWithCache(
+    clockedAdapters.fill.endpoint,
+    reqPayload,
+    (data) => clockedAdapters.fill.fromResponse(data),
+    mockFallback
+  );
+}
+
 
 

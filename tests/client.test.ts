@@ -212,6 +212,46 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
     assert.strictEqual(adapted.fields.equipment.items?.length, 2);
     assert.strictEqual(adapted.fields.equipment.items?.[0].value, "ThinkPad T14");
   });
+
+  it("adapter and client correctly process Fill request and response", async () => {
+    const mockFillRaw = {
+      model: "clocked-1.0",
+      fields: {
+        incident_id: {
+          value: "INC-8421",
+          start: 0,
+          end: 8,
+          confidence: 1,
+        },
+        category: {
+          value: "Identity & access",
+          probabilities: { "Identity & access": 0.85, Network: 0.1, Application: 0.05 },
+        },
+        severity: {
+          value: "High",
+          expected: 2.1,
+        },
+        major_incident: {
+          value: true,
+          confidence: 0.94,
+        },
+        stakeholder_update: {
+          value: "Payroll portal is unavailable due to SSO failure. Bank cutoff is 14:00 today. Identity rollback is currently pending approval.",
+          source: "generated",
+        },
+      },
+    };
+
+    const adapted = clockedAdapters.fill.fromResponse(mockFillRaw);
+    assert.strictEqual(adapted.model, "clocked-1.0");
+    assert.strictEqual(adapted.fields.incident_id.value, "INC-8421");
+    assert.strictEqual(adapted.fields.incident_id.start, 0);
+    assert.strictEqual(adapted.fields.category.value, "Identity & access");
+    assert.strictEqual(adapted.fields.severity.expected, 2.1);
+    assert.strictEqual(adapted.fields.major_incident.value, true);
+    assert.strictEqual(adapted.fields.stakeholder_update.source, "generated");
+  });
 });
+
 
 

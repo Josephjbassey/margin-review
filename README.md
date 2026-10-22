@@ -86,6 +86,7 @@ Margin consumes official Clocked API endpoints directly via standard HTTP JSON o
 | **Rerank** | `POST /clocked/rerank` | `{ query: claim_text, documents: reading_passages, top_n: 5 }` | `results[]: [{ index, id, action, relevance_score }]` | For unsupported or partial claims, reranks reading pack passages to find the closest syllabus references, showing verbatim excerpts with relevance scores. |
 | **Decide** | `POST /clocked/decide` | `{ state, questions: { ...typed questions (noul, choice, multiselect, score) } }` | `answers`: `{ [q]: { decision, choice, probabilities, confidence } }` | Evaluates typed classification questions over text context with calibrated probability distributions. |
 | **Extract** | `POST /clocked/extract` | `{ text, fields: { name: "...", list: true, format: "..." } }` | `fields`: `{ [f]: { value, start, end, confidence, items[] } }` | Reads named values verbatim with exact zero-based Unicode character offsets (`start`, `end`) for source evidence verification. |
+| **Fill** | `POST /clocked/fill` | `{ text, fields: { [name]: { type: "extract" \| "choice" \| "multiselect" \| "score" \| "yes_no" \| "generate" } } }` | `fields`: `{ [f]: { value, start, end, probabilities, expected, source } }` | Combines extracted verbatim facts, decisions, ordered scores, and explicit generation into a unified typed record. |
 
 ---
 

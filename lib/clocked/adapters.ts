@@ -188,6 +188,111 @@ export interface ExtractResult {
   raw_response: any;
 }
 
+export type FillFieldType =
+  | "extract"
+  | "choice"
+  | "multiselect"
+  | "score"
+  | "yes_no"
+  | "generate";
+
+export interface FillExtractField {
+  type: "extract";
+  description?: string;
+  infer?: boolean;
+  list?: boolean;
+  max_items?: number;
+  format?: ExtractFormat;
+  region?: [number, number];
+  unit?: "sentence";
+}
+
+export interface FillChoiceField {
+  type: "choice";
+  description?: string;
+  options?: string[];
+  options_by?: Record<string, any>;
+  allow_none?: boolean;
+  temperature?: number;
+  rotations?: number;
+}
+
+export interface FillMultiselectField {
+  type: "multiselect";
+  description?: string;
+  options: string[];
+  threshold?: number;
+  temperature?: number;
+  rotations?: number;
+}
+
+export interface FillScoreField {
+  type: "score";
+  description?: string;
+  levels: string[];
+  temperature?: number;
+  rotations?: number;
+}
+
+export interface FillYesNoField {
+  type: "yes_no";
+  description?: string;
+  threshold?: number;
+  temperature?: number;
+  rotations?: number;
+}
+
+export interface FillGenerateField {
+  type: "generate";
+  description?: string;
+  format?: "text" | "date" | "number";
+  max_tokens?: number;
+}
+
+export type FillFieldDefinition =
+  | FillExtractField
+  | FillChoiceField
+  | FillMultiselectField
+  | FillScoreField
+  | FillYesNoField
+  | FillGenerateField;
+
+export interface FillRequestPayload {
+  text?: string;
+  pdf?: string;
+  pages?: number[] | string;
+  pdf_mode?: "auto" | "text" | "image";
+  return_text?: boolean;
+  instructions?: string;
+  reference_date?: string;
+  return_pdf?: "highlight" | "box" | "redact";
+  fields: Record<string, FillFieldDefinition>;
+}
+
+export interface FilledFieldResult {
+  value: any;
+  start?: number;
+  end?: number;
+  confidence?: number;
+  probabilities?: Record<string, number> | number[];
+  expected?: number;
+  source?: "generated" | string;
+  items?: Array<{
+    value: any;
+    start?: number;
+    end?: number;
+    confidence?: number;
+  }>;
+}
+
+export interface FillResult {
+  model?: string;
+  fields: Record<string, FilledFieldResult>;
+  timing?: Record<string, any>;
+  pdf?: Record<string, any>;
+  raw_response: any;
+}
+
 // --- Adapters ---
 
 export const clockedAdapters = {
@@ -478,6 +583,48 @@ export const clockedAdapters = {
       };
     },
   },
+
+  // 7. FILL: POST /clocked/fill
+  fill: {
+    endpoint: "/fill",
+    toRequest(payload: FillRequestPayload) {
+      return payload;
+    },
+    fromResponse(data: any): FillResult {
+      const rawFields = data?.fields || {};
+      const fields: Record<string, FilledFieldResult> = {};
+
+      for (const [key, val] of Object.entries(rawFields)) {
+        const v = val as any;
+        fields[key] = {
+          value: v?.value ?? null,
+          start: typeof v?.start === "number" ? v.start : undefined,
+          end: typeof v?.end === "number" ? v.end : undefined,
+          confidence: typeof v?.confidence === "number" ? v.confidence : undefined,
+          probabilities: v?.probabilities,
+          expected: v?.expected,
+          source: v?.source,
+          items: Array.isArray(v?.items)
+            ? v.items.map((it: any) => ({
+                value: it?.value ?? null,
+                start: it?.start,
+                end: it?.end,
+                confidence: it?.confidence,
+              }))
+            : undefined,
+        };
+      }
+
+      return {
+        model: data?.model,
+        fields,
+        timing: data?.timing,
+        pdf: data?.pdf,
+        raw_response: data,
+      };
+    },
+  },
 };
+
 
 
