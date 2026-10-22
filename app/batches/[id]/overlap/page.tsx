@@ -403,14 +403,9 @@ export default function OverlapReviewPage({
                   </div>
 
                   {/* Side-by-Side Manuscripts View */}
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      gap: 16,
-                    }}
-                  >
+                  <div className="manuscripts-grid">
                     {/* Manuscript A */}
+
                     <div className="card" style={{ padding: 16 }}>
                       <div
                         style={{

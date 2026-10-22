@@ -189,15 +189,9 @@ export default function NewBatchPage() {
         </div>
 
         {/* Dual Upload Sections */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 24,
-            marginBottom: 24,
-          }}
-        >
+        <div className="dual-upload-grid">
           {/* Dropzone 1: Student Submissions */}
+
           <div className="card">
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
               <span className="label-mono" style={{ fontWeight: 700 }}>

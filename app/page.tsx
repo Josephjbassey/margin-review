@@ -178,15 +178,9 @@ export default function BatchesPage() {
       </div>
 
       {/* Operational Diagnostics Bento Cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: 20,
-          marginBottom: 36,
-        }}
-      >
+      <div className="bento-grid">
         <div className="card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <span className="caption-mono text-muted">QUEUE VOLUME</span>
             <span className="label-mono" style={{ color: "var(--accent)" }}>● LIVE</span>

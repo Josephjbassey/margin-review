@@ -31,18 +31,7 @@ export function BatchNav({
         marginBottom: 24,
       }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 40px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          flexWrap: "wrap",
-          gap: 16,
-        }}
-      >
+      <div className="batch-nav-header">
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
             <Link
@@ -69,7 +58,7 @@ export function BatchNav({
           </h1>
           <div
             className="caption-mono text-muted"
-            style={{ marginTop: 4, display: "flex", gap: 12 }}
+            style={{ marginTop: 4, display: "flex", gap: 12, flexWrap: "wrap" }}
           >
             <span>{totalSubmissions} submissions</span>
             <span>·</span>
@@ -89,15 +78,7 @@ export function BatchNav({
         </div>
       </div>
 
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "16px auto 0 auto",
-          padding: "0 40px",
-          display: "flex",
-          gap: 32,
-        }}
-      >
+      <div className="batch-nav-tabs">
         <Link
           href={`/batches/${batchId}/overlap`}
           className={`topbar-link ${isOverlap ? "active" : ""}`}
