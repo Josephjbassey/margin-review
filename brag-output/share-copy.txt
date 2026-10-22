@@ -1,0 +1,5 @@
+An 87% AI probability score is not evidence—it's an expulsion notice without due process.
+
+We built Margin for the Clocked Build Challenge to restore academic due process: it strips student identifiers at ingest, compares cohort papers pairwise for factual contradictions, and grounds assertions directly against the course syllabus with tactile pen-wash evidence.
+
+The tool flags; the educator decides. Explore the code and live demo: https://github.com/Josephjbassey/margin-review

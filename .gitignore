@@ -52,3 +52,7 @@ responses_cache/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# video intermediate artifacts
+brag-output/work/
+
