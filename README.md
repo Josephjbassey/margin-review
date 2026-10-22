@@ -2,7 +2,8 @@
 
 > **Entry for the Clocked Build Challenge (Oct 21 – Nov 10, 2026)**  
 > **Author:** Joseph John Bassey  
-> **Live Architecture:** Next.js 16 (Turbopack) · Better Auth · Neon PostgreSQL · Pure Vanilla CSS
+> **Live Architecture:** Next.js 16 (Turbopack) · Better Auth · Neon PostgreSQL · Pure Vanilla CSS  
+> **Technical Write-up:** [Restoring Academic Due Process (DEV.to)](https://dev.to/josephjbassey/restoring-academic-due-process-how-we-built-margin-with-nextjs-16-and-clocked-ai-19pl)
 
 Margin helps a university lecturer review a batch of student submissions: it masks student identifiers, compares every pair of submissions for shared or conflicting facts, checks each submission's claims against the course reading pack, and shows every finding side-by-side with its evidence so a human decides.
 
