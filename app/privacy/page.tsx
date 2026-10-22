@@ -62,7 +62,7 @@ export default function PrivacyPage() {
           <p style={{ color: "var(--ink)", lineHeight: 1.7, margin: 0 }}>
             Under the Family Educational Rights and Privacy Act (FERPA, 20 U.S.C. § 1232g), student
             educational records and personally identifiable information (PII) must be shielded from
-            unauthorized disclosure. When a batch is analyzed, <strong>Clocked Protect</strong> (<code>POST /clocked/pii</code>)
+            unauthorized disclosure. When a batch is analyzed, <strong>Automated PII Stripping</strong>
             immediately identifies and scrubs student names, matriculation numbers, institution emails, and personal identifiers.
             Subsequent steps—including pairwise comparison, claim grounding, and reviewer displays—strictly consume <code>masked_text</code>.
           </p>

@@ -33,16 +33,15 @@ export default function PricingPage() {
           ← Return to Batches &amp; Overview
         </Link>
         <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-          <span className="tag tag-supported">POWERED BY CLOCKED API</span>
-          <span className="tag tag-in-review">TRANSPARENT INFERENCE ECONOMICS</span>
+          <span className="tag tag-supported">TRANSPARENT USAGE PRICING</span>
+          <span className="tag tag-in-review">ACADEMIC DUE PROCESS</span>
         </div>
         <h1 className="page-title" style={{ fontSize: "38px", marginBottom: "12px" }}>
-          Honest Inference Pricing &amp; Academic Licensing
+          Transparent Review Pricing &amp; Institutional Licensing
         </h1>
         <p style={{ color: "var(--muted)", fontSize: "17px", maxWidth: "840px", lineHeight: "26px", margin: 0 }}>
-          Margin provides human-in-the-loop review interfaces powered by <strong>Clocked</strong> sub-second AI endpoints (
-          <code>/clocked/pii</code>, <code>/clocked/compare</code>, <code>/clocked/verify</code>, <code>/clocked/rerank</code>).
-          One Clocked credit covers up to 25ms of active model time.
+          Predictable, scholar-friendly pricing tailored for university procurement cycles, grant budgets, and departmental expense cards.
+          Choose between direct institutional account connectivity or turnkey semester bundles with zero hidden platform markups.
         </p>
       </div>
 
@@ -414,9 +413,9 @@ export default function PricingPage() {
           </h2>
         </div>
         <p style={{ color: "var(--ink)", lineHeight: 1.6, marginBottom: "24px" }}>
-          In Margin, reviewing a typical student paper (~1,500 words) against syllabus reading packs consumes
-          approximately <strong>40 to 60 Clocked credits</strong> (protecting PII, grounding factual claims, and reranking passages).
-          Local pairwise n-gram shingling is computed in-memory at <strong>0 API cost</strong>.
+          Reviewing a typical student paper (~1,500 words) against assigned course readings consumes
+          approximately <strong>40 to 60 processing credits</strong> (covering automated PII sanitization, citation verification, and syllabus claim grounding).
+          Initial document indexing and pairwise comparison are computed locally at <strong>zero incremental cost</strong>.
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px", marginBottom: "24px" }}>
@@ -481,7 +480,7 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* Strategic Payment Model Comparison */}
+      {/* Academic Procurement Options */}
       <div className="card" style={{ padding: "32px", marginBottom: "40px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
           <span
@@ -494,19 +493,18 @@ export default function PricingPage() {
               fontWeight: 700,
             }}
           >
-            STRATEGY
+            PROCUREMENT
           </span>
           <h2 className="card-title" style={{ margin: 0 }}>
-            How Should Payment Be Made? Credits vs. API Company Commission
+            Two Flexible Ways to Deploy Margin Across Your Department
           </h2>
         </div>
         <p style={{ color: "var(--ink)", lineHeight: 1.7, marginBottom: "20px" }}>
-          Because Margin is an academic interface built on top of Clocked infrastructure, universities can monetize
-          through two distinct avenues depending on their procurement structure:
+          Designed to accommodate both university central IT purchasing and individual faculty expense approvals:
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
-          {/* Avenue 1 */}
+          {/* Option 1 */}
           <div
             style={{
               padding: "20px",
@@ -516,22 +514,22 @@ export default function PricingPage() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-              <span className="material-symbols-outlined" style={{ color: "var(--accent)" }}>handshake</span>
+              <span className="material-symbols-outlined" style={{ color: "var(--accent)" }}>account_balance</span>
               <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 700 }}>
-                1. BYOK with Partner Commission (Direct Subscription)
+                1. Institutional Account Integration (Direct Connect)
               </h3>
             </div>
             <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: "19px", marginBottom: "12px" }}>
-              The department or campus university IT office signs up directly at Clocked (Rezolve AI) and pastes their API key into Margin.
+              Connect your institution&apos;s verified AI account directly to Margin with 0% platform surcharge.
             </p>
             <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "13px", lineHeight: "20px", color: "var(--ink)" }}>
-              <li><strong>Zero Float Risk:</strong> Margin does not absorb unused monthly credits that reset each billing cycle.</li>
-              <li><strong>Direct Compliance:</strong> The university maintains its own Data Processing Agreement (DPA) directly with Rezolve AI.</li>
-              <li><strong>Margin&apos;s Revenue:</strong> Margin receives a monthly recurring partner commission (typically 20–30%) on the institutional Clocked spend.</li>
+              <li><strong>Direct Compliance:</strong> Retain your university&apos;s direct Data Processing Agreements and security attestations.</li>
+              <li><strong>Direct Capacity Control:</strong> Manage monthly spending limits and authorized overages directly within your campus dashboard.</li>
+              <li><strong>Annual Volume Savings:</strong> Qualify for Clocked&apos;s 10% annual discount and 10% bonus credit pool.</li>
             </ul>
           </div>
 
-          {/* Avenue 2 */}
+          {/* Option 2 */}
           <div
             style={{
               padding: "20px",
@@ -543,52 +541,52 @@ export default function PricingPage() {
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
               <span className="material-symbols-outlined" style={{ color: "var(--accent)" }}>credit_card</span>
               <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 700 }}>
-                2. Managed Semester Bundles (Turnkey for P-Cards)
+                2. All-in-One Semester Packs (Faculty P-Cards &amp; Grants)
               </h3>
             </div>
             <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: "19px", marginBottom: "12px" }}>
-              For non-technical lecturers who cannot manage developer accounts or API keys through their dean:
+              For instructors who need a simple, self-contained solution without managing technical API accounts:
             </p>
             <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "13px", lineHeight: "20px", color: "var(--ink)" }}>
-              <li><strong>Semester-Term Limits:</strong> Bundles are valid for a 4-month academic semester, aligning with university budget windows and avoiding indefinite rollover liabilities.</li>
-              <li><strong>Extreme Gross Margin:</strong> At $0.012 raw API cost per student paper, a $49 course pack (250 papers) costs Margin only ~$3.75 in Clocked credits (~92% margin).</li>
-              <li><strong>All-in-One Invoice:</strong> Single receipt approved for university expense reimbursement.</li>
+              <li><strong>Turnkey Setup:</strong> Zero API configuration or developer keys required — start reviewing papers immediately.</li>
+              <li><strong>Fixed Term Budgeting:</strong> Covers your entire semester cohort (e.g. 250 paper comparisons for $49) with no surprise bills.</li>
+              <li><strong>Simplified Invoicing:</strong> Provides standard university expense receipts approved for P-card and grant fund reimbursement.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Clocked Billing Rules & FAQ */}
+      {/* Credit Mechanics & Billing FAQ */}
       <div style={{ maxWidth: "900px" }}>
         <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "20px" }}>
-          Clocked API Billing Details &amp; Operational Rules
+          Billing &amp; Credit Mechanics FAQ
         </h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div className="card" style={{ padding: "20px" }}>
             <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 8px 0" }}>
-              Do unused subscription credits roll over?
+              Do unused monthly subscription credits roll over?
             </h3>
             <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)", lineHeight: "20px" }}>
-              <strong>No.</strong> Under Clocked&apos;s official billing rules, included credits reset each billing month and do not roll over.
-              The monthly subscription buys the included usage without a separate platform fee.
+              <strong>No.</strong> Monthly subscription allowances refresh each billing cycle.
+              The monthly subscription covers the included usage with no separate seat or platform licensing fees.
             </p>
           </div>
           <div className="card" style={{ padding: "20px" }}>
             <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 8px 0" }}>
-              How does overage work?
+              How does overage work if our class submits extra drafts?
             </h3>
             <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)", lineHeight: "20px" }}>
-              Overage is off by default until you enable it with an authorized monthly dollar spending limit.
+              Overage is off by default until an authorized administrator sets a monthly spending limit.
               Overage is billed at flat rates per 1,000 credits: <strong>$0.30 on Build</strong>, <strong>$0.25 on Production</strong>, and <strong>$0.20 on Scale</strong>.
-              There are no volume bands; every extra credit costs the exact same flat rate.
+              There are no surprise step-ups; every extra credit is billed at the same flat rate.
             </p>
           </div>
           <div className="card" style={{ padding: "20px" }}>
             <h3 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 8px 0" }}>
-              What is dedicated capacity for high-throughput campuses?
+              Is dedicated high-throughput capacity available for university-wide honor courts?
             </h3>
             <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)", lineHeight: "20px" }}>
-              For massive university-wide cohorts requiring reserved throughput, dedicated GPU capacity starts at <strong>$7,500/month (H200)</strong> or <strong>$10,000/month (B200)</strong> with agreed concurrency and failover SLAs.
+              Yes. For university-wide rollouts handling thousands of simultaneous submissions during finals week, dedicated GPU capacity starts at <strong>$7,500/month (H200)</strong> or <strong>$10,000/month (B200)</strong> with customized throughput and uptime SLAs.
             </p>
           </div>
         </div>

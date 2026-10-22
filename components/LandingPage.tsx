@@ -1105,13 +1105,13 @@ export function LandingPage() {
             <span className="material-symbols-outlined" style={{ fontSize: "14px", color: "var(--accent)" }}>
               payments
             </span>
-            <span style={{ fontWeight: 700 }}>POWERED BY CLOCKED API · TRANSPARENT USAGE</span>
+            <span style={{ fontWeight: 700 }}>PREDICTABLE ACADEMIC BILLING · COMING SOON</span>
           </div>
           <h2 style={{ fontSize: "36px", fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 10px 0", color: "var(--ink)" }}>
-            Honest Academic Pricing Grounded in Real Inference
+            Honest Academic Pricing Grounded in Real Usage
           </h2>
           <p style={{ fontSize: "16px", color: "var(--muted)", maxWidth: "680px", margin: "0 auto", lineHeight: "24px" }}>
-            Margin runs on Clocked&apos;s sub-second intelligence engine (1 credit = up to 25ms active model time). Connect your direct Clocked key or use a managed semester pack with no hidden markup.
+            No surprise overage invoices or opaque per-seat penalties. Designed for university procurement cycles, grant budgets, and departmental expense cards.
           </p>
           <div style={{ marginTop: "12px" }}>
             <span
@@ -1404,18 +1404,18 @@ export function LandingPage() {
         >
           <div>
             <div className="label-mono" style={{ color: "var(--accent)", fontWeight: 700, marginBottom: "6px" }}>
-              HOW PAYMENT WORKS: DIRECT BYOK VS. SEMESTER PACKS
+              INSTITUTIONAL ACCOUNT INTEGRATION
             </div>
             <p style={{ margin: 0, fontSize: "13px", color: "var(--ink)", lineHeight: "20px" }}>
-              <strong>Direct Clocked Key (Commission Model):</strong> Sign up at Clocked (Rezolve AI), paste your API key with 0 markup, and Margin earns a partner commission on your plan.
+              <strong>Direct Key Connect:</strong> Connect your institution&apos;s verified AI account directly to Margin with 0% platform markup, maintaining sovereign data compliance.
             </p>
           </div>
           <div>
             <div className="label-mono" style={{ color: "var(--ink)", fontWeight: 700, marginBottom: "6px" }}>
-              MANAGED SEMESTER PACKS FOR FACULTY P-CARDS
+              ALL-IN-ONE SEMESTER PACKS FOR FACULTY
             </div>
             <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)", lineHeight: "20px" }}>
-              Can&apos;t manage developer API billing? Purchase fixed semester course packs ($49 / 250 papers) billed cleanly per academic term, backed by Margin&apos;s pooled Clocked reserve.
+              Prefer simple departmental billing? Purchase fixed course packs ($49 for 250 paper reviews) billed on a single university invoice per academic term.
             </p>
           </div>
         </div>
