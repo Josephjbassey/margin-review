@@ -341,6 +341,41 @@ export interface GuardResult {
   raw_response: any;
 }
 
+export interface InspectRequestPayload {
+  script: string;
+  pdf?: string;
+  instructions?: string;
+  categories?: string[] | null;
+  threshold?: number;
+  evidence?: boolean;
+  rotations?: number | null;
+}
+
+export interface InspectEvidence {
+  line: string;
+  start: number;
+  end: number;
+  confidence: number;
+}
+
+export interface InspectResult {
+  model?: string;
+  malicious?: number;
+  suspicious?: number;
+  verdict: string;
+  threshold: number;
+  category?: string;
+  categories?: Record<string, number>;
+  severity?: string;
+  severities?: Record<string, number>;
+  severity_expected?: number;
+  evidence: InspectEvidence[];
+  instructions_used?: string;
+  pdf?: Record<string, any>;
+  timing?: Record<string, any>;
+  raw_response: any;
+}
+
 // --- Adapters ---
 
 export const clockedAdapters = {
@@ -724,6 +759,61 @@ export const clockedAdapters = {
         severity_expected: data?.severity_expected,
         evidence,
         source: data?.source,
+        raw_response: data,
+      };
+    },
+  },
+
+  // 9. INSPECT: POST /clocked/script
+  inspect: {
+    endpoint: "/script",
+    toRequest(payload: InspectRequestPayload | string, options?: Partial<InspectRequestPayload>) {
+      if (typeof payload === "string") {
+        return {
+          script: payload,
+          threshold: options?.threshold ?? 0.5,
+          evidence: options?.evidence ?? true,
+          ...(options?.instructions ? { instructions: options.instructions } : {}),
+          ...(options?.categories !== undefined ? { categories: options.categories } : {}),
+          ...(options?.rotations !== undefined ? { rotations: options.rotations } : {}),
+          ...(options?.pdf ? { pdf: options.pdf } : {}),
+        };
+      }
+      return {
+        threshold: 0.5,
+        evidence: true,
+        ...payload,
+      };
+    },
+    fromResponse(data: any): InspectResult {
+      const rawEvidence = Array.isArray(data?.evidence) ? data.evidence : [];
+      const evidence: InspectEvidence[] = rawEvidence.map((e: any) => ({
+        line: String(e.line || ""),
+        start: Number(e.start ?? 0),
+        end: Number(e.end ?? 0),
+        confidence: Number(e.confidence ?? 1),
+      }));
+
+      return {
+        model: data?.model,
+        malicious: data?.malicious !== undefined ? Number(data.malicious) : undefined,
+        suspicious: data?.suspicious !== undefined ? Number(data.suspicious) : undefined,
+        verdict: String(
+          data?.verdict ||
+            ((Number(data?.malicious ?? 0) >= 0.5 || Number(data?.suspicious ?? 0) >= 0.5)
+              ? "malicious"
+              : "benign")
+        ),
+        threshold: Number(data?.threshold ?? 0.5),
+        category: data?.category ? String(data.category) : undefined,
+        categories: data?.categories,
+        severity: data?.severity,
+        severities: data?.severities,
+        severity_expected: data?.severity_expected,
+        evidence,
+        instructions_used: data?.instructions_used,
+        pdf: data?.pdf,
+        timing: data?.timing,
         raw_response: data,
       };
     },

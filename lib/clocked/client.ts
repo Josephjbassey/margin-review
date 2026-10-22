@@ -15,6 +15,8 @@ import {
   FillResult,
   GuardRequestPayload,
   GuardResult,
+  InspectRequestPayload,
+  InspectResult,
 } from "./adapters";
 import {
   computeCacheKey,
@@ -327,6 +329,26 @@ export async function guard(
     clockedAdapters.guard.endpoint,
     reqPayload,
     (data) => clockedAdapters.guard.fromResponse(data),
+    actualFallback
+  );
+}
+
+/**
+ * 9. INSPECT (POST /clocked/script):
+ * Assess a script's behavior and locate the lines behind a risk judgment without executing it.
+ */
+export async function inspect(
+  payload: InspectRequestPayload | string,
+  options?: Partial<InspectRequestPayload> | (() => InspectResult),
+  mockFallback?: () => InspectResult
+): Promise<InspectResult> {
+  const actualOptions = typeof options === "object" ? options : undefined;
+  const actualFallback = typeof options === "function" ? options : mockFallback;
+  const reqPayload = clockedAdapters.inspect.toRequest(payload, actualOptions);
+  return executeWithCache(
+    clockedAdapters.inspect.endpoint,
+    reqPayload,
+    (data) => clockedAdapters.inspect.fromResponse(data),
     actualFallback
   );
 }

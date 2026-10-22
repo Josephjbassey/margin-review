@@ -88,6 +88,7 @@ Margin consumes official Clocked API endpoints directly via standard HTTP JSON o
 | **Extract** | `POST /clocked/extract` | `{ text, fields: { name: "...", list: true, format: "..." } }` | `fields`: `{ [f]: { value, start, end, confidence, items[] } }` | Reads named values verbatim with exact zero-based Unicode character offsets (`start`, `end`) for source evidence verification. |
 | **Fill** | `POST /clocked/fill` | `{ text, fields: { [name]: { type: "extract" \| "choice" \| "multiselect" \| "score" \| "yes_no" \| "generate" } } }` | `fields`: `{ [f]: { value, start, end, probabilities, expected, source } }` | Combines extracted verbatim facts, decisions, ordered scores, and explicit generation into a unified typed record. |
 | **Guard** | `POST /clocked/injection` | `{ text, source: "content" \| "user", instructions, threshold, evidence: true }` | `injection`, `verdict`, `category`, `categories`, `severity`, `evidence[]` | Screens untrusted student text or retrieved content for prompt injection and instruction override attempts before assistant processing. |
+| **Inspect** | `POST /clocked/script` | `{ script, instructions, threshold, evidence: true, rotations }` | `malicious`, `suspicious`, `verdict`, `category`, `categories`, `severity`, `evidence[]` | Assesses submitted or referenced scripts/code blocks for harmful behaviors (e.g. security blinding, persistence, destruction) and returns specific line evidence without executing. |
 
 ---
 

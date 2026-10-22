@@ -7,6 +7,7 @@ import {
   verify,
   rerank,
   guard,
+  inspect,
   MAX_PAIRS,
 } from "../lib/clocked/client";
 import { clockedAdapters } from "../lib/clocked/adapters";
@@ -328,6 +329,78 @@ describe("client.ts - Clocked Client & Official Schemas", () => {
 
     assert.strictEqual(res.verdict, "benign");
     assert.strictEqual(res.injection, 0.05);
+    assert.strictEqual(res.evidence.length, 0);
+  });
+
+  it("adapter and client correctly process Inspect request and response", async () => {
+    // 1. toRequest options & defaults
+    const scriptCode = "Restart-Service -Name Spooler\nSet-MpPreference -DisableRealtimeMonitoring $true";
+    const reqFromStr = clockedAdapters.inspect.toRequest(scriptCode, {
+      instructions: "No exception to disable security controls is approved.",
+      threshold: 0.5,
+      rotations: 2,
+    });
+    assert.strictEqual(reqFromStr.script, scriptCode);
+    assert.strictEqual(reqFromStr.threshold, 0.5);
+    assert.strictEqual(reqFromStr.evidence, true);
+    assert.strictEqual(reqFromStr.rotations, 2);
+    assert.strictEqual(reqFromStr.instructions, "No exception to disable security controls is approved.");
+
+    // 2. fromResponse normalization
+    const mockInspectRaw = {
+      model: "clocked-1.0",
+      malicious: 0.94,
+      suspicious: 0.05,
+      verdict: "malicious",
+      threshold: 0.5,
+      category: "security_blinding",
+      categories: {
+        benign: 0.01,
+        security_blinding: 0.94,
+        credential_theft: 0.03,
+        destruction: 0.02,
+      },
+      severity: "high",
+      severity_expected: 3.0,
+      evidence: [
+        {
+          line: "Set-MpPreference -DisableRealtimeMonitoring $true",
+          start: 30,
+          end: 79,
+          confidence: 0.97,
+        },
+      ],
+      instructions_used: "custom",
+    };
+
+    const adapted = clockedAdapters.inspect.fromResponse(mockInspectRaw);
+    assert.strictEqual(adapted.model, "clocked-1.0");
+    assert.strictEqual(adapted.malicious, 0.94);
+    assert.strictEqual(adapted.suspicious, 0.05);
+    assert.strictEqual(adapted.verdict, "malicious");
+    assert.strictEqual(adapted.threshold, 0.5);
+    assert.strictEqual(adapted.category, "security_blinding");
+    assert.strictEqual(adapted.categories?.security_blinding, 0.94);
+    assert.strictEqual(adapted.severity, "high");
+    assert.strictEqual(adapted.severity_expected, 3.0);
+    assert.strictEqual(adapted.evidence.length, 1);
+    assert.strictEqual(adapted.evidence[0].line, "Set-MpPreference -DisableRealtimeMonitoring $true");
+    assert.strictEqual(adapted.evidence[0].start, 30);
+    assert.strictEqual(adapted.evidence[0].end, 79);
+    assert.strictEqual(adapted.evidence[0].confidence, 0.97);
+
+    // 3. inspect client call with mock fallback
+    const res = await inspect(scriptCode, () => ({
+      malicious: 0.02,
+      suspicious: 0.01,
+      verdict: "benign",
+      threshold: 0.5,
+      evidence: [],
+      raw_response: { mocked: true },
+    }));
+
+    assert.strictEqual(res.verdict, "benign");
+    assert.strictEqual(res.malicious, 0.02);
     assert.strictEqual(res.evidence.length, 0);
   });
 });
