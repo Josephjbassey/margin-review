@@ -13,6 +13,8 @@ import {
   ExtractResult,
   FillRequestPayload,
   FillResult,
+  GuardRequestPayload,
+  GuardResult,
 } from "./adapters";
 import {
   computeCacheKey,
@@ -308,6 +310,27 @@ export async function fill(
     mockFallback
   );
 }
+
+/**
+ * 8. GUARD (POST /clocked/injection):
+ * Screen untrusted messages or retrieved content for prompt injection or instruction override attempts.
+ */
+export async function guard(
+  payload: GuardRequestPayload | string,
+  options?: Partial<GuardRequestPayload> | (() => GuardResult),
+  mockFallback?: () => GuardResult
+): Promise<GuardResult> {
+  const actualOptions = typeof options === "object" ? options : undefined;
+  const actualFallback = typeof options === "function" ? options : mockFallback;
+  const reqPayload = clockedAdapters.guard.toRequest(payload, actualOptions);
+  return executeWithCache(
+    clockedAdapters.guard.endpoint,
+    reqPayload,
+    (data) => clockedAdapters.guard.fromResponse(data),
+    actualFallback
+  );
+}
+
 
 
 

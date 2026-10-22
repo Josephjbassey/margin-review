@@ -308,6 +308,39 @@ export interface FillResult {
   raw_response: any;
 }
 
+export interface GuardRequestPayload {
+  text: string;
+  pdf?: string;
+  source?: "user" | "content";
+  instructions?: string;
+  categories?: string[];
+  threshold?: number;
+  evidence?: boolean;
+  return_pdf?: "highlight" | "box" | "redact";
+}
+
+export interface GuardEvidence {
+  quote: string;
+  start: number;
+  end: number;
+  confidence: number;
+}
+
+export interface GuardResult {
+  model?: string;
+  injection: number;
+  verdict: string;
+  threshold: number;
+  category?: string;
+  categories?: Record<string, number>;
+  severity?: string;
+  severities?: Record<string, number>;
+  severity_expected?: number;
+  evidence: GuardEvidence[];
+  source?: string;
+  raw_response: any;
+}
+
 // --- Adapters ---
 
 export const clockedAdapters = {
@@ -648,7 +681,55 @@ export const clockedAdapters = {
       };
     },
   },
+
+  // 8. GUARD: POST /clocked/injection
+  guard: {
+    endpoint: "/injection",
+    toRequest(payload: GuardRequestPayload | string, options?: Partial<GuardRequestPayload>) {
+      if (typeof payload === "string") {
+        return {
+          text: payload,
+          source: options?.source || "content",
+          threshold: options?.threshold ?? 0.5,
+          evidence: options?.evidence ?? true,
+          ...(options?.instructions ? { instructions: options.instructions } : {}),
+          ...(options?.categories ? { categories: options.categories } : {}),
+        };
+      }
+      return {
+        source: "content",
+        threshold: 0.5,
+        evidence: true,
+        ...payload,
+      };
+    },
+    fromResponse(data: any): GuardResult {
+      const rawEvidence = Array.isArray(data?.evidence) ? data.evidence : [];
+      const evidence: GuardEvidence[] = rawEvidence.map((e: any) => ({
+        quote: String(e.quote || ""),
+        start: Number(e.start ?? 0),
+        end: Number(e.end ?? 0),
+        confidence: Number(e.confidence ?? 1),
+      }));
+
+      return {
+        model: data?.model,
+        injection: Number(data?.injection ?? 0),
+        verdict: String(data?.verdict || (Number(data?.injection ?? 0) >= 0.5 ? "injection" : "benign")),
+        threshold: Number(data?.threshold ?? 0.5),
+        category: data?.category ? String(data.category) : undefined,
+        categories: data?.categories,
+        severity: data?.severity,
+        severities: data?.severities,
+        severity_expected: data?.severity_expected,
+        evidence,
+        source: data?.source,
+        raw_response: data,
+      };
+    },
+  },
 };
+
 
 
 
