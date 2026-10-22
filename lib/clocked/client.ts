@@ -1,4 +1,5 @@
 import pLimit from "p-limit";
+import crypto from "crypto";
 import {
   clockedAdapters,
   ProtectResult,
@@ -13,12 +14,12 @@ import {
 } from "./cache";
 
 const CLOCKED_BASE_URL =
-  process.env.CLOCKED_BASE_URL || "https://api.clocked.dev/v1";
+  process.env.CLOCKED_BASE_URL || "https://clocked.rezolve.ai/clocked";
 
 const CLOCKED_API_KEY = process.env.CLOCKED_API_KEY || "";
 export const MAX_PAIRS = Number(process.env.MAX_PAIRS || 20);
 
-// Concurrency pool capped at 4 concurrent requests
+// Worker pool capped at 4 concurrent requests
 const limiter = pLimit(4);
 
 // In-memory credit tracker
@@ -55,6 +56,7 @@ interface RequestOptions {
 
 /**
  * Executes a Clocked API call with retry backoff on 429 and 5xx.
+ * Logs credit usage if reported in response; never logs the API key.
  */
 async function callClockedApi(
   endpoint: string,
@@ -63,6 +65,7 @@ async function callClockedApi(
 ): Promise<{ data: any; credits: number }> {
   const maxRetries = options.retries ?? 3;
   let delay = options.initialDelayMs ?? 500;
+  const idempotencyKey = crypto.randomUUID();
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
@@ -72,6 +75,7 @@ async function callClockedApi(
           "Content-Type": "application/json",
           Authorization: `Bearer ${CLOCKED_API_KEY}`,
           "X-API-Key": CLOCKED_API_KEY,
+          "Idempotency-Key": idempotencyKey,
         },
         body: JSON.stringify(payload),
       });
@@ -98,13 +102,13 @@ async function callClockedApi(
 
       const data = await response.json();
       const credits = Number(
-        data?.credits_used ?? data?.credits ?? data?.usage?.credits ?? 0
+        data?.credits_used ?? data?.credits ?? data?.usage?.input_tokens ?? 0
       );
 
       if (credits > 0) {
         totalCreditsConsumed += credits;
         console.log(
-          `[Clocked] Endpoint: ${endpoint} | Credits Used: ${credits} | Total: ${totalCreditsConsumed}`
+          `[Clocked] Endpoint: ${endpoint} | Credits/Tokens: ${credits} | Total: ${totalCreditsConsumed}`
         );
       }
 
@@ -139,7 +143,7 @@ async function executeWithCache<T>(
     return transform(cached.data);
   }
 
-  // 2. Concurrency limited network request
+  // 2. Concurrency limited network request (max 4 concurrent workers)
   return limiter(async () => {
     // Re-check cache after queue wait
     const secondCheck = getCachedResponse<any>(cacheKey);
@@ -149,8 +153,7 @@ async function executeWithCache<T>(
 
     try {
       if (!CLOCKED_API_KEY && mockFallback) {
-        const mockData = mockFallback();
-        return mockData;
+        return mockFallback();
       }
 
       const { data, credits } = await callClockedApi(endpoint, payload);
@@ -160,9 +163,8 @@ async function executeWithCache<T>(
 
       return transform(data);
     } catch (err) {
-      // If live API fails and mockFallback is provided (e.g. offline testing/demo)
       if (mockFallback) {
-        console.warn(`[Clocked] Live API call failed, using mock fallback:`, (err as Error).message);
+        console.warn(`[Clocked] Live API call on ${endpoint} failed, falling back to mock:`, (err as Error).message);
         return mockFallback();
       }
       throw err;
@@ -173,7 +175,8 @@ async function executeWithCache<T>(
 // --- Endpoints ---
 
 /**
- * 1. PROTECT: Masks student PII (names, matriculation numbers).
+ * 1. PROTECT (POST /clocked/pii):
+ * Masks student identifiers (names, matriculation numbers, emails).
  */
 export async function protect(
   text: string,
@@ -181,7 +184,7 @@ export async function protect(
 ): Promise<ProtectResult> {
   const payload = clockedAdapters.protect.toRequest(text);
   return executeWithCache(
-    "/protect",
+    clockedAdapters.protect.endpoint,
     payload,
     (data) => clockedAdapters.protect.fromResponse(data, text),
     mockFallback
@@ -189,7 +192,8 @@ export async function protect(
 }
 
 /**
- * 2. COMPARE: Compares a pair of submissions for overlap/conflict.
+ * 2. COMPARE (POST /clocked/compare):
+ * Compares two submissions for conflicts, duplicates, same facts, or overlaps.
  */
 export async function compare(
   docA: { id: string; text: string },
@@ -198,7 +202,7 @@ export async function compare(
 ): Promise<CompareResult> {
   const payload = clockedAdapters.compare.toRequest(docA, docB);
   return executeWithCache(
-    "/compare",
+    clockedAdapters.compare.endpoint,
     payload,
     (data) => clockedAdapters.compare.fromResponse(data),
     mockFallback
@@ -206,40 +210,37 @@ export async function compare(
 }
 
 /**
- * 3. VERIFY: Ground claims against reading pack documents.
+ * 3. VERIFY (POST /clocked/grounding):
+ * Checks student claims against course reading pack documents.
  */
 export async function verify(
-  claims: string[],
+  answer: string,
   sources: Array<{ id: string; text: string }>,
-  mockFallback?: () => VerifyResult[]
-): Promise<VerifyResult[]> {
-  const payload = clockedAdapters.verify.toRequest(claims, sources);
+  claims?: string[],
+  mockFallback?: () => VerifyResult
+): Promise<VerifyResult> {
+  const payload = clockedAdapters.verify.toRequest(answer, sources, claims);
   return executeWithCache(
-    "/verify",
+    clockedAdapters.verify.endpoint,
     payload,
-    (data) => {
-      if (Array.isArray(data)) {
-        return data.map((item, i) =>
-          clockedAdapters.verify.fromResponse(item, claims[i] || "")
-        );
-      }
-      return [clockedAdapters.verify.fromResponse(data, claims[0] || "")];
-    },
+    (data) => clockedAdapters.verify.fromResponse(data),
     mockFallback
   );
 }
 
 /**
- * 4. RERANK: Picks the top reading pack passages for an unsupported claim.
+ * 4. RERANK (POST /clocked/rerank):
+ * Picks the most relevant reading pack passages for an unsupported/partial claim.
  */
 export async function rerank(
   query: string,
-  passages: string[],
+  passages: Array<{ id: string; text: string; title?: string }>,
+  top_n: number = 5,
   mockFallback?: () => RerankResult
 ): Promise<RerankResult> {
-  const payload = clockedAdapters.rerank.toRequest(query, passages);
+  const payload = clockedAdapters.rerank.toRequest(query, passages, top_n);
   return executeWithCache(
-    "/rerank",
+    clockedAdapters.rerank.endpoint,
     payload,
     (data) => clockedAdapters.rerank.fromResponse(data, query),
     mockFallback

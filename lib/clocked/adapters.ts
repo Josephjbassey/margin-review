@@ -1,14 +1,28 @@
 /**
- * Clocked Schema Adapters Module
+ * Clocked Official Schema Adapters Module
  *
- * All Clocked API request/response mapping is isolated in this single file.
- * Any schema change from Clocked developer documentation only touches this module.
+ * Source: https://clocked.rezolve.ai/docs/
+ * - Protect: POST /clocked/pii
+ * - Compare: POST /clocked/compare
+ * - Verify:  POST /clocked/grounding
+ * - Rerank:  POST /clocked/rerank
+ *
+ * All external request/response mapping is isolated in this single file.
  */
 
-// --- Internal Types ---
+// --- Internal Domain Types ---
+
+export interface ProtectEntity {
+  type: string;
+  value: string;
+  start: number;
+  end: number;
+  confidence: number;
+}
 
 export interface ProtectResult {
   masked_text: string;
+  entities: ProtectEntity[];
   entities_masked_count: number;
   raw_response: any;
 }
@@ -17,6 +31,7 @@ export interface PassageOffset {
   char_start: number;
   char_end: number;
   text: string;
+  confidence?: number;
 }
 
 export interface CompareResult {
@@ -31,130 +46,163 @@ export interface VerifyEvidence {
   source_id: string;
   passage_text: string;
   relation: "supported" | "partial" | "unsupported" | "contradicts";
+  char_start?: number;
+  char_end?: number;
   confidence?: number;
-  raw_evidence?: any;
+}
+
+export interface ClaimVerification {
+  claim: string;
+  status: "supported" | "partial" | "unsupported";
+  verdict: string;
+  evidence: VerifyEvidence[];
+  source_id?: string;
+  confidence: number;
 }
 
 export interface VerifyResult {
-  claim: string;
-  status: "supported" | "partial" | "unsupported";
-  evidence: VerifyEvidence[];
+  grounded_score: number;
+  overall_verdict: string;
+  claims: ClaimVerification[];
+  unsupported_claim_indexes: number[];
   raw_response: any;
 }
 
 export interface RerankedPassage {
   index: number;
-  passage_text: string;
+  id?: string;
+  action: "use" | "expand" | "skip";
+  reason?: string;
   relevance_score: number;
-  raw_item?: any;
+  document_score?: number;
 }
 
 export interface RerankResult {
   query: string;
-  ranked_passages: RerankedPassage[];
+  results: RerankedPassage[];
   raw_response: any;
 }
 
 // --- Adapters ---
 
 export const clockedAdapters = {
-  // 1. PROTECT (PII Masking)
+  // 1. PROTECT: POST /clocked/pii
   protect: {
+    endpoint: "/pii",
     toRequest(text: string) {
       return {
         text,
-        options: {
-          mask_pii: true,
-          entities: ["PERSON", "NAME", "STUDENT_ID", "MATRICULATION_NUMBER", "EMAIL"],
+        entities: {
+          person: "Full names of people or students",
+          student_id: "Student matriculation numbers or IDs (e.g. CS/2024/019 or MAT-102)",
+          email: "Email addresses",
         },
+        anonymize: "replace",
+        threshold: 0.5,
       };
     },
     fromResponse(data: any, originalText: string): ProtectResult {
-      // Handle standard Clocked protect response shapes
-      const masked_text =
-        data?.masked_text ||
-        data?.text ||
-        data?.data?.masked_text ||
-        originalText;
+      const masked_text = data?.anonymized_text || originalText;
+      const rawEntities = Array.isArray(data?.entities) ? data.entities : [];
 
-      const entities =
-        data?.entities ||
-        data?.masked_entities ||
-        data?.data?.entities ||
-        [];
+      const entities: ProtectEntity[] = rawEntities.map((e: any) => ({
+        type: String(e.type || "pii"),
+        value: String(e.value || ""),
+        start: Number(e.start ?? 0),
+        end: Number(e.end ?? 0),
+        confidence: Number(e.confidence ?? 1),
+      }));
 
       return {
         masked_text,
-        entities_masked_count: Array.isArray(entities) ? entities.length : 0,
+        entities,
+        entities_masked_count: entities.length,
         raw_response: data,
       };
     },
   },
 
-  // 2. COMPARE (Pairwise document comparison)
+  // 2. COMPARE: POST /clocked/compare
   compare: {
+    endpoint: "/compare",
     toRequest(docA: { id: string; text: string }, docB: { id: string; text: string }) {
       return {
-        document_a: { id: docA.id, text: docA.text },
-        document_b: { id: docB.id, text: docB.text },
+        documents: [
+          { id: docA.id, text: docA.text },
+          { id: docB.id, text: docB.text },
+        ],
+        threshold: 0.5,
+        evidence: "flagged",
+        kinds: true,
       };
     },
     fromResponse(data: any): CompareResult {
-      // Map relation to canonical enum
-      const rawRel = String(
-        data?.relation || data?.decision || data?.comparison || "none"
-      ).toLowerCase();
+      // Clocked returns pairs array: data.pairs[0]
+      const pair = Array.isArray(data?.pairs) && data.pairs.length > 0 ? data.pairs[0] : data;
+
+      const rawRel = String(pair?.relation || data?.verdict || "unrelated").toLowerCase();
 
       let relation: CompareResult["relation"] = "none";
-      if (rawRel.includes("conflict") || rawRel.includes("contradict")) {
+      if (rawRel.includes("conflict") || rawRel.includes("conflicting")) {
         relation = "conflict";
-      } else if (rawRel.includes("same") || rawRel.includes("shared_facts")) {
+      } else if (rawRel.includes("same")) {
         relation = "same_facts";
-      } else if (rawRel.includes("dup") || rawRel.includes("identical")) {
+      } else if (rawRel.includes("dup") || data?.verdict === "duplicates") {
         relation = "duplicate";
-      } else if (rawRel.includes("overlap") || rawRel.includes("partial")) {
+      } else if (rawRel.includes("overlap") || rawRel.includes("overlapping")) {
         relation = "overlap";
       }
 
+      // Probability calculation: prefer specific probability, then related
       const probability = Number(
-        data?.probability ?? data?.confidence ?? data?.score ?? 0
+        pair?.probabilities?.[rawRel] ??
+        pair?.related ??
+        pair?.probability ??
+        0
       );
 
-      // Extract passage offsets for doc A
       const passages_a: PassageOffset[] = [];
-      const rawA =
-        data?.passages_a ||
-        data?.matches_a ||
-        data?.alignments?.map((a: any) => a.passage_a) ||
-        [];
+      const passages_b: PassageOffset[] = [];
 
-      if (Array.isArray(rawA)) {
-        for (const item of rawA) {
-          if (item) {
+      // Extract duplicates findings if present
+      if (Array.isArray(pair?.duplicates)) {
+        for (const item of pair.duplicates) {
+          if (item?.a) {
             passages_a.push({
-              char_start: Number(item.char_start ?? item.start ?? 0),
-              char_end: Number(item.char_end ?? item.end ?? 0),
-              text: String(item.text ?? item.passage ?? ""),
+              char_start: Number(item.a.start ?? 0),
+              char_end: Number(item.a.end ?? 0),
+              text: String(item.a.quote ?? ""),
+              confidence: Number(item.confidence ?? 1),
+            });
+          }
+          if (item?.b) {
+            passages_b.push({
+              char_start: Number(item.b.start ?? 0),
+              char_end: Number(item.b.end ?? 0),
+              text: String(item.b.quote ?? ""),
+              confidence: Number(item.confidence ?? 1),
             });
           }
         }
       }
 
-      // Extract passage offsets for doc B
-      const passages_b: PassageOffset[] = [];
-      const rawB =
-        data?.passages_b ||
-        data?.matches_b ||
-        data?.alignments?.map((a: any) => a.passage_b) ||
-        [];
-
-      if (Array.isArray(rawB)) {
-        for (const item of rawB) {
-          if (item) {
+      // Extract conflicts findings if present
+      if (Array.isArray(pair?.conflicts)) {
+        for (const item of pair.conflicts) {
+          if (item?.a) {
+            passages_a.push({
+              char_start: Number(item.a.start ?? 0),
+              char_end: Number(item.a.end ?? 0),
+              text: String(item.a.quote ?? ""),
+              confidence: Number(item.confidence ?? 1),
+            });
+          }
+          if (item?.b) {
             passages_b.push({
-              char_start: Number(item.char_start ?? item.start ?? 0),
-              char_end: Number(item.char_end ?? item.end ?? 0),
-              text: String(item.text ?? item.passage ?? ""),
+              char_start: Number(item.b.start ?? 0),
+              char_end: Number(item.b.end ?? 0),
+              text: String(item.b.quote ?? ""),
+              confidence: Number(item.confidence ?? 1),
             });
           }
         }
@@ -170,83 +218,100 @@ export const clockedAdapters = {
     },
   },
 
-  // 3. VERIFY (Grounding claims against reading pack)
+  // 3. VERIFY: POST /clocked/grounding
   verify: {
-    toRequest(claims: string[], sources: Array<{ id: string; text: string }>) {
+    endpoint: "/grounding",
+    toRequest(
+      answer: string,
+      sources: Array<{ id: string; text: string }>,
+      claims?: string[]
+    ) {
       return {
-        claims,
-        sources: sources.map((s) => ({ id: s.id, content: s.text })),
+        documents: sources.map((s) => ({ id: s.id, text: s.text })),
+        answer,
+        ...(claims && claims.length > 0 ? { claims } : {}),
+        evidence: "all",
+        threshold: 0.5,
       };
     },
-    fromResponse(data: any, claimText: string): VerifyResult {
-      const rawStatus = String(
-        data?.status || data?.verdict || data?.grounding || "unsupported"
-      ).toLowerCase();
+    fromResponse(data: any): VerifyResult {
+      const grounded_score = Number(data?.grounded ?? 0);
+      const overall_verdict = String(data?.verdict ?? "unsupported");
+      const unsupported_claim_indexes: number[] = Array.isArray(data?.unsupported_claims)
+        ? data.unsupported_claims
+        : [];
 
-      let status: VerifyResult["status"] = "unsupported";
-      if (rawStatus.includes("support") && !rawStatus.includes("un")) {
-        status = "supported";
-      } else if (rawStatus.includes("part")) {
-        status = "partial";
-      }
+      const rawClaims = Array.isArray(data?.claims) ? data.claims : [];
+      const parsedClaims: ClaimVerification[] = rawClaims.map((c: any) => {
+        const rawVerdict = String(c?.verdict ?? "unsupported").toLowerCase();
+        let status: ClaimVerification["status"] = "unsupported";
+        if (rawVerdict.includes("support")) {
+          status = "supported";
+        } else if (rawVerdict.includes("part")) {
+          status = "partial";
+        }
 
-      const evidenceList: VerifyEvidence[] = [];
-      const rawEvidence = data?.evidence || data?.sources || data?.matches || [];
-
-      if (Array.isArray(rawEvidence)) {
-        for (const ev of rawEvidence) {
-          const evRel = String(ev?.relation || ev?.status || status).toLowerCase();
-          let relation: VerifyEvidence["relation"] = "supported";
-          if (evRel.includes("part")) relation = "partial";
-          else if (evRel.includes("unsupported")) relation = "unsupported";
-          else if (evRel.includes("contra")) relation = "contradicts";
-
-          evidenceList.push({
-            source_id: String(ev.source_id || ev.id || "R-01"),
-            passage_text: String(ev.passage || ev.text || ev.passage_text || ""),
-            relation,
-            confidence: Number(ev.confidence ?? ev.score ?? 0.8),
-            raw_evidence: ev,
+        const evidence: VerifyEvidence[] = [];
+        if (c?.evidence) {
+          const evRel = status === "supported" ? "supported" : rawVerdict.includes("contra") ? "contradicts" : "unsupported";
+          evidence.push({
+            source_id: String(c.evidence.document || c.source || "reading-pack"),
+            passage_text: String(c.evidence.quote || ""),
+            relation: evRel,
+            char_start: Number(c.evidence.start ?? 0),
+            char_end: Number(c.evidence.end ?? 0),
+            confidence: Number(c.evidence.confidence ?? 1),
           });
         }
-      }
+
+        return {
+          claim: String(c?.claim || ""),
+          status,
+          verdict: rawVerdict,
+          evidence,
+          source_id: c?.source ? String(c.source) : undefined,
+          confidence: Number(c?.supported ?? (status === "supported" ? 0.95 : 0.1)),
+        };
+      });
 
       return {
-        claim: claimText,
-        status,
-        evidence: evidenceList,
+        grounded_score,
+        overall_verdict,
+        claims: parsedClaims,
+        unsupported_claim_indexes,
         raw_response: data,
       };
     },
   },
 
-  // 4. RERANK (Passage reranking for unsupported/partial claims)
+  // 4. RERANK: POST /clocked/rerank
   rerank: {
-    toRequest(query: string, passages: string[]) {
+    endpoint: "/rerank",
+    toRequest(query: string, passages: Array<{ id: string; text: string; title?: string }>, top_n?: number) {
       return {
         query,
-        passages,
+        documents: passages.map((p) => ({
+          id: p.id,
+          text: p.text,
+          ...(p.title ? { title: p.title } : {}),
+        })),
+        ...(top_n ? { top_n } : {}),
       };
     },
     fromResponse(data: any, query: string): RerankResult {
-      const ranked: RerankedPassage[] = [];
-      const rawList = data?.results || data?.ranked_passages || data?.ranking || [];
-
-      if (Array.isArray(rawList)) {
-        for (let i = 0; i < rawList.length; i++) {
-          const item = rawList[i];
-          ranked.push({
-            index: Number(item.index ?? i),
-            passage_text: String(item.text ?? item.passage ?? ""),
-            relevance_score: Number(item.relevance_score ?? item.score ?? 1 - i * 0.1),
-            raw_item: item,
-          });
-        }
-      }
+      const rawResults = Array.isArray(data?.results) ? data.results : [];
+      const results: RerankedPassage[] = rawResults.map((r: any) => ({
+        index: Number(r.index ?? 0),
+        id: r.id ? String(r.id) : undefined,
+        action: (r.action as "use" | "expand" | "skip") || "use",
+        reason: r.reason ? String(r.reason) : undefined,
+        relevance_score: Number(r.relevance_score ?? 0),
+        document_score: r.document_score ? Number(r.document_score) : undefined,
+      }));
 
       return {
         query,
-        ranked_passages: ranked,
+        results,
         raw_response: data,
       };
     },
