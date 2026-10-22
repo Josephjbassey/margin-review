@@ -546,6 +546,7 @@ export function LandingPage() {
 
       {/* 4. Foundational Architecture (3 Pillars) */}
       <section
+        id="architecture"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -674,6 +675,7 @@ export function LandingPage() {
 
       {/* 5. Live Comparison Architecture Inspection (Specification Matrix) */}
       <section
+        id="specs"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -1070,6 +1072,251 @@ export function LandingPage() {
               <span>LOCAL FERPA PRIVACY</span>
               <span>·</span>
               <span>HUMAN LECTURER DECIDES</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7.5 Pricing & Institutional Credit Packs (Coming Soon) */}
+      <section
+        id="pricing"
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "48px 24px 32px 24px",
+        }}
+      >
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "4px 10px",
+              backgroundColor: "var(--surface)",
+              border: "1px solid var(--ink)",
+              borderRadius: "2px",
+              fontSize: "11px",
+              fontFamily: "var(--font-mono)",
+              boxShadow: "2px 2px 0 0 var(--ink)",
+              marginBottom: "12px",
+            }}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: "14px", color: "var(--accent)" }}>
+              payments
+            </span>
+            <span style={{ fontWeight: 700 }}>PREDICTABLE ACADEMIC BILLING · COMING SOON</span>
+          </div>
+          <h2 style={{ fontSize: "36px", fontWeight: 600, letterSpacing: "-0.02em", margin: "0 0 10px 0", color: "var(--ink)" }}>
+            Simple, Transparent Plans for Faculty &amp; Departments
+          </h2>
+          <p style={{ fontSize: "16px", color: "var(--muted)", maxWidth: "620px", margin: "0 auto", lineHeight: "24px" }}>
+            No surprise overage bills or uncapped API meters. Tailored for university procurement cycles, departmental P-cards, and grant funding.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", alignItems: "stretch" }}>
+          {/* Plan 1: Instructor Pilot */}
+          <div
+            className="card"
+            style={{
+              padding: "32px 24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              boxShadow: "4px 4px 0 0 var(--ink)",
+              position: "relative",
+            }}
+          >
+            <div>
+              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
+                Individual Pilot
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "6px" }}>
+                <span style={{ fontSize: "36px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$0</span>
+                <span className="caption-mono text-muted">/ Free for evaluation</span>
+              </div>
+              <p style={{ fontSize: "14px", color: "var(--muted)", margin: "0 0 24px 0", lineHeight: "20px" }}>
+                For individual professors, seminar leaders, and honor court members evaluating Margin on a single course cohort.
+              </p>
+
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Up to 20 paper comparisons per run</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Direct PDF, Word &amp; Text ingestion</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Full side-by-side evidence reviewer</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Signed Markdown audit export</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ paddingTop: "28px" }}>
+              <button
+                type="button"
+                onClick={handleJudgeLogin}
+                disabled={judgeLoading}
+                className="btn btn-secondary"
+                style={{ width: "100%", padding: "12px", justifyContent: "center" }}
+              >
+                Launch Free Judge Trial →
+              </button>
+            </div>
+          </div>
+
+          {/* Plan 2: Department Credit Packs (Highlighted) */}
+          <div
+            className="card"
+            style={{
+              padding: "32px 24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              boxShadow: "6px 6px 0 0 var(--accent)",
+              border: "2px solid var(--accent)",
+              position: "relative",
+              backgroundColor: "var(--surface)",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: "-12px",
+                right: "20px",
+                backgroundColor: "var(--accent)",
+                color: "#FFFFFF",
+                fontSize: "10px",
+                fontWeight: 700,
+                fontFamily: "var(--font-mono)",
+                padding: "2px 10px",
+                borderRadius: "2px",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+              }}
+            >
+              Recommended For Faculties
+            </div>
+
+            <div>
+              <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
+                Department Credit Packs
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "6px" }}>
+                <span style={{ fontSize: "36px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>Prepaid</span>
+                <span className="caption-mono text-muted">/ Credits rollover</span>
+              </div>
+              <p style={{ fontSize: "14px", color: "var(--muted)", margin: "0 0 24px 0", lineHeight: "20px" }}>
+                Pre-purchase essay review credits with departmental grant funds or credit cards. Credits never expire and carry over across semesters.
+              </p>
+
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span><strong>250 Essays:</strong> $49 (~$0.19/essay)</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span><strong>1,000 Essays:</strong> $149 (~$0.14/essay)</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Full Course Syllabus &amp; Reading Pack Grounding</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Shared workspace for TAs &amp; Course Instructors</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Automatic deterministic cache discount</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ paddingTop: "28px" }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById("demo");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="btn btn-primary"
+                style={{ width: "100%", padding: "12px", justifyContent: "center" }}
+              >
+                Join Waitlist for Fall 2026 →
+              </button>
+            </div>
+          </div>
+
+          {/* Plan 3: Campus Enclave (Enterprise / BYOK) */}
+          <div
+            className="card"
+            style={{
+              padding: "32px 24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              boxShadow: "4px 4px 0 0 var(--ink)",
+              position: "relative",
+            }}
+          >
+            <div>
+              <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "8px" }}>
+                Campus &amp; Registrar
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "6px" }}>
+                <span style={{ fontSize: "36px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>Campus</span>
+                <span className="caption-mono text-muted">/ Annual Site License</span>
+              </div>
+              <p style={{ fontSize: "14px", color: "var(--muted)", margin: "0 0 24px 0", lineHeight: "20px" }}>
+                Full institutional deployment for university-wide honor courts, registrar offices, and academic computing divisions.
+              </p>
+
+              <div style={{ borderTop: "1px solid var(--track)", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Unlimited student paper submissions</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Canvas, Blackboard, &amp; D2L Brightspace LTI 1.3</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>InCommon / Shibboleth / SAML SSO Integration</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span><strong>Bring-Your-Own-Key (BYOK)</strong> direct API option</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--accent)" }}>check</span>
+                  <span>Dedicated compliance SLA &amp; FERPA DPA</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ paddingTop: "28px" }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById("demo");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="btn btn-secondary"
+                style={{ width: "100%", padding: "12px", justifyContent: "center" }}
+              >
+                Inquire for Campus License →
+              </button>
             </div>
           </div>
         </div>

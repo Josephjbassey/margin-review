@@ -35,24 +35,61 @@ export function Topbar({ active = "batches" }: TopbarProps) {
         </Link>
 
         <nav className="topbar-nav">
-          <Link
-            href="/"
-            className={`topbar-link ${active === "batches" ? "active" : ""}`}
-          >
-            Batches
-          </Link>
-          <Link
-            href="/new"
-            className={`topbar-link ${active === "reading" ? "active" : ""}`}
-          >
-            New Batch
-          </Link>
-          <Link
-            href="/privacy"
-            className={`topbar-link ${active === "privacy" ? "active" : ""}`}
-          >
-            FERPA Policy
-          </Link>
+          {!isPending && session?.user ? (
+            <>
+              <Link
+                href="/"
+                className={`topbar-link ${active === "batches" ? "active" : ""}`}
+              >
+                Batches
+              </Link>
+              <Link
+                href="/new"
+                className={`topbar-link ${active === "reading" ? "active" : ""}`}
+              >
+                New Batch
+              </Link>
+              <Link
+                href="/privacy"
+                className={`topbar-link ${active === "privacy" ? "active" : ""}`}
+              >
+                FERPA Policy
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/"
+                className={`topbar-link ${active === "batches" ? "active" : ""}`}
+              >
+                Overview
+              </Link>
+              <Link
+                href="/#architecture"
+                className="topbar-link"
+              >
+                How It Works
+              </Link>
+              <Link
+                href="/#specs"
+                className="topbar-link"
+              >
+                Comparison
+              </Link>
+              <Link
+                href="/#pricing"
+                className="topbar-link"
+              >
+                Pricing (Soon)
+              </Link>
+              <Link
+                href="/privacy"
+                className={`topbar-link ${active === "privacy" ? "active" : ""}`}
+              >
+                FERPA Policy
+              </Link>
+            </>
+          )}
         </nav>
 
         <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
