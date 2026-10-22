@@ -61,8 +61,9 @@ export default function NotFound() {
             fontFamily: "var(--font-mono)",
           }}
         >
-          Margin Academic Integrity Forensic Engine · Clocked 2026
+          Margin · Academic Integrity Forensic Review System
         </div>
+
       </div>
     </div>
   );
