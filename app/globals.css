@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
   --paper: #F4F1EA;
   --surface: #FBFAF6;
+  --surface-container: #F1EEE7;
+  --surface-container-low: #F6F3EC;
+  --surface-container-high: #EBE8E1;
   --ink: #101426;
   --accent: #2B44FF;
   --wash: #C5CEFF;
@@ -10,6 +14,7 @@
   --track: #E4E1D6;
   --muted: #5A5E70;
   --on-dark: #AEB9FF;
+  --error: #BA1A1A;
 
   --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'Space Mono', monospace;

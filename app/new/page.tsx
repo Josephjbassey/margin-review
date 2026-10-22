@@ -13,11 +13,10 @@ export default function NewBatchPage() {
   const { data: session, isPending: authPending } = authClient.useSession();
 
   useEffect(() => {
-    document.title = "New Batch · Margin Academic Forensic Review";
+    document.title = "New batch · Step 1 of 3 · Margin";
   }, []);
 
-
-  const [name, setName] = useState("GNS102 Informatics & Formal Methods");
+  const [name, setName] = useState("GNS102 · Essay 2");
   const [submissions, setSubmissions] = useState<File[]>([]);
   const [readingPack, setReadingPack] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -68,7 +67,7 @@ export default function NewBatchPage() {
 
       setSubmissions(subFiles);
       setReadingPack(readFiles);
-      setName("GNS102 Informatics & Formal Methods (Autumn 2026)");
+      setName("GNS102 · Essay 2 (Modern Thought)");
     } catch (err: any) {
       setError(err.message || "Failed to load sample dataset");
     } finally {
@@ -135,256 +134,621 @@ export default function NewBatchPage() {
   }
 
   return (
-    <div className="container">
-
-      {/* Top back link */}
-      <div style={{ marginBottom: 20 }}>
-        <Link href="/" className="caption-mono text-muted" style={{ textDecoration: "none" }}>
-          ← Back to Batches
-        </Link>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: 32,
-          flexWrap: "wrap",
-          gap: 16,
-        }}
-      >
-        <div>
-          <h1 className="page-title" style={{ margin: 0 }}>
-            New Review Batch
-          </h1>
-          <p className="text-muted" style={{ margin: "6px 0 0 0", fontSize: 16 }}>
-            Upload student submissions and course reading pack. Identifiers are masked before pairwise
-            comparison.
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleLoadSample}
-          disabled={loadingSample}
-          className="btn btn-secondary"
-        >
-          {loadingSample ? "Staging..." : "⚡ Stage GNS102 Sample Files"}
-        </button>
-      </div>
-
-      {error && (
+    <div style={{ width: "100%", backgroundColor: "var(--paper)", minHeight: "100vh" }}>
+      <div className="container" style={{ paddingBottom: "96px" }}>
+        {/* Progress Header & Workflow Metadata */}
         <div
-          className="card"
           style={{
-            marginBottom: 24,
-            borderColor: "var(--ink)",
-            backgroundColor: "#FFF0F0",
-            color: "#900",
-            fontWeight: 500,
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            gap: "20px",
+            paddingBottom: "24px",
+            borderBottom: "1px solid var(--ink)",
+            marginBottom: "32px",
           }}
         >
-          {error}
-        </div>
-      )}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+              <span className="tag tag-conflict" style={{ padding: "2px 8px", fontSize: "10px" }}>
+                STAGE · INGESTION
+              </span>
+              <span className="label-mono text-muted" style={{ textTransform: "uppercase" }}>
+                Step 1 of 3
+              </span>
+            </div>
+            <h1
+              style={{
+                fontFamily: "var(--font-inter)",
+                fontSize: "24px",
+                lineHeight: "32px",
+                fontWeight: 600,
+                letterSpacing: "-0.015em",
+                margin: 0,
+                color: "var(--ink)",
+              }}
+            >
+              New batch
+            </h1>
+          </div>
 
-      <form onSubmit={handleSubmit}>
-        {/* Batch Name */}
-        <div className="card" style={{ marginBottom: 24 }}>
-          <label
-            htmlFor="batchName"
-            className="label-mono"
-            style={{ display: "block", marginBottom: 8, fontWeight: 700 }}
+          {/* Step Tracking Pipeline Visual */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--accent)",
+                  color: "#FFFFFF",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                1
+              </span>
+              <span className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
+                Corpus Intake
+              </span>
+            </div>
+            <div style={{ width: "32px", height: "2px", backgroundColor: "var(--ink)" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", opacity: 0.5 }}>
+              <span
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--surface)",
+                  border: "1px solid var(--ink)",
+                  color: "var(--ink)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                2
+              </span>
+              <span className="label-mono text-muted">Tokenize &amp; Align</span>
+            </div>
+            <div style={{ width: "32px", height: "2px", backgroundColor: "var(--track)" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", opacity: 0.5 }}>
+              <span
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--surface)",
+                  border: "1px solid var(--muted)",
+                  color: "var(--muted)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                3
+              </span>
+              <span className="label-mono text-muted">Claims Matrix</span>
+            </div>
+          </div>
+        </div>
+
+        {error && (
+          <div
+            style={{
+              padding: "12px 16px",
+              backgroundColor: "#FFF0F0",
+              border: "1px solid var(--ink)",
+              borderRadius: "2px",
+              color: "var(--error)",
+              fontSize: "14px",
+              marginBottom: "24px",
+              boxShadow: "3px 3px 0 0 var(--ink)",
+            }}
           >
-            BATCH NAME & COURSE
-          </label>
-          <input
-            id="batchName"
-            type="text"
-            className="input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="e.g. GNS102 Formal Systems - Assignment 2"
-          />
-        </div>
+            {error}
+          </div>
+        )}
 
-        {/* Dual Upload Sections */}
-        <div className="dual-upload-grid">
-          {/* Dropzone 1: Student Submissions */}
-
-          <div className="card">
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span className="label-mono" style={{ fontWeight: 700 }}>
-                1. STUDENT SUBMISSIONS (.txt, .docx)
-              </span>
-              <span className="caption-mono tag tag-draft">
-                {submissions.length} staged
-              </span>
+        {/* Primary Configuration Form */}
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+          {/* Batch Identity Block */}
+          <div style={{ maxWidth: "560px", display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <label className="label-mono" style={{ fontWeight: 700, textTransform: "uppercase" }} htmlFor="batch-name">
+                Batch Name / Reference ID
+              </label>
+              <span className="caption-mono text-muted">FERPA-SECURE ID</span>
             </div>
-
-            <label className="dropzone" style={{ display: "block" }}>
+            <div style={{ position: "relative" }}>
               <input
-                type="file"
-                multiple
-                accept=".txt,.docx"
-                onChange={handleSubmissionsUpload}
-                style={{ display: "none" }}
+                id="batch-name"
+                type="text"
+                className="input"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                placeholder="e.g. GNS102 · Essay 2"
+                style={{ paddingRight: "80px", fontWeight: 600 }}
               />
-              <div style={{ fontSize: 24, marginBottom: 8 }}>📄</div>
-              <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                Drop student essays or click to browse
-              </div>
-              <div className="caption-mono text-muted">
-                Each manuscript receives an anonymous sequential label (S-01, S-02...)
-              </div>
-            </label>
-
-            {submissions.length > 0 && (
               <div
                 style={{
-                  marginTop: 16,
-                  maxHeight: 220,
-                  overflowY: "auto",
-                  border: "1px solid var(--ink)",
-                  backgroundColor: "var(--paper)",
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  color: "var(--muted)",
+                  pointerEvents: "none",
                 }}
+                className="caption-mono"
               >
-                {submissions.map((f, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: "8px 12px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      borderBottom: "1px solid rgba(16,20,38,0.1)",
-                    }}
-                  >
-                    <div>
-                      <span className="caption-mono tag tag-draft" style={{ marginRight: 8 }}>
-                        S-0{i + 1}
-                      </span>
-                      <span style={{ fontSize: 13, fontWeight: 500 }}>{f.name}</span>
-                      <span className="caption-mono text-muted" style={{ marginLeft: 8 }}>
-                        ({(f.size / 1024).toFixed(1)} KB)
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeSubmission(i)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        color: "var(--muted)",
-                        cursor: "pointer",
-                        fontWeight: 700,
-                      }}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
+                <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>
+                  verified
+                </span>
+                <span>SECURE</span>
               </div>
-            )}
+            </div>
           </div>
 
-          {/* Dropzone 2: Course Reading Pack */}
-          <div className="card">
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span className="label-mono" style={{ fontWeight: 700 }}>
-                2. COURSE READING PACK (.txt, .docx)
-              </span>
-              <span className="caption-mono tag tag-draft">
-                {readingPack.length} staged
-              </span>
-            </div>
+          {/* Quick Demo Pre-load Bar */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
+            <span className="caption-mono text-muted">
+              Select student manuscripts and assigned syllabus readings or stage benchmark files:
+            </span>
+            <button
+              type="button"
+              onClick={handleLoadSample}
+              disabled={loadingSample}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: "12px" }}
+            >
+              {loadingSample ? "Staging..." : "⚡ Stage Reference GNS102 Sample Files"}
+            </button>
+          </div>
 
-            <label className="dropzone" style={{ display: "block" }}>
-              <input
-                type="file"
-                multiple
-                accept=".txt,.docx"
-                onChange={handleReadingUpload}
-                style={{ display: "none" }}
-              />
-              <div style={{ fontSize: 24, marginBottom: 8 }}>📚</div>
-              <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                Drop textbook chapters or syllabus reading
-              </div>
-              <div className="caption-mono text-muted">
-                Student claims are verified and grounded against this reference corpus
-              </div>
-            </label>
-
-            {readingPack.length > 0 && (
+          {/* Intake Mosaic Grid (7:5 Column Split) */}
+          <div className="review-grid" style={{ alignItems: "start" }}>
+            {/* Card 1: Submissions Drop & Registry (7 cols) */}
+            <div
+              className="card"
+              style={{
+                padding: "24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "18px",
+                boxShadow: "4px 4px 0 0 var(--ink)",
+              }}
+            >
               <div
                 style={{
-                  marginTop: 16,
-                  maxHeight: 220,
-                  overflowY: "auto",
-                  border: "1px solid var(--ink)",
-                  backgroundColor: "var(--paper)",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingBottom: "12px",
+                  borderBottom: "1px solid var(--ink)",
                 }}
               >
-                {readingPack.map((f, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: "8px 12px",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      borderBottom: "1px solid rgba(16,20,38,0.1)",
-                    }}
-                  >
-                    <div>
-                      <span className="caption-mono tag tag-draft" style={{ marginRight: 8 }}>
-                        R-0{i + 1}
-                      </span>
-                      <span style={{ fontSize: 13, fontWeight: 500 }}>{f.name}</span>
-                      <span className="caption-mono text-muted" style={{ marginLeft: 8 }}>
-                        ({(f.size / 1024).toFixed(1)} KB)
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeReading(i)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        color: "var(--muted)",
-                        cursor: "pointer",
-                        fontWeight: 700,
-                      }}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+                    folder_supervised
+                  </span>
+                  <h2 style={{ fontSize: "18px", fontWeight: 600, margin: 0 }}>Submissions</h2>
+                </div>
+                <span className="tag tag-same_facts" style={{ fontWeight: 700 }}>
+                  {submissions.length} files staged
+                </span>
               </div>
-            )}
-          </div>
-        </div>
 
-        {/* Pairwise Guard Card */}
-        <div
-          className="card"
-          style={{
-            marginBottom: 24,
-            backgroundColor: isPairExceeded ? "#FFF0F0" : "var(--surface)",
-            borderColor: isPairExceeded ? "#900" : "var(--ink)",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              {/* Dropzone */}
+              <label
+                className="dropzone"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "28px 16px",
+                  backgroundColor: "rgba(244, 241, 234, 0.6)",
+                }}
+              >
+                <input
+                  type="file"
+                  multiple
+                  accept=".txt,.docx"
+                  onChange={handleSubmissionsUpload}
+                  style={{ display: "none" }}
+                />
+                <div
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    border: "1px solid var(--ink)",
+                    backgroundColor: "var(--surface)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "2px 2px 0 0 var(--ink)",
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: "22px" }}>
+                    upload_file
+                  </span>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 600, color: "var(--ink)", fontSize: "14px" }}>
+                    Drop .txt or .docx files
+                  </div>
+                  <div className="caption-mono text-muted">
+                    Individual student essays up to 25 MB each
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  style={{ marginTop: "4px", pointerEvents: "none" }}
+                >
+                  Choose files
+                </button>
+              </label>
+
+              {/* Staged Stream Table */}
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingBottom: "6px",
+                    borderBottom: "1px solid rgba(16, 20, 38, 0.3)",
+                  }}
+                  className="caption-mono text-muted"
+                >
+                  <span style={{ textTransform: "uppercase" }}>Student Manuscript ID</span>
+                  <div style={{ display: "flex", gap: "24px" }}>
+                    <span>SIZE</span>
+                    <span>STATUS</span>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    maxHeight: "220px",
+                    overflowY: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                  className="label-mono"
+                >
+                  {submissions.length === 0 ? (
+                    <div style={{ padding: "16px 0", textAlign: "center" }} className="caption-mono text-muted">
+                      No student manuscripts staged yet. Drag files above.
+                    </div>
+                  ) : (
+                    submissions.map((f, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          padding: "8px 4px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          borderBottom: "1px solid rgba(16, 20, 38, 0.1)",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1 }}>
+                          <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>
+                            description
+                          </span>
+                          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {f.name}
+                          </span>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexShrink: 0 }}>
+                          <span className="caption-mono text-muted">
+                            {(f.size / 1024).toFixed(1)} KB
+                          </span>
+                          <span
+                            style={{
+                              width: "8px",
+                              height: "8px",
+                              borderRadius: "50%",
+                              backgroundColor: "var(--accent)",
+                              display: "inline-block",
+                            }}
+                            title="Ready to index"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeSubmission(i)}
+                            style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", padding: "0 4px" }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Reading Pack / Baseline Authority (5 cols) */}
+            <div
+              className="card"
+              style={{
+                padding: "24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "18px",
+                boxShadow: "4px 4px 0 0 var(--ink)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingBottom: "12px",
+                  borderBottom: "1px solid var(--ink)",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+                    auto_stories
+                  </span>
+                  <h2 style={{ fontSize: "18px", fontWeight: 600, margin: 0 }}>Reading pack</h2>
+                </div>
+                <span className="tag tag-draft" style={{ fontWeight: 700 }}>
+                  {readingPack.length} files
+                </span>
+              </div>
+
+              {/* Dropzone */}
+              <label
+                className="dropzone"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "28px 16px",
+                  backgroundColor: "rgba(244, 241, 234, 0.6)",
+                }}
+              >
+                <input
+                  type="file"
+                  multiple
+                  accept=".txt,.docx"
+                  onChange={handleReadingUpload}
+                  style={{ display: "none" }}
+                />
+                <div
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    border: "1px solid var(--ink)",
+                    backgroundColor: "var(--surface)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "2px 2px 0 0 var(--ink)",
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: "22px" }}>
+                    library_books
+                  </span>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 600, color: "var(--ink)", fontSize: "14px" }}>
+                    Drop the course material
+                  </div>
+                  <div className="caption-mono text-muted">
+                    PDF, Markdown or DOCX canonical texts
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  style={{ marginTop: "4px", pointerEvents: "none" }}
+                >
+                  Choose files
+                </button>
+              </label>
+
+              {/* Staged Stream Table */}
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingBottom: "6px",
+                    borderBottom: "1px solid rgba(16, 20, 38, 0.3)",
+                  }}
+                  className="caption-mono text-muted"
+                >
+                  <span style={{ textTransform: "uppercase" }}>Source Reference File</span>
+                  <div style={{ display: "flex", gap: "24px" }}>
+                    <span>SIZE</span>
+                    <span>SCOPE</span>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    maxHeight: "220px",
+                    overflowY: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                  className="label-mono"
+                >
+                  {readingPack.length === 0 ? (
+                    <div style={{ padding: "16px 0", textAlign: "center" }} className="caption-mono text-muted">
+                      No course materials staged yet.
+                    </div>
+                  ) : (
+                    readingPack.map((f, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          padding: "8px 4px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          borderBottom: "1px solid rgba(16, 20, 38, 0.1)",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1 }}>
+                          <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>
+                            menu_book
+                          </span>
+                          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {f.name}
+                          </span>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
+                          <span className="caption-mono text-muted">
+                            {(f.size / 1024).toFixed(1)} KB
+                          </span>
+                          <span className="tag tag-same_facts" style={{ fontSize: "10px", padding: "1px 6px" }}>
+                            {i === 0 ? "PRIMARY" : "REF"}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => removeReading(i)}
+                            style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", padding: "0 4px" }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Forensic Note */}
+              <div
+                style={{
+                  marginTop: "auto",
+                  backgroundColor: "var(--surface-container)",
+                  border: "1px solid rgba(16, 20, 38, 0.3)",
+                  padding: "12px",
+                  borderRadius: "2px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--ink)", marginTop: "2px" }}>
+                  fingerprint
+                </span>
+                <p style={{ margin: 0, fontSize: "12px", lineHeight: "17px", color: "var(--muted)" }}>
+                  Passages from uploaded reading packets serve as the ground-truth index for alignment offset calculations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Alignment Engine Configuration Callout */}
+          <div
+            style={{
+              width: "100%",
+              backgroundColor: "var(--paper)",
+              border: "1px solid var(--ink)",
+              borderRadius: "2px",
+              padding: "16px 20px",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "16px",
+              boxShadow: "3px 3px 0 0 var(--ink)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "2px",
+                  border: "1px solid var(--ink)",
+                  backgroundColor: "var(--surface)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+                  tune
+                </span>
+              </div>
+              <div>
+                <div className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
+                  Corpus Detection Tolerance: Exact &amp; Conceptual Overlap
+                </div>
+                <div style={{ fontSize: "12px", color: "var(--muted)" }}>
+                  Character offset matching window configured to 64 tokens with semantic paraphrase flag enabled.
+                </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                backgroundColor: "var(--surface)",
+                border: "1px solid var(--ink)",
+                padding: "4px 10px",
+                borderRadius: "2px",
+              }}
+              className="label-mono"
+            >
+              <span>PRESET:</span>
+              <span style={{ fontWeight: 700, color: "var(--accent)" }}>ACADEMIC_STANDARD_v2</span>
+            </div>
+          </div>
+
+          {/* Pairwise Limit Guard */}
+          <div
+            style={{
+              padding: "14px 18px",
+              backgroundColor: isPairExceeded ? "#FFF0F0" : "var(--surface)",
+              border: "1px solid var(--ink)",
+              borderRadius: "2px",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "12px",
+            }}
+          >
             <div>
-              <div className="caption-mono text-muted" style={{ fontWeight: 700 }}>
-                PAIRWISE COMPARISON GUARD (MAX_PAIRS = {MAX_PAIRS})
+              <div className="caption-mono text-muted" style={{ fontWeight: 700, textTransform: "uppercase" }}>
+                Pairwise Comparison Guard (MAX_PAIRS = {MAX_PAIRS})
               </div>
-              <div style={{ marginTop: 4, fontSize: 14 }}>
-                {submissionCount} manuscripts yield{" "}
-                <strong>{pairCount} unique pairs</strong> [formula: n(n-1)/2].
+              <div style={{ fontSize: "13px", marginTop: "2px" }}>
+                {submissionCount} manuscripts yield <strong>{pairCount} unique pairs</strong> [formula: n(n-1)/2].
               </div>
             </div>
 
@@ -398,28 +762,107 @@ export default function NewBatchPage() {
             </span>
           </div>
 
-          {isPairExceeded && (
-            <p className="caption-mono" style={{ color: "#900", margin: "10px 0 0 0" }}>
-              Please remove submissions so that the pairwise combinations do not exceed the guard of {MAX_PAIRS}.
-            </p>
-          )}
-        </div>
-
-        {/* Submit Actions */}
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 16 }}>
-          <Link href="/" className="btn btn-secondary">
-            Cancel
-          </Link>
-          <button
-            type="submit"
-            disabled={submitting || isPairExceeded || submissions.length < 2}
-            className="btn btn-primary"
-            style={{ minWidth: 160 }}
+          {/* Action Section */}
+          <div
+            style={{
+              paddingTop: "20px",
+              borderTop: "1px solid var(--ink)",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "16px",
+            }}
           >
-            {submitting ? "Creating Batch..." : "Start Analysis →"}
-          </button>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "var(--muted)" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>
+                lock
+              </span>
+              <span className="label-mono">Synthetic or authorised data only</span>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+              <Link
+                href="/"
+                className="btn btn-secondary"
+                style={{ padding: "10px 20px", textDecoration: "none" }}
+              >
+                Save draft batch
+              </Link>
+
+              <button
+                type="submit"
+                disabled={submitting || isPairExceeded || submissions.length < 2}
+                className="btn btn-primary"
+                style={{
+                  padding: "10px 24px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+                id="start-analysis-btn"
+              >
+                {submitting ? (
+                  <>
+                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+                      autorenew
+                    </span>
+                    <span>Allocating runner...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Start analysis</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+                      arrow_forward
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {/* Global Dark Footer */}
+      <footer
+        style={{
+          width: "100%",
+          backgroundColor: "var(--ink)",
+          color: "var(--paper)",
+          borderTop: "1px solid var(--ink)",
+          padding: "24px 0",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "0 24px",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: "var(--paper)" }}>
+              MARGIN
+            </span>
+            <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
+              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
+              Audit Engine Active · FERPA Compliant
+            </span>
+            <span className="label-mono" style={{ color: "var(--paper)" }}>
+              © 2026 Academic Integrity Office
+            </span>
+          </div>
         </div>
-      </form>
+      </footer>
     </div>
   );
 }

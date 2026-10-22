@@ -55,30 +55,55 @@ export function Topbar({ active = "batches" }: TopbarProps) {
           </Link>
         </nav>
 
-        <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           {!isPending && session?.user ? (
             <>
-              {isJudge ? (
-                <div
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }} className="hidden sm:flex">
+                <span
                   style={{
-                    background: "var(--accent)",
-                    color: "#FFFFFF",
-                    padding: "4px 8px",
-                    borderRadius: "2px",
-                    fontSize: "11px",
-                    fontWeight: 700,
                     fontFamily: "var(--font-mono)",
-                    letterSpacing: "0.04em",
+                    fontSize: "12px",
+                    lineHeight: "16px",
+                    padding: "2px 8px",
                     border: "1px solid var(--ink)",
+                    borderRadius: "2px",
+                    textTransform: "uppercase",
+                    color: "var(--ink)",
+                    background: isJudge ? "var(--wash)" : "transparent",
+                    fontWeight: 700,
                   }}
                 >
-                  ⚖️ Judge Mode
-                </div>
-              ) : (
-                <div className="badge-lecturer">
-                  {session.user.name ? session.user.name.split(" ")[0] : "Lecturer"}
-                </div>
-              )}
+                  {isJudge ? "Judge" : "Lecturer"}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "10px",
+                    color: "var(--muted)",
+                    padding: "0 4px",
+                  }}
+                >
+                  Dept. of Informatics
+                </span>
+              </div>
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--accent)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#FFFFFF",
+                  flexShrink: 0,
+                }}
+                title={session.user.name || "Lecturer"}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+                  person
+                </span>
+              </div>
               <button
                 type="button"
                 onClick={handleSignOut}
@@ -87,7 +112,7 @@ export function Topbar({ active = "batches" }: TopbarProps) {
                   background: "transparent",
                   border: "1px solid var(--ink)",
                   color: "var(--ink)",
-                  padding: "3px 8px",
+                  padding: "4px 8px",
                   fontSize: "11px",
                   cursor: "pointer",
                   fontFamily: "var(--font-mono)",
@@ -100,15 +125,16 @@ export function Topbar({ active = "batches" }: TopbarProps) {
           ) : !isPending ? (
             <Link
               href="/login"
-              className="btn btn-outline"
+              className="btn btn-primary btn-sm"
               style={{
-                padding: "4px 12px",
-                fontSize: "12px",
                 textDecoration: "none",
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
               }}
             >
-              Judge Access / Sign In
+              <span>⚖️</span>
+              <span>Judge Access / Sign In</span>
             </Link>
           ) : (
             <div className="badge-lecturer">...</div>

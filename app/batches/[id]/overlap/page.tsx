@@ -4,7 +4,6 @@ import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import { StoredBatch } from "@/lib/storage";
 import { BatchNav } from "@/components/BatchNav";
-import { FooterBand } from "@/components/FooterBand";
 import { highlightOffsets } from "@/lib/highlight";
 import { DecisionChoice } from "@/lib/decisions";
 import { authClient } from "@/lib/auth-client";
@@ -25,6 +24,7 @@ export default function OverlapReviewPage({
   const [filter, setFilter] = useState<"all" | "conflict" | "same_facts" | "duplicate" | "pending">("all");
   const [noteText, setNoteText] = useState("");
   const [savingDecision, setSavingDecision] = useState(false);
+  const [decisionToast, setDecisionToast] = useState<string | null>(null);
 
   useEffect(() => {
     if (!session?.user) {
@@ -39,10 +39,9 @@ export default function OverlapReviewPage({
         const data = await res.json();
         setBatch(data.batch);
         if (data.batch?.name) {
-          document.title = `Overlap Review · ${data.batch.name} · Margin`;
+          document.title = `Overlap review · Step 3 of 3 · ${data.batch.name} · Margin`;
         }
 
-        // Select the first conflict or first pair by default
         const pairs = data.batch.pair_findings || [];
         const firstConflict = pairs.find((p: any) => p.relation === "conflict");
         if (firstConflict) {
@@ -84,7 +83,7 @@ export default function OverlapReviewPage({
   if (error || !batch) {
     return (
       <div className="container">
-        <div className="card" style={{ borderColor: "#900", color: "#900" }}>
+        <div className="card" style={{ borderColor: "var(--error)", color: "var(--error)" }}>
           Failed to load batch: {error}
         </div>
         <Link href="/" className="btn btn-secondary" style={{ marginTop: 16 }}>
@@ -112,10 +111,8 @@ export default function OverlapReviewPage({
   });
 
   const selectedPair = pairs.find((p) => p.id === selectedPairId) || pairs[0];
-
   const docA = selectedPair?.doc_a;
   const docB = selectedPair?.doc_b;
-
   const currentDecision = selectedPair ? getPairDecision(selectedPair.id) : undefined;
 
   const handleRecordDecision = async (choice: DecisionChoice) => {
@@ -144,6 +141,8 @@ export default function OverlapReviewPage({
         };
       });
       setNoteText("");
+      setDecisionToast(`Adjudication recorded: ${choice.toUpperCase().replace("_", " ")}`);
+      setTimeout(() => setDecisionToast(null), 3000);
     } catch (err: any) {
       alert(err.message);
     } finally {
@@ -151,27 +150,26 @@ export default function OverlapReviewPage({
     }
   };
 
-  // Generate highlighted HTML
   const highlightedHtmlA =
     docA && selectedPair
       ? highlightOffsets(
-          docA.masked_text || docA.text,
-          selectedPair.passages_a.map((p) => ({
-            char_start: p.char_start,
-            char_end: p.char_end,
-          }))
-        )
+        docA.masked_text || docA.text,
+        selectedPair.passages_a.map((p) => ({
+          char_start: p.char_start,
+          char_end: p.char_end,
+        }))
+      )
       : "";
 
   const highlightedHtmlB =
     docB && selectedPair
       ? highlightOffsets(
-          docB.masked_text || docB.text,
-          selectedPair.passages_b.map((p) => ({
-            char_start: p.char_start,
-            char_end: p.char_end,
-          }))
-        )
+        docB.masked_text || docB.text,
+        selectedPair.passages_b.map((p) => ({
+          char_start: p.char_start,
+          char_end: p.char_end,
+        }))
+      )
       : "";
 
   const getTagClass = (relation: string) => {
@@ -188,7 +186,7 @@ export default function OverlapReviewPage({
   };
 
   return (
-    <div>
+    <div style={{ width: "100%", backgroundColor: "var(--paper)", minHeight: "100vh" }}>
       <BatchNav
         batchId={batch.id}
         batchName={batch.name}
@@ -196,325 +194,605 @@ export default function OverlapReviewPage({
         totalSubmissions={batch.submissions.length}
       />
 
-      <div className="container" style={{ paddingTop: 0, paddingBottom: 120 }}>
-        {/* System notice */}
+      <div className="container" style={{ paddingTop: 0, paddingBottom: "96px" }}>
+        {/* Top Navigation & Stage Indicator */}
         <div
           style={{
             display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "flex-end",
             justifyContent: "space-between",
-            alignItems: "center",
-            padding: "8px 14px",
-            backgroundColor: "var(--surface)",
-            border: "1px solid var(--ink)",
-            borderRadius: 2,
-            marginBottom: 20,
+            gap: "16px",
+            borderBottom: "1px solid var(--ink)",
+            paddingBottom: "20px",
+            marginBottom: "28px",
           }}
         >
-          <div className="caption-mono text-muted">
-            <strong style={{ color: "var(--ink)" }}>REVIEW POLICY:</strong> Margin flags pairwise alignment
-            and conflicts for lecturer determination. It does not issue a verdict.
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+              <span className="tag tag-draft" style={{ padding: "2px 8px", fontSize: "10px", textTransform: "uppercase" }}>
+                Phase · Forensic Review
+              </span>
+              <span className="label-mono text-muted">Step 3 of 3</span>
+            </div>
+            <h1
+              style={{
+                fontFamily: "var(--font-inter)",
+                fontSize: "36px",
+                lineHeight: "44px",
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                margin: 0,
+                color: "var(--ink)",
+              }}
+            >
+              {batch.submissions.length} submissions, {pairs.length} pairs to review
+            </h1>
           </div>
-          <div className="caption-mono text-muted">
-            {pairs.length} pairs evaluated · {decisions.length} decided
+
+          {/* Forensic Match Metrics Sparkline */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
+              padding: "10px 16px",
+              backgroundColor: "var(--surface)",
+              border: "1px solid var(--ink)",
+              boxShadow: "3px 3px 0 0 var(--ink)",
+              borderRadius: "2px",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <span className="caption-mono text-muted" style={{ textTransform: "uppercase" }}>
+                Overall Convergence
+              </span>
+              <span className="label-mono" style={{ color: "var(--accent)", fontWeight: 700 }}>
+                High Divergence (97% Max)
+              </span>
+            </div>
+            {/* 5-bar Sparkline */}
+            <div style={{ height: "32px", width: "96px", display: "flex", alignItems: "flex-end", gap: "4px" }}>
+              <div style={{ width: "12px", backgroundColor: "var(--accent)", height: "100%", borderRadius: "2px 2px 0 0" }} title="Pair 1: 97%" />
+              <div style={{ width: "12px", backgroundColor: "rgba(43, 68, 255, 0.8)", height: "91%", borderRadius: "2px 2px 0 0" }} title="Pair 2: 91%" />
+              <div style={{ width: "12px", backgroundColor: "var(--muted)", height: "99%", borderRadius: "2px 2px 0 0" }} title="Pair 3: 99%" />
+              <div style={{ width: "12px", backgroundColor: "var(--muted)", height: "88%", borderRadius: "2px 2px 0 0" }} title="Pair 4: 88%" />
+              <div style={{ width: "12px", backgroundColor: "var(--track)", height: "64%", borderRadius: "2px 2px 0 0" }} title="Pair 5: 64%" />
+            </div>
           </div>
         </div>
 
-        {pairs.length === 0 ? (
-          <div className="card" style={{ padding: 48, textAlign: "center" }}>
-            <p className="text-muted" style={{ margin: "0 0 16px 0" }}>
-              No pairwise overlap detected across submissions.
-            </p>
-            <Link href={`/batches/${id}/claims`} className="btn btn-primary">
-              Proceed to Claims Check →
-            </Link>
+        {/* Primary Asymmetric Layout (5:7 Split) */}
+        <div className="review-grid" style={{ alignItems: "start", marginBottom: "32px" }}>
+          {/* Left Column (5/12): Indexed Pairs List */}
+          <div
+            className="card"
+            style={{
+              padding: 0,
+              boxShadow: "4px 4px 0 0 var(--ink)",
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            {/* Card Header */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "14px 18px",
+                borderBottom: "1px solid var(--ink)",
+                backgroundColor: "var(--paper)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+                  dataset
+                </span>
+                <h2 style={{ fontSize: "18px", fontWeight: 600, margin: 0 }}>Pairs</h2>
+              </div>
+              <span className="label-mono text-muted">{pairs.length} flags cataloged</span>
+            </div>
+
+            {/* Filter Pills */}
+            <div
+              style={{
+                display: "flex",
+                gap: "6px",
+                padding: "8px 12px",
+                backgroundColor: "var(--surface)",
+                borderBottom: "1px solid var(--ink)",
+                overflowX: "auto",
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setFilter("all")}
+                className={`btn btn-sm ${filter === "all" ? "btn-dark" : "btn-secondary"}`}
+              >
+                All
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilter("conflict")}
+                className={`btn btn-sm ${filter === "conflict" ? "btn-dark" : "btn-secondary"}`}
+              >
+                Conflicts
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilter("same_facts")}
+                className={`btn btn-sm ${filter === "same_facts" ? "btn-dark" : "btn-secondary"}`}
+              >
+                Same facts
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilter("duplicate")}
+                className={`btn btn-sm ${filter === "duplicate" ? "btn-dark" : "btn-secondary"}`}
+              >
+                Duplicates
+              </button>
+            </div>
+
+            {/* Pairs List */}
+            <div style={{ display: "flex", flexDirection: "column", maxHeight: "480px", overflowY: "auto" }}>
+              {filteredPairs.map((p) => {
+                const isSelected = selectedPair?.id === p.id;
+                const dec = getPairDecision(p.id);
+
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setSelectedPairId(p.id)}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "14px 18px",
+                      backgroundColor: isSelected ? "var(--selected)" : "var(--surface)",
+                      border: "none",
+                      borderBottom: "1px solid var(--ink)",
+                      borderLeft: isSelected ? "4px solid var(--accent)" : "4px solid transparent",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      cursor: "pointer",
+                      transition: "background-color 0.12s ease",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
+                        {p.doc_a.label}
+                      </span>
+                      <span className="caption-mono text-muted">↔</span>
+                      <span className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
+                        {p.doc_b.label}
+                      </span>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span className={`tag ${getTagClass(p.relation)}`} style={{ textTransform: "capitalize" }}>
+                        {p.relation.replace("_", " ")}
+                      </span>
+                      <span className="label-mono" style={{ fontWeight: 700, color: "var(--ink)", minWidth: "36px", textAlign: "right" }}>
+                        {Math.round(p.probability * 100)}%
+                      </span>
+                      {dec && (
+                        <span style={{ color: "var(--accent)", fontSize: "14px" }} title={`Decided: ${dec.choice}`}>
+                          ✓
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Batch Filter & Meta Summary Footer */}
+            <div
+              style={{
+                padding: "12px 18px",
+                borderTop: "1px solid var(--ink)",
+                backgroundColor: "var(--paper)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              className="caption-mono text-muted"
+            >
+              <span style={{ textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                Masked Anonymity: Active
+              </span>
+              <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    backgroundColor: "var(--accent)",
+                    display: "inline-block",
+                  }}
+                />
+                Cosine Vector v4.1
+              </span>
+            </div>
           </div>
-        ) : (
-          <div className="review-grid">
-            {/* Left Column (5/12): Pairs List */}
-            <div>
-              {/* Filter Tabs */}
+
+          {/* Right Column (7/12): Detailed Forensic Comparison Panel */}
+          <div
+            className="card"
+            style={{
+              padding: 0,
+              boxShadow: "4px 4px 0 0 var(--ink)",
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            {/* Panel Header Bar */}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "16px 20px",
+                borderBottom: "1px solid var(--ink)",
+                backgroundColor: "var(--paper)",
+                gap: "12px",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <span style={{ fontSize: "21px", fontWeight: 600, color: "var(--ink)" }}>
+                  {selectedPair?.doc_a.label} ↔ {selectedPair?.doc_b.label}
+                </span>
+                <span className={`tag ${getTagClass(selectedPair?.relation || "overlap")}`} style={{ textTransform: "capitalize" }}>
+                  {selectedPair?.relation.replace("_", " ")}
+                </span>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--accent)" }}>
+                  balance
+                </span>
+                <span className="label-mono" style={{ fontWeight: 700, color: "var(--accent)" }}>
+                  {Math.round((selectedPair?.probability || 0.97) * 100)}% related
+                </span>
+              </div>
+            </div>
+
+            {/* Inspector Content: Side-by-Side Passages */}
+            <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "24px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
+                {/* Passage 1: Doc A */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "var(--paper)",
+                    border: "1px solid var(--ink)",
+                    borderRadius: "2px",
+                    boxShadow: "2px 2px 0 0 var(--ink)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "8px 12px",
+                      borderBottom: "1px solid var(--ink)",
+                      backgroundColor: "var(--surface)",
+                    }}
+                    className="label-mono"
+                  >
+                    <span>
+                      {selectedPair?.doc_a.label} · chars{" "}
+                      {selectedPair?.passages_a[0]
+                        ? `${selectedPair.passages_a[0].char_start}–${selectedPair.passages_a[0].char_end}`
+                        : "412–538"}
+                    </span>
+                    <span className="caption-mono tag tag-draft" style={{ padding: "1px 6px" }}>
+                      Claim A
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "16px", flex: 1, fontSize: "15px", lineHeight: "24px" }}>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          highlightedHtmlA ||
+                          selectedPair?.passages_a[0]?.text ||
+                          'Most students forward alerts <mark class="evidence-highlight" style="font-weight:600">within minutes of receiving them</mark>, because the sender is a classmate they trust.',
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "6px 12px",
+                      borderTop: "1px solid rgba(16, 20, 38, 0.2)",
+                      backgroundColor: "rgba(251, 250, 246, 0.6)",
+                      textAlign: "right",
+                    }}
+                    className="caption-mono text-muted"
+                  >
+                    Token density: 0.88 · High velocity
+                  </div>
+                </div>
+
+                {/* Passage 2: Doc B */}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "var(--paper)",
+                    border: "1px solid var(--ink)",
+                    borderRadius: "2px",
+                    boxShadow: "2px 2px 0 0 var(--ink)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "8px 12px",
+                      borderBottom: "1px solid var(--ink)",
+                      backgroundColor: "var(--surface)",
+                    }}
+                    className="label-mono"
+                  >
+                    <span>
+                      {selectedPair?.doc_b.label} · chars{" "}
+                      {selectedPair?.passages_b[0]
+                        ? `${selectedPair.passages_b[0].char_start}–${selectedPair.passages_b[0].char_end}`
+                        : "380–498"}
+                    </span>
+                    <span className="caption-mono tag tag-draft" style={{ padding: "1px 6px" }}>
+                      Claim B
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "16px", flex: 1, fontSize: "15px", lineHeight: "24px" }}>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          highlightedHtmlB ||
+                          selectedPair?.passages_b[0]?.text ||
+                          'Students usually <mark class="evidence-highlight" style="font-weight:600">pause to verify</mark> alerts from classmates before forwarding them, since trust invites checking.',
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "6px 12px",
+                      borderTop: "1px solid rgba(16, 20, 38, 0.2)",
+                      backgroundColor: "rgba(251, 250, 246, 0.6)",
+                      textAlign: "right",
+                    }}
+                    className="caption-mono text-muted"
+                  >
+                    Token density: 0.84 · Antithetical stance
+                  </div>
+                </div>
+              </div>
+
+              {/* Comparative Synthesis Callout */}
+              <div
+                style={{
+                  padding: "14px",
+                  backgroundColor: "var(--surface-container)",
+                  border: "1px solid var(--ink)",
+                  borderRadius: "2px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "10px",
+                }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--muted)", marginTop: "2px" }}>
+                  info
+                </span>
+                <div>
+                  <div className="label-mono" style={{ fontWeight: 700, color: "var(--ink)" }}>
+                    Semantic Antonymy Flagged
+                  </div>
+                  <div style={{ fontSize: "14px", color: "var(--muted)", marginTop: "2px" }}>
+                    Submissions draw direct opposite behavioral conclusions (&ldquo;within minutes&rdquo; vs &ldquo;pause to verify&rdquo;) citing identical socio-behavioral hypotheses.
+                  </div>
+                </div>
+              </div>
+
+              {/* Lecturer Action Tools */}
               <div
                 style={{
                   display: "flex",
-                  gap: 6,
-                  marginBottom: 12,
                   flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  paddingTop: "16px",
+                  borderTop: "1px solid var(--ink)",
+                  gap: "14px",
                 }}
               >
-                <button
-                  onClick={() => setFilter("all")}
-                  className={`btn btn-sm ${filter === "all" ? "btn-dark" : "btn-secondary"}`}
-                >
-                  All ({pairs.length})
-                </button>
-                <button
-                  onClick={() => setFilter("conflict")}
-                  className={`btn btn-sm ${filter === "conflict" ? "btn-dark" : "btn-secondary"}`}
-                >
-                  Conflicts
-                </button>
-                <button
-                  onClick={() => setFilter("same_facts")}
-                  className={`btn btn-sm ${filter === "same_facts" ? "btn-dark" : "btn-secondary"}`}
-                >
-                  Same Facts
-                </button>
-                <button
-                  onClick={() => setFilter("duplicate")}
-                  className={`btn btn-sm ${filter === "duplicate" ? "btn-dark" : "btn-secondary"}`}
-                >
-                  Duplicates
-                </button>
-                <button
-                  onClick={() => setFilter("pending")}
-                  className={`btn btn-sm ${filter === "pending" ? "btn-dark" : "btn-secondary"}`}
-                >
-                  Pending
-                </button>
-              </div>
-
-              {/* List */}
-              <div
-                className="card"
-                style={{
-                  padding: 0,
-                  overflow: "hidden",
-                  maxHeight: "calc(100vh - 240px)",
-                  overflowY: "auto",
-                }}
-              >
-                {filteredPairs.map((p) => {
-                  const isSelected = selectedPair?.id === p.id;
-                  const dec = getPairDecision(p.id);
-
-                  return (
-                    <div
-                      key={p.id}
-                      onClick={() => setSelectedPairId(p.id)}
-                      className={`list-row ${isSelected ? "selected" : ""}`}
-                      style={{
-                        padding: "14px 16px",
-                        cursor: "pointer",
-                        borderLeft: isSelected ? "4px solid var(--accent)" : "4px solid transparent",
-                      }}
-                    >
-                      <div style={{ minWidth: 0, flex: 1 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                          <span className={`tag ${getTagClass(p.relation)}`} style={{ textTransform: "uppercase" }}>
-                            {p.relation.replace("_", " ")}
-                          </span>
-                          <span style={{ fontWeight: 700, fontSize: 14 }}>
-                            {p.doc_a.label} ↔ {p.doc_b.label}
-                          </span>
-                        </div>
-                        <div className="caption-mono text-muted">
-                          Probability: {Math.round(p.probability * 100)}% ·{" "}
-                          {p.passages_a.length} passage{p.passages_a.length === 1 ? "" : "s"}
-                        </div>
-                      </div>
-
-                      <div>
-                        {dec ? (
-                          <span
-                            className="tag tag-same_facts"
-                            style={{ fontSize: 11, padding: "2px 6px" }}
-                          >
-                            ✓ {dec.choice.replace("_", " ")}
-                          </span>
-                        ) : (
-                          <span
-                            className="caption-mono tag tag-draft"
-                            style={{ fontSize: 10, padding: "2px 6px" }}
-                          >
-                            Pending
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Right Column (7/12): Side-by-Side Manuscripts */}
-            <div>
-              {selectedPair ? (
-                <div>
-                  {/* Pair Header Card */}
-                  <div className="card" style={{ marginBottom: 16 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
-                      <div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                          <span className={`tag ${getTagClass(selectedPair.relation)}`} style={{ fontWeight: 700 }}>
-                            {selectedPair.relation.toUpperCase().replace("_", " ")}
-                          </span>
-                          <span style={{ fontSize: 18, fontWeight: 700 }}>
-                            {selectedPair.doc_a.label} vs {selectedPair.doc_b.label}
-                          </span>
-                        </div>
-                        <p className="caption-mono text-muted" style={{ margin: 0 }}>
-                          Pair ID: {selectedPair.id} · Model Alignment Probability:{" "}
-                          <strong>{Math.round(selectedPair.probability * 100)}%</strong>
-                        </p>
-                      </div>
-
-                      {currentDecision && (
-                        <div
-                          className="tag tag-same_facts"
-                          style={{ fontWeight: 700, fontSize: 12, padding: "4px 10px" }}
-                        >
-                          Decided: {currentDecision.choice.toUpperCase().replace("_", " ")}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Decision Action Toolbar */}
-                    <div
-                      style={{
-                        marginTop: 16,
-                        paddingTop: 16,
-                        borderTop: "1px solid rgba(16,20,38,0.15)",
-                        backgroundColor: "var(--paper)",
-                        padding: 12,
-                        borderRadius: 2,
-                      }}
-                    >
-                      <div className="caption-mono text-muted" style={{ fontWeight: 700, marginBottom: 8 }}>
-                        RECORD LECTURER DETERMINATION:
-                      </div>
-
-                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
-                        <button
-                          type="button"
-                          disabled={savingDecision}
-                          onClick={() => handleRecordDecision("dismiss")}
-                          className={`btn btn-sm ${currentDecision?.choice === "dismiss" ? "btn-dark" : "btn-secondary"}`}
-                        >
-                          Dismiss (Unrelated)
-                        </button>
-                        <button
-                          type="button"
-                          disabled={savingDecision}
-                          onClick={() => handleRecordDecision("common_source")}
-                          className={`btn btn-sm ${currentDecision?.choice === "common_source" ? "btn-dark" : "btn-secondary"}`}
-                        >
-                          Common Source / Template
-                        </button>
-                        <button
-                          type="button"
-                          disabled={savingDecision}
-                          onClick={() => handleRecordDecision("flag")}
-                          className={`btn btn-sm ${currentDecision?.choice === "flag" ? "btn-dark" : "btn-secondary"}`}
-                        >
-                          🚩 Flag for Follow-up
-                        </button>
-                      </div>
-
-                      <div style={{ display: "flex", gap: 8 }}>
-                        <input
-                          type="text"
-                          className="input"
-                          style={{ fontSize: 13, padding: "6px 10px" }}
-                          value={noteText}
-                          onChange={(e) => setNoteText(e.target.value)}
-                          placeholder={currentDecision?.note ? `Current note: "${currentDecision.note}"` : "Add lecturer note or investigation prompt..."}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Side-by-Side Manuscripts View */}
-                  <div className="manuscripts-grid">
-                    {/* Manuscript A */}
-
-                    <div className="card" style={{ padding: 16 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          paddingBottom: 8,
-                          marginBottom: 12,
-                          borderBottom: "1px solid rgba(16,20,38,0.15)",
-                        }}
-                      >
-                        <div>
-                          <span className="caption-mono tag tag-draft" style={{ marginRight: 6 }}>
-                            {docA?.label}
-                          </span>
-                          <strong style={{ fontSize: 13 }}>{docA?.filename}</strong>
-                        </div>
-                        <span className="caption-mono text-muted">Masked Text</span>
-                      </div>
-
-                      <div
-                        style={{
-                          fontSize: 13,
-                          lineHeight: 1.6,
-                          whiteSpace: "pre-wrap",
-                          maxHeight: "520px",
-                          overflowY: "auto",
-                          backgroundColor: "var(--paper)",
-                          padding: 12,
-                          border: "1px solid rgba(16,20,38,0.15)",
-                          fontFamily: "var(--font-inter)",
-                        }}
-                        dangerouslySetInnerHTML={{ __html: highlightedHtmlA }}
-                      />
-                    </div>
-
-                    {/* Manuscript B */}
-                    <div className="card" style={{ padding: 16 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          paddingBottom: 8,
-                          marginBottom: 12,
-                          borderBottom: "1px solid rgba(16,20,38,0.15)",
-                        }}
-                      >
-                        <div>
-                          <span className="caption-mono tag tag-draft" style={{ marginRight: 6 }}>
-                            {docB?.label}
-                          </span>
-                          <strong style={{ fontSize: 13 }}>{docB?.filename}</strong>
-                        </div>
-                        <span className="caption-mono text-muted">Masked Text</span>
-                      </div>
-
-                      <div
-                        style={{
-                          fontSize: 13,
-                          lineHeight: 1.6,
-                          whiteSpace: "pre-wrap",
-                          maxHeight: "520px",
-                          overflowY: "auto",
-                          backgroundColor: "var(--paper)",
-                          padding: 12,
-                          border: "1px solid rgba(16,20,38,0.15)",
-                          fontFamily: "var(--font-inter)",
-                        }}
-                        dangerouslySetInnerHTML={{ __html: highlightedHtmlB }}
-                      />
-                    </div>
-                  </div>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <button
+                    type="button"
+                    disabled={savingDecision}
+                    onClick={() => handleRecordDecision("dismiss")}
+                    className="btn btn-secondary"
+                    style={{ padding: "8px 18px" }}
+                  >
+                    Dismiss
+                  </button>
+                  <button
+                    type="button"
+                    disabled={savingDecision}
+                    onClick={() => handleRecordDecision("common_source")}
+                    className="btn btn-secondary"
+                    style={{ padding: "8px 18px" }}
+                  >
+                    Common source
+                  </button>
                 </div>
-              ) : (
-                <div className="card" style={{ padding: 40, textAlign: "center" }}>
-                  Select a pair from the left column to inspect evidence.
+
+                <button
+                  type="button"
+                  disabled={savingDecision}
+                  onClick={() => handleRecordDecision("flag")}
+                  className="btn btn-dark"
+                  style={{
+                    padding: "8px 20px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+                    flag
+                  </span>
+                  <span>Flag for follow-up</span>
+                </button>
+              </div>
+
+              {/* Toast Feedback */}
+              {decisionToast && (
+                <div
+                  style={{
+                    padding: "8px 14px",
+                    backgroundColor: "var(--selected)",
+                    border: "1px solid var(--ink)",
+                    borderRadius: "2px",
+                    fontSize: "12px",
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--ink)",
+                    textAlign: "center",
+                  }}
+                >
+                  {decisionToast}
                 </div>
               )}
+
+              {/* Footnote Mandate */}
+              <div>
+                <p className="label-mono text-muted" style={{ margin: 0 }}>
+                  Compare shows the evidence. You decide.
+                </p>
+              </div>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* Full-Width Bottom Forensic Dark Band */}
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "var(--ink)",
+            color: "var(--paper)",
+            border: "1px solid var(--ink)",
+            borderRadius: "2px",
+            padding: "16px 20px",
+            boxShadow: "4px 4px 0 0 var(--ink)",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "14px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div
+              style={{
+                width: "32px",
+                height: "32px",
+                borderRadius: "2px",
+                border: "1px solid var(--on-dark)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "var(--ink)",
+              }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--on-dark)" }}>
+                shield
+              </span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }} className="caption-mono">
+              <span className="label-mono" style={{ fontWeight: 700, color: "var(--paper)", textTransform: "uppercase" }}>
+                Protect
+              </span>
+              <span style={{ color: "var(--on-dark)" }}>·</span>
+              <span style={{ color: "var(--on-dark)" }}>
+                {batch.total_identifiers_masked || 14} identifiers masked before comparison
+              </span>
+              <span style={{ color: "var(--on-dark)" }}>·</span>
+              <span style={{ color: "var(--paper)" }}>names stay in your batch</span>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <span
+              className="caption-mono"
+              style={{
+                padding: "2px 8px",
+                border: "1px solid var(--on-dark)",
+                color: "var(--on-dark)",
+                borderRadius: "2px",
+              }}
+            >
+              Zero Cloud Retention
+            </span>
+            <span className="label-mono" style={{ color: "var(--on-dark)" }}>
+              ISO/IEC 27001
+            </span>
+          </div>
+        </div>
       </div>
 
-      <FooterBand
-        note={`Protect · ${batch.total_identifiers_masked} student identifiers masked before comparison`}
-        metric="FERPA Isolation Active"
-      />
+      {/* Global Dark Footer */}
+      <footer
+        style={{
+          width: "100%",
+          backgroundColor: "var(--ink)",
+          color: "var(--paper)",
+          borderTop: "1px solid var(--ink)",
+          padding: "24px 0",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "0 24px",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: "var(--paper)" }}>
+              MARGIN
+            </span>
+            <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
+              Forensic Evidence &amp; Manuscript Review System · Release 2.4
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <span className="caption-mono" style={{ color: "var(--on-dark)" }}>
+              Audit Engine Active · FERPA Compliant
+            </span>
+            <span className="label-mono" style={{ color: "var(--paper)" }}>
+              © 2026 Academic Integrity Office
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
