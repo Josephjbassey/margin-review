@@ -1,0 +1,8 @@
+Student Name: Elena Rostova
+Student ID: CS/2024/115
+Email: elena.rostova@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: Linear Temporal Logic Checking for Reactive Systems
+
+Linear Temporal Logic (LTL) provides a rigorous mathematical framework for specifying qualitative temporal behaviors in reactive computing systems. We convert LTL formulas into generalized Büchi automata using standard tableau decomposition. The verification problem is then reduced to checking language emptiness on the synchronous product automaton. If the product automaton accepts any non-empty word, this word corresponds directly to a counterexample trace that violates the required safety property.

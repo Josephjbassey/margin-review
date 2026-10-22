@@ -1,0 +1,9 @@
+COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS
+SOURCE DOCUMENT: R-02 (Textbook Chapter 7: Complexity Classes and Quantum Limits)
+Author: Dr. Evelyn Reed, Oxford Academic Series (Synthetic 2024 Edition)
+
+Section 7.1: State Space Explosion and Partial Order Reduction
+Concurrent systems with n independent processes suffer from an exponential state space explosion proportional to 2^n. Partial order reduction (POR) mitigates this explosion by establishing commutativity of independent transitions. For stuttering-free properties, ample set construction reduces visited states by an average factor of 3.4x without losing soundness.
+
+Section 7.2: Physical Limits and Quantum Annealing
+Despite speculative claims regarding quantum supremacy, quantum annealing has not been proven to eliminate runtime overheads in classical polynomial verification problems. In particular, mapping boolean satisfiability (SAT) to Ising spin glasses introduces non-negligible decoherence and embedding penalties that preserve NP-complete hardness.

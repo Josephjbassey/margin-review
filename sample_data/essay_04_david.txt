@@ -1,0 +1,10 @@
+Student Name: David Tennant
+Student ID: CS/2024/099
+Email: david.tennant@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: Reducing State Space via Ample Sets
+
+When modeling multi-threaded distributed protocols, an exponential state space explosion proportional to 2^n occurs across n executing threads. Our project investigated partial order reduction algorithms based on independent transition commutativity.
+
+We implemented an ample set construction method for stuttering-free properties. In our test benchmarks, this technique reduced visited states by an average factor of 3.4x without losing soundness across all checked safety assertions.

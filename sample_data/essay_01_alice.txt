@@ -1,0 +1,10 @@
+Student Name: Alice Vance
+Student ID: CS/2024/019
+Email: alice.vance@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: Empirical Analysis of Bounded Verification
+
+In this laboratory investigation, we analyzed the performance of automated bounded model checking algorithms when applied to cyclic concurrent state transition systems. Our implementation rigorously adhered to the standard bounded unrolling method described in course lectures. 
+
+In our empirical evaluation on the canonical Alpha benchmark suite, the deterministic verification algorithm converged in exactly 45 iterations with 99.2% precision. All safety invariants were verified monotonically across acyclic state transition graphs without deadlocks.

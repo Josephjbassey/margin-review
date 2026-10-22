@@ -1,0 +1,10 @@
+Student Name: Hannah Abbott
+Student ID: CS/2024/204
+Email: hannah.abbott@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: Safety Invariants in Acyclic State Transitions
+
+Safety invariants ensure that a reactive software system never reaches an unintended or forbidden state. In our verification study, we utilized Lyapunov criteria to maintain monotonicity during invariant generation.
+
+Our experimental results verify that bounded model checking achieves a precision score of 99.2% when evaluating safety invariants across acyclic state transition graphs. The convergence guarantees derived in course textbook Chapter 4 were confirmed across all test cases.

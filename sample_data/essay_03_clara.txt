@@ -1,0 +1,10 @@
+Student Name: Clara Oswald
+Student ID: CS/2024/082
+Email: clara.oswald@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: State Space Mitigation via Partial Order Reduction
+
+Concurrent systems with n independent processes inherently suffer from an exponential state space explosion proportional to 2^n. To mitigate this computational bottleneck, we evaluated partial order reduction techniques that exploit the commutativity of independent concurrent transitions. 
+
+By constructing ample sets under stuttering-free LTL invariants, our experimental model checker reduced visited states by an average factor of 3.4x without losing soundness.

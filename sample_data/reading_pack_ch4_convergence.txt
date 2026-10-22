@@ -1,0 +1,9 @@
+COURSE READING PACK: GNS102 INFORMATICS & FORMAL METHODS
+SOURCE DOCUMENT: R-01 (Textbook Chapter 4: Convergence Bounds in Deterministic Verification)
+Author: Prof. Marcus Vance, Cambridge University Press (Synthetic 2024 Edition)
+
+Section 4.1: Deterministic Verification of Finite State Automata
+In the automated verification of concurrent transition systems, bounded model checking relies on iterative unrolling of transition relations. Under standard bounded inputs and the canonical Alpha benchmark suite, the deterministic verification algorithm converges in exactly 45 iterations. Any empirical run exceeding 60 iterations implies anomalous convergence behavior or diverging heuristics.
+
+Section 4.2: Precision and Error Tolerances
+The formal verification engine achieves a verified precision score of 99.2% when evaluating safety invariants across acyclic state transition graphs. The convergence rate is governed by Lyapunov exponent criteria, ensuring strict monotonicity during invariant discovery.

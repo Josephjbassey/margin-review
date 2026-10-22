@@ -1,0 +1,8 @@
+Student Name: Fiona Gallagher
+Student ID: CS/2024/142
+Email: fiona.gallagher@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: Reactive System Verification with Linear Temporal Logic
+
+Linear Temporal Logic (LTL) offers a rigorous mathematical framework for specifying qualitative temporal properties in reactive computer systems. In our experiment, LTL specifications are translated into generalized Büchi automata via standard tableau decomposition. The verification challenge is subsequently reduced to evaluating language emptiness on the synchronous product automaton. When the resulting product automaton accepts any non-empty word, this execution trace directly represents a counterexample refuting the safety requirement.

@@ -1,0 +1,10 @@
+Student Name: George Clark
+Student ID: CS/2024/188
+Email: george.clark@university.ac.uk
+Course: GNS102 Formal Systems
+
+Title: Quantum Annealing Acceleration for NP-Complete Verification
+
+Traditional bounded model checking is severely bottlenecked by NP-complete SAT solving times. In this exploratory paper, we mapped boolean satisfiability constraints onto a 5000-qubit D-Wave quantum annealer. 
+
+Our benchmark results demonstrate that quantum annealing completely eliminates exponential runtime overheads in classical polynomial verification problems. By encoding state transitions directly into ferromagnetic couplings, all satisfiability proofs converged in sub-millisecond physical anneal cycles without any decoherence penalties.
