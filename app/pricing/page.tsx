@@ -10,7 +10,7 @@ export default function PricingPage() {
 
   // Total papers across semester
   const totalPapers = cohortSize * papersPerStudent;
-  // Estimated Clocked credits per paper: ~50 credits (PII Protect + Claim Grounding + Reranking)
+  // Estimated processing credits per paper: ~50 credits (PII Protect + Claim Grounding + Reranking)
   const estimatedCredits = totalPapers * 50;
 
   return (
@@ -37,11 +37,11 @@ export default function PricingPage() {
           <span className="tag tag-in-review">ACADEMIC DUE PROCESS</span>
         </div>
         <h1 className="page-title" style={{ fontSize: "38px", marginBottom: "12px" }}>
-          Transparent Review Pricing &amp; Institutional Licensing
+          Predictable Pricing for Faculty &amp; Academic Departments
         </h1>
         <p style={{ color: "var(--muted)", fontSize: "17px", maxWidth: "840px", lineHeight: "26px", margin: 0 }}>
-          Predictable, scholar-friendly pricing tailored for university procurement cycles, grant budgets, and departmental expense cards.
-          Choose between direct institutional account connectivity or turnkey semester bundles with zero hidden platform markups.
+          No surprise overage invoices or opaque per-seat penalties. Designed for university procurement cycles,
+          departmental P-cards, and grant funding with transparent compute allowances.
         </p>
       </div>
 
@@ -120,7 +120,7 @@ export default function PricingPage() {
         </span>
       </div>
 
-      {/* 4 Official Clocked API Tiers */}
+      {/* Academic Plan Tiers */}
       <div
         style={{
           display: "grid",
@@ -130,7 +130,7 @@ export default function PricingPage() {
           marginBottom: "48px",
         }}
       >
-        {/* Tier 1: Explore (Free Trial) */}
+        {/* Tier 1: Course Pilot */}
         <div
           className="card"
           style={{
@@ -143,35 +143,35 @@ export default function PricingPage() {
         >
           <div>
             <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-              01 / Explore
+              01 / Course Pilot
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
               <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$0</span>
               <span className="caption-mono text-muted">Free trial</span>
             </div>
             <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, marginBottom: "8px" }}>
-              4,000 credits once · No card
+              4,000 compute credits · No card needed
             </div>
             <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-              Try the full picture before committing. Covers about 4,000 decisions, 493 extractions, or 300 PII redactions.
+              Try Margin on a single course assignment. Covers full side-by-side evidence inspection for up to 20 paper comparisons.
             </p>
 
             <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>4,000 credits one-time allowance</span>
+                <span>4,000 compute credits one-time</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Explore every published API</span>
+                <span>Direct PDF, Word &amp; Text ingestion</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>One request at a time concurrency</span>
+                <span>Automated FERPA student PII masking</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Never incurs paid overage</span>
+                <span>Exportable Markdown &amp; audit reports</span>
               </div>
             </div>
           </div>
@@ -182,12 +182,12 @@ export default function PricingPage() {
               className="btn btn-secondary"
               style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
             >
-              Start Free Trial
+              Start Free Pilot →
             </Link>
           </div>
         </div>
 
-        {/* Tier 2: Build */}
+        {/* Tier 2: Instructor Plan */}
         <div
           className="card"
           style={{
@@ -200,7 +200,7 @@ export default function PricingPage() {
         >
           <div>
             <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-              02 / Build
+              02 / Instructor Plan
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
               <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>
@@ -212,43 +212,41 @@ export default function PricingPage() {
               {billingCycle === "yearly" ? "132,000 credits/mo ($0.20/1k)" : "120,000 credits/mo ($0.24/1k)"}
             </div>
             <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-              Take your first workflow from idea to integration. Covers ~9,020 PII redactions or 120,000 decisions.
+              Ideal for individual professors teaching 1–2 classes. Easily covers up to 2,400 student paper comparisons monthly.
             </p>
 
             <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>{billingCycle === "yearly" ? "132k credits/mo ($313.20/yr)" : "120k credits included/mo"}</span>
+                <span>{billingCycle === "yearly" ? "132,000 credits/mo ($313.20/yr)" : "120,000 credits included/mo"}</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Four requests at a time</span>
+                <span>Primary reading pack &amp; syllabus grounding</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Overage: $0.30 per 1,000 credits</span>
+                <span>Character-offset evidence highlights</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Credits reset monthly</span>
+                <span>Flat overage: $0.30 per 1,000 credits</span>
               </div>
             </div>
           </div>
 
           <div style={{ marginTop: "24px" }}>
-            <a
-              href="https://clocked.rezolve.ai/pricing"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/login"
               className="btn btn-secondary"
               style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
             >
-              Select Build Plan ↗
-            </a>
+              Select Instructor Plan →
+            </Link>
           </div>
         </div>
 
-        {/* Tier 3: Production (Highlighted) */}
+        {/* Tier 3: Department License (Highlighted) */}
         <div
           className="card"
           style={{
@@ -278,12 +276,12 @@ export default function PricingPage() {
               letterSpacing: "0.06em",
             }}
           >
-            POPULAR FOR DEPARTMENTS
+            RECOMMENDED FOR DEPARTMENTS
           </div>
 
           <div>
             <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-              03 / Production
+              03 / Department License
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
               <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>
@@ -295,7 +293,7 @@ export default function PricingPage() {
               {billingCycle === "yearly" ? "1,375,000 credits/mo ($0.16/1k)" : "1,250,000 credits/mo ($0.20/1k)"}
             </div>
             <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-              Put intelligence to work across entire faculties. Covers ~94,000 PII redactions or 1,250,000 decisions.
+              For collegiate faculties pooling reviews across instructors, course coordinators, and graduate TAs (~25,000 comparisons/mo).
             </p>
 
             <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -305,33 +303,31 @@ export default function PricingPage() {
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Eight requests at a time</span>
+                <span>Shared TA &amp; instructor multi-seat workspace</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Overage: $0.25 per 1,000 credits</span>
+                <span>Higher concurrent request queues</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Flat overage rate, no volume bands</span>
+                <span>Flat overage: $0.25 per 1,000 credits</span>
               </div>
             </div>
           </div>
 
           <div style={{ marginTop: "24px" }}>
-            <a
-              href="https://clocked.rezolve.ai/pricing"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/login"
               className="btn btn-primary"
               style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
             >
-              Select Production Plan ↗
-            </a>
+              Choose Department Plan →
+            </Link>
           </div>
         </div>
 
-        {/* Tier 4: Scale */}
+        {/* Tier 4: Campus & Registrar */}
         <div
           className="card"
           style={{
@@ -344,7 +340,7 @@ export default function PricingPage() {
         >
           <div>
             <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-              04 / Scale
+              04 / Campus &amp; Registrar
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
               <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>
@@ -356,7 +352,7 @@ export default function PricingPage() {
               {billingCycle === "yearly" ? "7,150,000 credits/mo ($0.13/1k)" : "6,500,000 credits/mo ($0.15/1k)"}
             </div>
             <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-              More room for campus-wide honor councils and registrar offices. Covers ~489,000 redactions.
+              Campus-wide honor councils and registrar offices reviewing large student cohorts (~130,000 comparisons/mo).
             </p>
 
             <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -366,28 +362,26 @@ export default function PricingPage() {
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Sixteen requests at a time</span>
+                <span>LMS LTI 1.3 (Canvas, Blackboard, Brightspace)</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Overage: $0.20 per 1,000 credits</span>
+                <span>InCommon &amp; SAML 2.0 Single Sign-On</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                <span>Dedicated Enterprise SLAs</span>
+                <span>Dedicated institutional FERPA DPA &amp; SLA</span>
               </div>
             </div>
           </div>
 
           <div style={{ marginTop: "24px" }}>
             <a
-              href="https://clocked.rezolve.ai/pricing"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="mailto:procurement@margin.edu?subject=Campus%20License%20Inquiry%20-%20Margin"
               className="btn btn-secondary"
               style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
             >
-              Select Scale Plan ↗
+              Inquire for Campus License →
             </a>
           </div>
         </div>
@@ -406,7 +400,7 @@ export default function PricingPage() {
               fontWeight: 700,
             }}
           >
-            CALCULATOR
+            ESTIMATOR
           </span>
           <h2 className="card-title" style={{ margin: 0 }}>
             Estimate Your Course Cohort&apos;s Credit Requirements
@@ -471,10 +465,10 @@ export default function PricingPage() {
             </div>
             <div style={{ fontSize: "12px", color: "var(--accent)", marginTop: "4px", fontWeight: 600 }}>
               {estimatedCredits <= 4000
-                ? "✓ Fully covered by Explore (Free Trial)"
+                ? "✓ Fully covered by Course Pilot (Free)"
                 : estimatedCredits <= 120000
-                ? "✓ Easily covered by Build ($29/mo)"
-                : "✓ Requires Production ($249/mo)"}
+                ? "✓ Easily covered by Instructor Plan ($29/mo)"
+                : "✓ Recommended: Department License ($249/mo)"}
             </div>
           </div>
         </div>
@@ -577,7 +571,7 @@ export default function PricingPage() {
             </h3>
             <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)", lineHeight: "20px" }}>
               Overage is off by default until an authorized administrator sets a monthly spending limit.
-              Overage is billed at flat rates per 1,000 credits: <strong>$0.30 on Build</strong>, <strong>$0.25 on Production</strong>, and <strong>$0.20 on Scale</strong>.
+              Overage is billed at flat rates per 1,000 credits: <strong>$0.30 on Instructor Plan</strong>, <strong>$0.25 on Department License</strong>, and <strong>$0.20 on Campus &amp; Registrar</strong>.
               There are no surprise step-ups; every extra credit is billed at the same flat rate.
             </p>
           </div>

@@ -1132,7 +1132,7 @@ export function LandingPage() {
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: "20px", alignItems: "stretch" }}>
-          {/* Plan 1: Explore (Free Trial) */}
+          {/* Plan 1: Course Pilot */}
           <div
             className="card"
             style={{
@@ -1146,35 +1146,35 @@ export function LandingPage() {
           >
             <div>
               <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-                01 / Explore
+                01 / Course Pilot
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
                 <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$0</span>
                 <span className="caption-mono text-muted">/ Free Trial</span>
               </div>
               <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, marginBottom: "8px" }}>
-                4,000 credits once · No card required
+                4,000 compute credits · No card needed
               </div>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-                Evaluate Margin on a sample class. Covers ~300 PII redactions, 493 claim extractions, or 4,000 decisions.
+                Evaluate Margin on a sample class. Covers full side-by-side evidence inspection for up to 20 paper comparisons.
               </p>
 
               <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>4,000 Clocked credits one-time</span>
+                  <span>4,000 compute credits one-time</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>1 request at a time concurrency</span>
+                  <span>Direct PDF, Word &amp; Text ingestion</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Full side-by-side evidence UI</span>
+                  <span>Automated FERPA student PII masking</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Signed Markdown audit export</span>
+                  <span>Exportable Markdown &amp; audit reports</span>
                 </div>
               </div>
             </div>
@@ -1187,12 +1187,12 @@ export function LandingPage() {
                 className="btn btn-secondary"
                 style={{ width: "100%", padding: "10px", fontSize: "12px", justifyContent: "center" }}
               >
-                Start Free Trial →
+                Start Free Pilot →
               </button>
             </div>
           </div>
 
-          {/* Plan 2: Build (Single Instructor) */}
+          {/* Plan 2: Instructor Plan */}
           <div
             className="card"
             style={{
@@ -1206,7 +1206,7 @@ export function LandingPage() {
           >
             <div>
               <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-                02 / Build
+                02 / Instructor Plan
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
                 <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$29</span>
@@ -1216,7 +1216,7 @@ export function LandingPage() {
                 120,000 credits/mo ($0.24 per 1k)
               </div>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-                Ideal for individual professors or seminar courses reviewing up to 2,400 student papers/month.
+                Ideal for individual professors teaching 1–2 classes. Easily covers up to 2,400 student paper comparisons monthly.
               </p>
 
               <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -1226,15 +1226,15 @@ export function LandingPage() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>4 requests at a time concurrency</span>
+                  <span>Primary reading pack syllabus grounding</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Overage: flat $0.30 per 1,000 credits</span>
+                  <span>Character-offset evidence highlights</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Credits reset monthly per Clocked</span>
+                  <span>Flat overage: $0.30 per 1,000 credits</span>
                 </div>
               </div>
             </div>
@@ -1245,12 +1245,12 @@ export function LandingPage() {
                 className="btn btn-secondary"
                 style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
               >
-                View Build Details →
+                View Instructor Details →
               </Link>
             </div>
           </div>
 
-          {/* Plan 3: Production (Collegiate Departments - Highlighted) */}
+          {/* Plan 3: Department License (Highlighted) */}
           <div
             className="card"
             style={{
@@ -1285,7 +1285,7 @@ export function LandingPage() {
 
             <div>
               <div className="caption-mono" style={{ color: "var(--accent)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-                03 / Production
+                03 / Department License
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
                 <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$249</span>
@@ -1295,7 +1295,7 @@ export function LandingPage() {
                 1,250,000 credits/mo ($0.20 per 1k)
               </div>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-                For collegiate departments pooling reviews across multiple instructors and TAs (~25,000 papers/month).
+                For collegiate faculties pooling reviews across instructors, course coordinators, and graduate TAs (~25,000 comparisons/mo).
               </p>
 
               <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -1305,15 +1305,15 @@ export function LandingPage() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>8 requests at a time concurrency</span>
+                  <span>Shared TA &amp; instructor multi-seat workspace</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Overage: flat $0.25 per 1,000 credits</span>
+                  <span>Flat overage: $0.25 per 1,000 credits</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Shared departmental TA workspace</span>
+                  <span>Departmental pooled allocation</span>
                 </div>
               </div>
             </div>
@@ -1324,12 +1324,12 @@ export function LandingPage() {
                 className="btn btn-primary"
                 style={{ width: "100%", padding: "10px", fontSize: "12px", textDecoration: "none", justifyContent: "center" }}
               >
-                Choose Production →
+                Choose Department Plan →
               </Link>
             </div>
           </div>
 
-          {/* Plan 4: Scale (Campus-Wide & Registrar) */}
+          {/* Plan 4: Campus & Registrar */}
           <div
             className="card"
             style={{
@@ -1343,7 +1343,7 @@ export function LandingPage() {
           >
             <div>
               <div className="caption-mono text-muted" style={{ textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "6px" }}>
-                04 / Scale
+                04 / Campus &amp; Registrar
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "4px" }}>
                 <span style={{ fontSize: "32px", fontWeight: 700, color: "var(--ink)", fontFamily: "var(--font-inter)" }}>$999</span>
@@ -1353,7 +1353,7 @@ export function LandingPage() {
                 6,500,000 credits/mo ($0.15 per 1k)
               </div>
               <p style={{ fontSize: "13px", color: "var(--muted)", margin: "0 0 20px 0", lineHeight: "18px" }}>
-                Campus-wide honor courts and university registrar offices reviewing high-volume cohorts (~130,000 papers/month).
+                Campus-wide honor councils and registrar offices reviewing large student cohorts (~130,000 comparisons/mo).
               </p>
 
               <div style={{ borderTop: "1px solid var(--track)", paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -1363,15 +1363,15 @@ export function LandingPage() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>16 requests at a time concurrency</span>
+                  <span>LMS LTI 1.3 (Canvas, Blackboard, Brightspace)</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Overage: flat $0.20 per 1,000 credits</span>
+                  <span>InCommon &amp; SAML 2.0 Single Sign-On</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--accent)" }}>check</span>
-                  <span>Canvas / Blackboard LTI 1.3 &amp; SAML SSO</span>
+                  <span>Dedicated institutional FERPA DPA</span>
                 </div>
               </div>
             </div>
