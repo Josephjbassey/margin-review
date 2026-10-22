@@ -2,13 +2,33 @@
 
 > **Entry for the Clocked Build Challenge (Oct 21 – Nov 10, 2026)**  
 > **Author:** Joseph John Bassey  
-> **Live Architecture:** Next.js 16 (Turbopack) · Better Auth · Neon PostgreSQL · Pure Vanilla CSS  
-> **Technical Write-up:** [Restoring Academic Due Process (DEV.to)](https://dev.to/josephjbassey/restoring-academic-due-process-how-we-built-margin-with-nextjs-16-and-clocked-ai-19pl)
+> **Live Demo:** [margin-review-one.vercel.app](https://margin-review-one.vercel.app)  
+> **Video Walkthrough:** [Watch 65s Product Tour (MP4)](https://margin-review-one.vercel.app/demo.mp4)  
+> **Technical Write-up:** [Restoring Academic Due Process (DEV.to)](https://dev.to/josephjbassey/restoring-academic-due-process-how-we-built-margin-with-nextjs-16-and-clocked-ai-19pl)  
+> **Architecture:** Next.js 16 (Turbopack) · Better Auth · Neon PostgreSQL · Pure Vanilla CSS  
 
 Margin helps a university lecturer review a batch of student submissions: it masks student identifiers, compares every pair of submissions for shared or conflicting facts, checks each submission's claims against the course reading pack, and shows every finding side-by-side with its evidence so a human decides.
 
 **Margin flags; it never issues an automated verdict.**  
 Margin is **NOT** an internet-wide plagiarism checker. Within one class, the useful forensic questions are narrower and more actionable: which submissions overlap, which claims are unsupported by the syllabus, and where is the exact textual evidence?
+
+---
+
+## 🎬 65-Second Video Walkthrough
+
+A complete live demonstration of Margin running on Vercel with real GNS102 student submissions:
+
+[![Watch Margin Demo Video](public/screenshots/hero_preview.png)](https://margin-review-one.vercel.app/demo.mp4)
+
+> 📹 **Direct Video Link**: [margin-review-one.vercel.app/demo.mp4](https://margin-review-one.vercel.app/demo.mp4) *(H.264 / AAC, 65s, 4.0 MB)*  
+> **Chapter Breakdown**:
+> - **0:00–0:15**: Landing Page Value Proposition & 1-Click Judge Access
+> - **0:15–0:26**: Batches Dashboard, Submission Diagnostics & Queue Velocity
+> - **0:26–0:46**: Overlap Review (S-01 ↔ S-02 Contradiction on Iteration Counts, Pen-Wash Highlights)
+> - **0:46–0:58**: Claims Check (Syllabus Grounding & Verified Reading Pack Citation Modal)
+> - **0:58–0:66**: Transparent Decisions Summary Ledger & 1-Click Markdown Export
+> - **0:66–0:75**: Clocked Build Challenge Evaluation Slate
+
 
 ---
 
@@ -337,7 +357,7 @@ npm run build
 ## Evaluation Workflow (Step-by-Step for Judges)
 
 1. **Public Landing Page & 1-Click Judge Access (`/`)**:
-   - Open [http://localhost:3000](http://localhost:3000) in your browser.
+   - Open **[margin-review-one.vercel.app](https://margin-review-one.vercel.app)** in your browser (or [http://localhost:3000](http://localhost:3000) locally).
    - Explore the public landing page: interactive live evidence trial sandbox, Academic Due Process manifesto, and operational criteria comparison table.
    - Click the topbar button: **"⚖️ Judge Access"** (or click **"Launch Free Judge Trial →"** in the hero). This instantly provisions an authenticated evaluation session without requiring signup.
 2. **Batches Dashboard (`/`)**:
