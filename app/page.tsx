@@ -97,17 +97,10 @@ export default function BatchesPage() {
     return true;
   });
 
-  if (authPending) {
-    return (
-      <div className="container" style={{ textAlign: "center", padding: "100px 0" }}>
-        <div className="label-mono text-muted">Checking authentication status...</div>
-      </div>
-    );
-  }
-
   if (!session?.user) {
     return <LandingPage />;
   }
+
 
   return (
     <div className="container">
