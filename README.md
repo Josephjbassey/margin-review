@@ -247,6 +247,19 @@ npm run build
 
 ---
 
+## Known Limits & Considerations
+
+1. **Intra-Batch Forensic Scope (Not Internet Plagiarism Search)**:
+   - Margin is deliberately designed to review submission cohorts against each other and against the assigned course reading pack. It does not scan external internet web pages or proprietary essay mills.
+2. **Combinatorial Pair Budgeting (`MAX_PAIRS`)**:
+   - Evaluating all pairs requires $O(n^2)$ comparisons ($n(n-1)/2$). While this is ideal for seminar-sized cohorts (10–20 students), large lecture halls (e.g. 200+ students) should be split into seminar sections or prioritized using pre-clustering filters to preserve API credits and avoid reviewer fatigue.
+3. **Serving Token Budget on Grounding Sources**:
+   - The Verify endpoint operates within Clocked's source context admission limit (up to 20 documents, 200,000 characters). Syllabi exceeding this budget should be pre-chunked or selectively assigned per module.
+4. **Human In The Loop Requirement**:
+   - Margin never issues automated penalties, grades, or disciplinary verdicts. Every flagged contradiction, near-duplicate phrase, or ungrounded statement requires a human lecturer to confirm context and render a decision.
+
+---
+
 ## License
 
 MIT License. Designed and developed by Joseph John Bassey for the Clocked Build Challenge (2026).
