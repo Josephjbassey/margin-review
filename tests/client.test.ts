@@ -4,7 +4,6 @@ import {
   validatePairLimit,
   protect,
   compare,
-  verify,
   rerank,
   guard,
   inspect,

@@ -4,7 +4,6 @@ import {
   runProtectStep,
   runVerifyStep,
   runRerankStep,
-  runFullPipeline,
   PipelineDocument,
 } from "../lib/pipeline";
 import {

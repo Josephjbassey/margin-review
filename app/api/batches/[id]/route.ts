@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getBatch, saveBatch, deleteBatch } from "@/lib/storage";
+import { getBatch, deleteBatch } from "@/lib/storage";
 
 export async function GET(
   _req: Request,
@@ -14,8 +14,9 @@ export async function GET(
     }
 
     return NextResponse.json({ batch });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -27,7 +28,8 @@ export async function DELETE(
     const { id } = await params;
     const deleted = deleteBatch(id);
     return NextResponse.json({ success: deleted });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

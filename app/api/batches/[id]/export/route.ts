@@ -14,8 +14,12 @@ export async function GET(
       return NextResponse.json({ error: "Batch not found" }, { status: 404 });
     }
 
-    const totalFindings = batch.pair_findings.length + batch.claim_findings.length;
-    const stats = computeDecisionsStats(totalFindings, batch.decisions);
+    const pairFindings = batch.pair_findings || [];
+    const claimFindings = batch.claim_findings || [];
+    const decisions = batch.decisions || [];
+
+    const totalFindings = pairFindings.length + claimFindings.length;
+    const stats = computeDecisionsStats(totalFindings, decisions);
 
     const flaggedItems: Array<{
       type: "pair" | "claim";
@@ -26,8 +30,8 @@ export async function GET(
     }> = [];
 
     // Add flagged pairs
-    for (const p of batch.pair_findings) {
-      const dec = batch.decisions.find(
+    for (const p of pairFindings) {
+      const dec = decisions.find(
         (d) => d.finding_id === p.id && d.finding_type === "pair"
       );
       if (dec && dec.choice === "flag") {
@@ -44,8 +48,8 @@ export async function GET(
     }
 
     // Add flagged claims
-    for (const c of batch.claim_findings) {
-      const dec = batch.decisions.find(
+    for (const c of claimFindings) {
+      const dec = decisions.find(
         (d) => d.finding_id === c.id && d.finding_type === "claim"
       );
       if (dec && (dec.choice === "flag" || dec.choice === "cite")) {
@@ -69,7 +73,8 @@ export async function GET(
         "Content-Disposition": `attachment; filename="margin_review_${batch.id}.md"`,
       },
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

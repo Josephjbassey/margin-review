@@ -21,7 +21,7 @@ export default function ProcessingPage({
   const [isCompleted, setIsCompleted] = useState(false);
   const [running, setRunning] = useState(true);
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [elapsedSeconds, setElapsedSeconds] = useState(42);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   useEffect(() => {
     document.title = "Processing · Step 2 of 3 · Margin";
@@ -72,9 +72,9 @@ export default function ProcessingPage({
 
         // Trigger next step
         timer = setTimeout(executeNextStep, 1500);
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (!active) return;
-        setError(err.message);
+        setError(err instanceof Error ? err.message : "Step execution failed");
         setRunning(false);
       }
     }

@@ -49,10 +49,11 @@ export async function POST() {
         headers: responseHeaders,
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Judge login failed:", error);
+    const message = error instanceof Error ? error.message : "Failed to enter judge mode";
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to enter judge mode" },
+      { success: false, error: message },
       { status: 500 }
     );
   }

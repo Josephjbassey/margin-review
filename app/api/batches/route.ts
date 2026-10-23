@@ -7,8 +7,9 @@ export async function GET() {
   try {
     const batches = getAllBatches();
     return NextResponse.json({ batches });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -135,8 +136,9 @@ export async function POST(req: Request) {
       name: newBatch.name,
       status: newBatch.status,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Create Batch Error]:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

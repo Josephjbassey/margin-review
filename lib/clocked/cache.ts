@@ -4,7 +4,7 @@ import os from "os";
 import path from "path";
 
 // In-memory cache fallback for serverless cold-starts or read-only environments
-const memoryCache = new Map<string, { data: any; credits?: number }>();
+const memoryCache = new Map<string, { data: unknown; credits?: number }>();
 
 function resolveCacheDir(): string {
   if (process.env.CACHE_DIR) {
@@ -43,14 +43,10 @@ function getCacheDir(): string {
   }
 }
 
-function ensureCacheDir() {
-  getCacheDir();
-}
-
 /**
  * Deterministically stringifies an object by recursively sorting its keys.
  */
-export function canonicalJson(obj: any): string {
+export function canonicalJson(obj: unknown): string {
   if (obj === null || typeof obj !== "object") {
     return JSON.stringify(obj);
   }
@@ -59,15 +55,16 @@ export function canonicalJson(obj: any): string {
     return "[" + obj.map(canonicalJson).join(",") + "]";
   }
 
-  const sortedKeys = Object.keys(obj).sort();
-  const pairs = sortedKeys.map((k) => `${JSON.stringify(k)}:${canonicalJson(obj[k])}`);
+  const record = obj as Record<string, unknown>;
+  const sortedKeys = Object.keys(record).sort();
+  const pairs = sortedKeys.map((k) => `${JSON.stringify(k)}:${canonicalJson(record[k])}`);
   return "{" + pairs.join(",") + "}";
 }
 
 /**
  * Computes the sha256 hash key for an endpoint call and payload.
  */
-export function computeCacheKey(endpoint: string, payload: any): string {
+export function computeCacheKey(endpoint: string, payload: unknown): string {
   const canonical = canonicalJson(payload);
   return crypto.createHash("sha256").update(`${endpoint}:${canonical}`).digest("hex");
 }
@@ -75,13 +72,14 @@ export function computeCacheKey(endpoint: string, payload: any): string {
 /**
  * Checks if a response is empty or failed (should never be cached).
  */
-export function isInvalidResponse(data: any): boolean {
+export function isInvalidResponse(data: unknown): boolean {
   if (!data) return true;
   if (typeof data !== "object") return false;
-  if (data.error || data.detail || data.status === "error") return true;
+  const obj = data as Record<string, unknown>;
+  if (obj.error || obj.detail || obj.status === "error") return true;
 
   // Empty object or empty array
-  const keys = Object.keys(data);
+  const keys = Object.keys(obj);
   if (keys.length === 0) return true;
 
   return false;
@@ -90,7 +88,7 @@ export function isInvalidResponse(data: any): boolean {
 /**
  * Retrieves a cached response from memory or disk by key, if present.
  */
-export function getCachedResponse<T = any>(key: string): { data: T; credits?: number } | null {
+export function getCachedResponse<T = unknown>(key: string): { data: T; credits?: number } | null {
   // Check memory cache first
   const inMem = memoryCache.get(key);
   if (inMem) {
@@ -100,12 +98,12 @@ export function getCachedResponse<T = any>(key: string): { data: T; credits?: nu
   try {
     const dir = getCacheDir();
     const filePath = path.join(dir, `${key}.json`);
-    if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(/*turbopackIgnore: true*/ filePath)) {
       return null;
     }
     const content = fs.readFileSync(filePath, "utf-8");
     const parsed = JSON.parse(content);
-    const result = { data: parsed.response, credits: parsed.credits };
+    const result = { data: parsed.response as T, credits: parsed.credits as number | undefined };
     memoryCache.set(key, result);
     return result;
   } catch {
@@ -120,8 +118,8 @@ export function getCachedResponse<T = any>(key: string): { data: T; credits?: nu
 export function setCachedResponse(
   key: string,
   endpoint: string,
-  payload: any,
-  response: any,
+  payload: unknown,
+  response: unknown,
   credits: number = 0
 ): boolean {
   if (isInvalidResponse(response)) {
@@ -144,7 +142,7 @@ export function setCachedResponse(
     };
     fs.writeFileSync(filePath, JSON.stringify(record, null, 2), "utf-8");
     return true;
-  } catch (err) {
+  } catch {
     // Memory cache already set; safe to ignore filesystem write restrictions
     return true;
   }

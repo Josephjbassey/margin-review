@@ -31,6 +31,11 @@ export async function POST(
 
     const decision = recordDecision(id, finding_type, finding_id, choice, note || "");
 
+    // Ensure decisions array exists
+    if (!Array.isArray(batch.decisions)) {
+      batch.decisions = [];
+    }
+
     // Update in batch object
     const existingIndex = batch.decisions.findIndex(
       (d) => d.finding_id === finding_id && d.finding_type === finding_type
@@ -44,7 +49,8 @@ export async function POST(
     saveBatch(batch);
 
     return NextResponse.json({ success: true, decision, decisions: batch.decisions });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

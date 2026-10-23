@@ -57,19 +57,19 @@ export default function NewBatchPage() {
       if (!res.ok) throw new Error("Failed to load sample files");
       const data = await res.json();
 
-      const subFiles = (data.submissions || []).slice(0, 6).map((item: any) => {
+      const subFiles = (data.submissions || []).slice(0, 6).map((item: { name: string; content: string }) => {
         return new File([item.content], item.name, { type: "text/plain" });
       });
 
-      const readFiles = (data.readingPack || []).map((item: any) => {
+      const readFiles = (data.readingPack || []).map((item: { name: string; content: string }) => {
         return new File([item.content], item.name, { type: "text/plain" });
       });
 
       setSubmissions(subFiles);
       setReadingPack(readFiles);
       setName("GNS102 · Essay 2 (Modern Thought)");
-    } catch (err: any) {
-      setError(err.message || "Failed to load sample dataset");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to load sample dataset");
     } finally {
       setLoadingSample(false);
     }
@@ -110,8 +110,8 @@ export default function NewBatchPage() {
       }
 
       router.push(`/batches/${result.id}/processing`);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to create batch");
       setSubmitting(false);
     }
   };

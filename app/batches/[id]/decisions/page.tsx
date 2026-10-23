@@ -38,8 +38,8 @@ export default function DecisionsSummaryPage({
         if (data.batch?.name) {
           document.title = `Decisions · Review summary · ${data.batch.name} · Margin`;
         }
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to load batch");
       } finally {
         setLoading(false);
       }
@@ -92,10 +92,10 @@ export default function DecisionsSummaryPage({
   const flaggedCount = decisions.filter((d) => d.choice === "flag" || d.choice === "cite").length;
   const pendingCount = Math.max(0, totalFindings - decisions.length);
 
-  const totalEvaluated = totalFindings > 0 ? totalFindings : 5;
-  const dismissedPct = Math.round((dismissedCount / totalEvaluated) * 100) || 40;
-  const commonSourcePct = Math.round((commonSourceCount / totalEvaluated) * 100) || 20;
-  const flaggedPct = Math.round((flaggedCount / totalEvaluated) * 100) || 40;
+  const totalEvaluated = totalFindings > 0 ? totalFindings : 0;
+  const dismissedPct = totalEvaluated > 0 ? Math.round((dismissedCount / totalEvaluated) * 100) : 0;
+  const commonSourcePct = totalEvaluated > 0 ? Math.round((commonSourceCount / totalEvaluated) * 100) : 0;
+  const flaggedPct = totalEvaluated > 0 ? Math.round((flaggedCount / totalEvaluated) * 100) : 0;
 
   const handleExport = () => {
     setShowExportToast(true);

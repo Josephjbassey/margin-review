@@ -42,14 +42,14 @@ export default function ClaimsCheckPage({
         }
 
         const claims = data.batch.claim_findings || [];
-        const firstUnsupported = claims.find((c: any) => c.status === "unsupported");
+        const firstUnsupported = claims.find((c: { status?: string }) => c.status === "unsupported");
         if (firstUnsupported) {
           setSelectedClaimId(firstUnsupported.id);
         } else if (claims.length > 0) {
           setSelectedClaimId(claims[0].id);
         }
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to load batch");
       } finally {
         setLoading(false);
       }
@@ -142,8 +142,8 @@ export default function ClaimsCheckPage({
       setNoteText("");
       setDecisionToast(`Recorded verdict: ${choice.toUpperCase().replace("_", " ")}`);
       setTimeout(() => setDecisionToast(null), 3000);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "Failed to record decision");
     } finally {
       setSavingDecision(false);
     }
@@ -740,7 +740,7 @@ export default function ClaimsCheckPage({
             </span>
             <button
               type="button"
-              onClick={() => alert(`Reading Pack Manifest: ${batch.reading_pack.map((r: any) => r.filename || r.name).join(", ")}`)}
+              onClick={() => alert(`Reading Pack Manifest: ${(batch.reading_pack || []).map((r) => r.filename || r.id).join(", ")}`)}
               style={{
                 background: "none",
                 border: "none",

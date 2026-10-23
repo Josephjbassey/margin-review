@@ -70,10 +70,6 @@ function getDataDir(): string {
   }
 }
 
-function ensureDataDir() {
-  getDataDir();
-}
-
 function getBatchFilePath(batchId: string): string {
   const dir = getDataDir();
   return path.join(dir, `${batchId}.json`);
@@ -84,7 +80,7 @@ export function saveBatch(batch: StoredBatch): void {
   try {
     const filePath = getBatchFilePath(batch.id);
     fs.writeFileSync(filePath, JSON.stringify(batch, null, 2), "utf-8");
-  } catch (err) {
+  } catch {
     // Memory store is already populated; safe to ignore filesystem write restrictions
   }
 }
@@ -100,7 +96,7 @@ export function getBatch(batchId: string): StoredBatch | null {
 
   try {
     const filePath = getBatchFilePath(batchId);
-    if (!fs.existsSync(filePath)) return null;
+    if (!fs.existsSync(/*turbopackIgnore: true*/ filePath)) return null;
     const content = fs.readFileSync(filePath, "utf-8");
     const parsed = JSON.parse(content) as StoredBatch;
     inMemoryBatches.set(batchId, parsed);
@@ -156,7 +152,7 @@ export function deleteBatch(batchId: string): boolean {
   inMemoryBatches.delete(batchId);
   try {
     const filePath = getBatchFilePath(batchId);
-    if (fs.existsSync(filePath)) {
+    if (fs.existsSync(/*turbopackIgnore: true*/ filePath)) {
       fs.unlinkSync(filePath);
       return true;
     }

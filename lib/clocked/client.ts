@@ -6,16 +6,11 @@ import {
   ProtectResult,
   CompareOptions,
   CompareRequestPayload,
-  CompareFinding,
-  ComparePairResult,
   CompareResult,
   VerifyOptions,
   VerifyRequestPayload,
   VerifyResult,
   RerankDocumentInput,
-  RerankConversationTurn,
-  RerankLevels,
-  RerankedPassage,
   RerankOptions,
   RerankRequestPayload,
   RerankResult,
@@ -83,9 +78,9 @@ interface RequestOptions {
  */
 async function callClockedApi(
   endpoint: string,
-  payload: any,
+  payload: unknown,
   options: RequestOptions = {}
-): Promise<{ data: any; credits: number }> {
+): Promise<{ data: unknown; credits: number }> {
   const maxRetries = options.retries ?? 3;
   let delay = options.initialDelayMs ?? 500;
   const idempotencyKey = crypto.randomUUID();
@@ -123,9 +118,12 @@ async function callClockedApi(
         );
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as Record<string, unknown>;
       const credits = Number(
-        data?.credits_used ?? data?.credits ?? data?.usage?.input_tokens ?? 0
+        data?.credits_used ??
+          data?.credits ??
+          (data?.usage as Record<string, unknown> | undefined)?.input_tokens ??
+          0
       );
 
       if (credits > 0) {
@@ -136,7 +134,7 @@ async function callClockedApi(
       }
 
       return { data, credits };
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (attempt === maxRetries) {
         throw err;
       }
@@ -154,14 +152,14 @@ async function callClockedApi(
  */
 async function executeWithCache<T>(
   endpoint: string,
-  payload: any,
-  transform: (data: any) => T,
+  payload: unknown,
+  transform: (data: unknown) => T,
   mockFallback?: () => T
 ): Promise<T> {
   const cacheKey = computeCacheKey(endpoint, payload);
 
   // 1. Check disk cache
-  const cached = getCachedResponse<any>(cacheKey);
+  const cached = getCachedResponse<unknown>(cacheKey);
   if (cached) {
     return transform(cached.data);
   }
@@ -169,7 +167,7 @@ async function executeWithCache<T>(
   // 2. Concurrency limited network request (max 4 concurrent workers)
   return limiter(async () => {
     // Re-check cache after queue wait
-    const secondCheck = getCachedResponse<any>(cacheKey);
+    const secondCheck = getCachedResponse<unknown>(cacheKey);
     if (secondCheck) {
       return transform(secondCheck.data);
     }

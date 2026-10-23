@@ -43,14 +43,14 @@ export default function OverlapReviewPage({
         }
 
         const pairs = data.batch.pair_findings || [];
-        const firstConflict = pairs.find((p: any) => p.relation === "conflict");
+        const firstConflict = pairs.find((p: { relation?: string; id: string }) => p.relation === "conflict");
         if (firstConflict) {
           setSelectedPairId(firstConflict.id);
         } else if (pairs.length > 0) {
           setSelectedPairId(pairs[0].id);
         }
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to load batch");
       } finally {
         setLoading(false);
       }
@@ -143,8 +143,8 @@ export default function OverlapReviewPage({
       setNoteText("");
       setDecisionToast(`Adjudication recorded: ${choice.toUpperCase().replace("_", " ")}`);
       setTimeout(() => setDecisionToast(null), 3000);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "Failed to record decision");
     } finally {
       setSavingDecision(false);
     }
@@ -154,7 +154,7 @@ export default function OverlapReviewPage({
     docA && selectedPair
       ? highlightOffsets(
         docA.masked_text || docA.text,
-        selectedPair.passages_a.map((p) => ({
+        (selectedPair.passages_a || []).map((p) => ({
           char_start: p.char_start,
           char_end: p.char_end,
         }))
@@ -165,7 +165,7 @@ export default function OverlapReviewPage({
     docB && selectedPair
       ? highlightOffsets(
         docB.masked_text || docB.text,
-        selectedPair.passages_b.map((p) => ({
+        (selectedPair.passages_b || []).map((p) => ({
           char_start: p.char_start,
           char_end: p.char_end,
         }))

@@ -32,7 +32,7 @@ export interface PipelinePairFinding {
   probability: number;
   passages_a: PassageOffset[];
   passages_b: PassageOffset[];
-  raw_json: any;
+  raw_json?: unknown;
 }
 
 export interface PipelineClaimFinding {
@@ -48,7 +48,7 @@ export interface PipelineClaimFinding {
     action: "use" | "expand" | "skip";
     relevance_score: number;
   }>;
-  raw_json: any;
+  raw_json?: unknown;
 }
 
 export interface PipelineStepProgress {
@@ -125,7 +125,8 @@ export async function runProtectStep(
           state: i + 1 === total ? "done" : "running",
         });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
       console.error(`[Pipeline Protect Error] ${doc.label}:`, err);
       if (onProgress) {
         await onProgress({
@@ -133,7 +134,7 @@ export async function runProtectStep(
           done: i + 1,
           total,
           state: "error",
-          error_message: `Error masking ${doc.label}: ${err?.message}`,
+          error_message: `Error masking ${doc.label}: ${message}`,
         });
       }
       throw err;
@@ -224,7 +225,8 @@ export async function runCompareStep(
       }
 
       return finding;
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
       console.error(`[Pipeline Compare Error] ${docA.label} <-> ${docB.label}:`, err);
       doneCount++;
       if (onProgress) {
@@ -233,7 +235,7 @@ export async function runCompareStep(
           done: doneCount,
           total,
           state: "error",
-          error_message: `Error comparing ${docA.label} and ${docB.label}: ${err?.message}`,
+          error_message: `Error comparing ${docA.label} and ${docB.label}: ${message}`,
         });
       }
       throw err;
@@ -322,7 +324,8 @@ export async function runVerifyStep(
           state: i + 1 === total ? "done" : "running",
         });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
       console.error(`[Pipeline Verify Error] ${doc.label}:`, err);
       if (onProgress) {
         await onProgress({
@@ -330,7 +333,7 @@ export async function runVerifyStep(
           done: i + 1,
           total,
           state: "error",
-          error_message: `Error verifying ${doc.label}: ${err?.message}`,
+          error_message: `Error verifying ${doc.label}: ${message}`,
         });
       }
       throw err;
@@ -439,7 +442,8 @@ export async function runRerankStep(
           state: i + 1 === total ? "done" : "running",
         });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
       console.error(`[Pipeline Rerank Error] ${claim.id}:`, err);
       if (onProgress) {
         await onProgress({
@@ -447,7 +451,7 @@ export async function runRerankStep(
           done: i + 1,
           total,
           state: "error",
-          error_message: `Error reranking ${claim.id}: ${err?.message}`,
+          error_message: `Error reranking ${claim.id}: ${message}`,
         });
       }
       throw err;
