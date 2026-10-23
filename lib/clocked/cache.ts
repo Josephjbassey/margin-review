@@ -26,7 +26,7 @@ function getCacheDir(): string {
   if (activeCacheDir) return activeCacheDir;
   const preferred = resolveCacheDir();
   try {
-    if (!fs.existsSync(preferred)) {
+    if (!fs.existsSync(/*turbopackIgnore: true*/ preferred)) {
       fs.mkdirSync(preferred, { recursive: true });
     }
     activeCacheDir = preferred;
@@ -34,7 +34,7 @@ function getCacheDir(): string {
   } catch {
     const fallback = path.join(os.tmpdir(), "clocked_cache");
     try {
-      if (!fs.existsSync(fallback)) {
+      if (!fs.existsSync(/*turbopackIgnore: true*/ fallback)) {
         fs.mkdirSync(fallback, { recursive: true });
       }
     } catch {}
@@ -157,8 +157,8 @@ export function clearCache(): number {
   memoryCache.clear();
   try {
     const dir = getCacheDir();
-    if (!fs.existsSync(dir)) return 0;
-    const files = fs.readdirSync(dir);
+    if (!fs.existsSync(/*turbopackIgnore: true*/ dir)) return 0;
+    const files = fs.readdirSync(/*turbopackIgnore: true*/ dir);
     let count = 0;
     for (const f of files) {
       if (f.endsWith(".json")) {
